@@ -2,8 +2,7 @@ import Setting.Setting;
 import processing.core.PApplet;
 import processing.core.PImage;
 import Map.*;
-
-import java.util.Set;
+import processing.core.PVector;
 
 import static java.lang.Math.max;
 import static java.lang.Math.min;
@@ -15,93 +14,88 @@ public class Player {
     PApplet par;
     PImage img;
 
-    int x, y;
-    public Player(PApplet par, int x, int y){
+    Map map;
+    PVector pos;
+
+    int vx = 4;
+    int vy = 4;
+    boolean ismoving;
+    int dir;
+
+    public Player(PApplet par, int x, int y, Map map){
         this.par = par;
-        this.x = x;
-        this.y = y;
-        img = par.loadImage("image/player.png");
+        pos = new PVector( x*Setting.BlockSize, y*Setting.BlockSize);
+        this.map = map;
+        img = par.loadImage("image/p2.png");
     }
 
     public void display(){
         int blocksize = Setting.BlockSize;
-        par.image(img, (x-1)*blocksize, (y-1)*blocksize, blocksize, blocksize);
+
+        par.image(img, pos.x, pos.y, blocksize, blocksize );
     }
 
-    public void move(int dir, Map map){
+    public void move(int dir){
+        int gx = (int)pos.x/Setting.BlockSize + 1, gy = (int) pos.y/Setting.BlockSize + 1; // screen
+        int mx = gx + map.stx , my = gy+map.sty ; // map
 
-        int w = Setting.ScreenWidthNum;
-        int h = Setting.ScreenHeightNum;
-        int sh = Setting.HeightSpaceNum;
-
-        if(!tryMove(dir, map)) return;
-        System.out.println("h = " + h);
+        int nx = (int)pos.x, ny = (int)pos.y;
+        if(canMove(dir)==false) return;
         if(dir==1){ // up
-            if(y==sh){
-                if(map.sty+1<=sh){
-                    map.sty += 1;
-                }else y--;
-            }
-            else if(y-1>=1) y -= 1;
+            if(gy==Setting.HeightSpaceNum && map.sty>0) map.sty -= 1;
+            else if(pos.y-1>0) ny -= Setting.BlockSize;
         }
         else if(dir==2){ // right
-            if(x==w-1){
-                if(map.stx+1+w-1<=map.numW){
-                    map.stx+=1;
-                }else{
-                    x+= 1;
-                }
-            }
-            else if(x+1<=w) x += 1;
+            if(gx==Setting.ScreenWidthNum-1 && map.stx+1+Setting.ScreenWidthNum<=Setting.BlockNumWidth) map.stx += 1;
+            else if(gx+1<Setting.ScreenWidthNum) nx += Setting.BlockSize;
         }
         else if(dir==3){ // down
-            if(y==h-1){
-                int nextY = map.sty-1;
-                if(max(-nextY,1) + h-1<=map.numH){
-                    map.sty -= 1;
-                }else{
-                    y += 1;
-                }
-            }else if(y+1<=h) y += 1;
+            if(gy==Setting.ScreenHeightNum-1 && map.sty+1+Setting.ScreenHeightNum<=Setting.BlockNumHeight) map.sty += 1;
+            else if(gy+1<=Setting.ScreenHeightNum) ny += Setting.BlockSize;
         }
         else if(dir==4){ // left
-            if(x==2){
-                if(map.stx>1){
-                    map.stx -= 1;
-                }else x -= 1;
-            }
-            else if(x-1>=1) x -= 1;
+            if(gx==2 && map.stx>0) map.stx -= 1;
+            else if(gx>=1) nx -= Setting.BlockSize;
         }
-        System.out.println("x = " + x + " y = " + y);
-        System.out.println("stx = " + map.stx + " sty = " + map.sty);
+        gx = nx/Setting.BlockSize + 1; gy = ny/Setting.BlockSize + 1; // screen
+        mx = gx +map.stx; my = gy + map.sty;
+        System.out.println("gx = " + gx + ",, gy = " + gy);
+        System.out.println("mx = " + mx + ",, my = " + my);
+        System.out.println("stx = " +map.stx + ", sty = " + map.sty + "\n");
+
+        pos.x = nx;
+        pos.y = ny;
 
     }
 
-    boolean tryMove(int dir, Map map){
-        int xx, yy;
+    boolean canMove(int dir){
+        int gx = (int)pos.x/Setting.BlockSize + 1 , gy = (int)pos.y/Setting.BlockSize + 1; // screen
+        int mx = gx + map.stx, my = gy+map.sty; // map
+        if(dir==1) my -= 1;
+        else if(dir==2) mx += 1;
+        else if(dir==3) my += 1;
+        else if(dir==4) mx -= 1;
 
-        //TODO:
-        if(dir==1) yy = y-1;
-
-        return true;
+        return map.canMove(mx, my);
     }
 
-    void digBlock(int dir, Map map){
-        int xx = x, yy = y;
+    void digBlock(int dir) {
+        int gx = (int)pos.x/Setting.BlockSize + 1 , gy = (int)pos.y/Setting.BlockSize + 1; // screen
+        int mx = gx + map.stx, my = gy+map.sty; // map
+        if(dir==1) my -= 1;
+        else if(dir==2) mx += 1;
+        else if(dir==3) my += 1;
+        else if(dir==4) mx -= 1;
 
-        if(dir==1) yy -= 1;
-        else if(dir==2) xx += 1;
-        else if(dir==3) yy += 1;
-        else if(dir==4) xx -= 1;
-        else return;
+        boolean result = map.tryDig(mx, my);
+        if(result && dir==3) move(3);
+    }
 
-
-        xx = map.stx+xx-1;
-        yy = yy - map.sty;
-        System.out.println("dig xx = " + xx + " yy = " + yy);
-        if( xx>=1 && yy>=1 && map.map[yy][xx].CanDig()){
-            map.map[yy][xx].dig();
-        }
+    void putItem(){
+        int gx = (int)pos.x/Setting.BlockSize + 1 , gy = (int)pos.y/Setting.BlockSize + 1; // screen
+        int mx = gx + map.stx, my = gy+map.sty; // map
+        map.putItem(mx, my, 0);
     }
 
 }
+

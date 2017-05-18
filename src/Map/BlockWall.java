@@ -16,9 +16,13 @@ public class BlockWall extends Block{
     }
 
     public void display(int x,int y,int w,int h){
-        if(status==BlockStatus.EMPTY)
-            par.image(imgEmpty, x, y, w, h);
-        else
+        if(status==BlockStatus.NORMAL)
             par.image(imgWall, x, y, w, h);
+        else
+            par.image(imgEmpty, x, y, w, h);
+
+        if(status==BlockStatus.LADDER){
+            par.image(imgLadder, x, y, w, h);
+        }
     }
 }

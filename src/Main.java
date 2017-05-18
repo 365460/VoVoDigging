@@ -22,11 +22,11 @@ public class Main extends PApplet {
     }
 
     public void keyPressed(){
-        game.handleKey();
+        game.keyPressed();
     }
-//    public void keyReleased(){
-//        game.handleKey();
-//    }
+    public void keyReleased(){
+        game.keyReleased();
+    }
 
     public static void main(String _args[]) {
         PApplet.main(new String[]{ Main.class.getName()});
