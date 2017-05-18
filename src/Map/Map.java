@@ -34,19 +34,19 @@ public class Map {
         System.out.println("stx = " + stx + ", sty = " + sty);
 
         // init Block image
-        Block.imgSoil = par.loadImage("image/soil.jpg");
-        Block.imgWall = par.loadImage("image/wall.jpg");
-        Block.imgRock = par.loadImage("image/rock.jpg");
-        Block.imgEmpty = par.loadImage("image/empty.jpg");
+        Block.imgSoil   = par.loadImage("image/soil.jpg");
+        Block.imgWall   = par.loadImage("image/wall.jpg");
+        Block.imgRock   = par.loadImage("image/rock.jpg");
+        Block.imgEmpty  = par.loadImage("image/empty.jpg");
+        Block.imgGold   = par.loadImage("image/gold.png");
         Block.imgLadder = par.loadImage("image/ladder.png");
-
-        imgbackground = par.loadImage("image/background.jpg");
-
+        imgbackground   = par.loadImage("image/background.jpg");
 
         for(int i=1; i<=numH-1; i++){
             for(int j=2; j<=numW-1; j++){
-                int id = (int)par.random(0, 5);
-                if(id>=2) map[i][j] = new BlockSoil(this.par);
+                int id = (int)par.random(0, 6);
+                if(id==1)  map[i][j] = new BlockGold(this.par);
+                else if(id>=2) map[i][j] = new BlockSoil(this.par);
                 else map[i][j] = new BlockRock(this.par);
             }
         }
@@ -56,16 +56,21 @@ public class Map {
         for(int i=1; i<=numH; i++) map[i][numW] = new BlockWall(par);
     }
 
-    public void display(){
+    public void display(int playerx,int playery){
+
+        int gx = playerx/Setting.BlockSize + 1, gy = playery/Setting.BlockSize + 1;
+        int r = 1;
+        System.out.println("gx = " + gx + " gy = " + gy);
         par.background(0);
         // ground
         if(sty<=Setting.HeightSpaceNum){
-            par.image(imgbackground, 0, 0, Setting.GameWidth, Setting.HeightSpaceNum*Setting.BlockSize );
+            par.image(imgbackground, 0, -(sty)*Setting.BlockSize, Setting.GameWidth, (Setting.HeightSpaceNum)*Setting.BlockSize );
         }
         for(int i=1; i<=Setting.ScreenHeightNum; i++){
             for(int j=1; j<=Setting.ScreenWidthNum; j++){
 
-                if(sty+i>Setting.HeightSpaceNum){ // bottom
+                if(sty+i>Setting.HeightSpaceNum) { // bottom
+                    if( ! ((i-r<=gy && gy<=i+r)&&(j-r<=gx && gx<=j+r)) ) continue;
                     int y =  sty+i-Setting.HeightSpaceNum;
                     int x = j + stx;
                     map[y][x].display( (j-1)*blockSize, (i-1)*blockSize, blockSize, blockSize);
@@ -75,16 +80,18 @@ public class Map {
     }
 
     public boolean canMove(int x,int y){
-        System.out.println("move to " + x + "　" + y);
         if(x<=1 || x>=Setting.BlockNumWidth) return false;
         if(y<=1 || y>=Setting.BlockNumHeight) return false;
 
         int mgy = y -Setting.HeightSpaceNum;
+        if(mgy==0){
+            if(map[mgy+1][x].status==BlockStatus.EMPTY) return false;
+            else return true;
+        }
         if(mgy<0) return false;
-        if(mgy==0) return true;
-        if(map[mgy][x].status==BlockStatus.LADDER) return true;
         if(map[mgy+1][x].status == BlockStatus.EMPTY) return false;
         if(map[mgy][x].status==BlockStatus.NORMAL) return false;
+        if(map[mgy][x].status==BlockStatus.LADDER) return true;
         if(map[mgy][x].status==BlockStatus.EMPTY) return true;
         return true;
     }
@@ -95,12 +102,12 @@ public class Map {
         return false;
     }
 
-    public boolean tryDig(int x,int y){
+    public int Dig(int x,int y){// 0 -> fail
          y -= Setting.HeightSpaceNum;
-        if(OverBoard(x,y)) return false;
-        if(map[y][x].status!=BlockStatus.NORMAL) return false;
-        map[y][x].dig();
-        return true;
+        if(OverBoard(x,y)) return 0;
+        if(map[y][x].status!=BlockStatus.NORMAL) return 0;
+
+        return map[y][x].dig();
     }
 
     public boolean putItem(int x,int y,int id){

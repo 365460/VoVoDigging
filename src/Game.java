@@ -24,10 +24,12 @@ public class Game {
     }
 
     public void draw(){
-        map.display();
-        player.display();
-
-        //TODO: mask
+        switch (gameStatus){
+            case DIGGING:
+                map.display((int)player.pos.x, (int)player.pos.y);
+                player.display();
+                break;
+        }
     }
 
     public void keyPressed(){
@@ -41,17 +43,14 @@ public class Game {
                 else if(par.keyCode==par.DOWN || par.key=='s') dir = 3;
                 else if(par.keyCode==par.LEFT || par.key=='a') dir = 4;
 
-                if(par.key=='q'){
-                    player.putItem();
-                }
+                if(par.key=='q') player.putItem();
+
                 else if(par.key == par.CODED){
                     player.ismoving = true;
                     player.dir = dir;
                     player.move(dir);
                 }
-                else{
-                    player.digBlock(dir);
-                }
+                else player.digBlock(dir);
 
                 break;
         }

@@ -87,8 +87,8 @@ public class Player {
         else if(dir==3) my += 1;
         else if(dir==4) mx -= 1;
 
-        boolean result = map.tryDig(mx, my);
-        if(result && dir==3) move(3);
+        int result = map.Dig(mx, my);
+        if(result!=0 && dir==3) move(3);
     }
 
     void putItem(){

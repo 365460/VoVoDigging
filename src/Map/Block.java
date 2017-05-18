@@ -15,14 +15,17 @@ public class Block {
     static PImage imgSoil;
     static PImage imgWall;
     static PImage imgEmpty;
+    static PImage imgGold;
+
     static PImage imgLadder;
 
     public void display(int x,int y,int w,int h){
     }
 
-    public void dig(){
-        status = BlockStatus.EMPTY;
-    }
+    public int dig(){ return 0;}
+
+
+
 
     public boolean CanDig(){
         // TODO: compare with tools

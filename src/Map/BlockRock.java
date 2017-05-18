@@ -1,7 +1,7 @@
 package Map;
 
 import processing.core.PApplet;
-import processing.core.PImage;
+import Setting.*;
 
 /**
  * Created by Rober on 2017/5/5.
@@ -10,7 +10,7 @@ public class BlockRock extends Block{
 
     public BlockRock(PApplet par){
         this.par = par;
-        level = 10;
+        level = Setting.RockLevel;
     }
 
     public void display(int x,int y,int w,int h){
@@ -22,5 +22,10 @@ public class BlockRock extends Block{
         if(status==BlockStatus.LADDER){
             par.image(imgLadder, x, y, w, h);
         }
+    }
+
+    public int dig(){
+        status = BlockStatus.EMPTY;
+        return Setting.IronId;
     }
 }

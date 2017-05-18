@@ -1,21 +1,22 @@
 package Map;
 
-import Setting.Setting;
 import processing.core.PApplet;
-import processing.core.PImage;
+import Setting.*;
 
 /**
- * Created by Rober on 2017/5/5.
+ * Created by Rober on 2017/5/18.
  */
-public class BlockSoil extends Block{
-
-    public BlockSoil(PApplet par){
+public class BlockGold extends Block{
+    public BlockGold(PApplet par){
         this.par = par;
+        level = Setting.GoldLevel;
     }
 
     public void display(int x,int y,int w,int h){
-        if(status==BlockStatus.NORMAL)
+        if(status==BlockStatus.NORMAL){
             par.image(imgSoil, x, y, w, h);
+            par.image(imgGold, x, y, w, h);
+        }
         else
             par.image(imgEmpty, x, y, w, h);
 
@@ -26,7 +27,6 @@ public class BlockSoil extends Block{
 
     public int dig(){
         status = BlockStatus.EMPTY;
-        return Setting.SoilId;
+        return Setting.GoldId;
     }
-
 }

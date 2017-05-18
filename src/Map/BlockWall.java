@@ -1,7 +1,7 @@
 package Map;
 
 import processing.core.PApplet;
-import processing.core.PImage;
+import Setting.*;
 
 /**
  * Created by Rober on 2017/5/5.
@@ -12,7 +12,7 @@ public class BlockWall extends Block{
 
     public BlockWall(PApplet par){
         this.par = par;
-        level = 100;
+        level = Setting.WallLevel;
     }
 
     public void display(int x,int y,int w,int h){
