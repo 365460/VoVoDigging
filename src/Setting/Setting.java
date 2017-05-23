@@ -27,10 +27,20 @@ public class Setting {
     public static int WallLevel = 100;
 
 
-    public static int WoodId    = 1;
-    public static int CoalId    = 2;
-    public static int IronId    = 3;
-    public static int GoldId    = 4;
-    public static int DiamondId = 5;
-    public static int SoilId    = 6;
+    /*              Mine            */
+    public static int MineNum = 6+1;
+    public static String[] MineName = {"", "Soil", "Wood", "Coal", "Iron", "Gold", "Diamond"};
+    public static int[] MineWeight =  { 0,      1,      1,      2,       2,    3,          4};
+    final public static int SoilId    = 1;
+    final public static int WoodId    = 2;
+    final public static int CoalId    = 3;
+    final public static int IronId    = 4;
+    final public static int GoldId    = 5;
+    final public static int DiamondId = 6;
+
+
+    /*              Item            */
+    public static int ItemNum =  4;
+    public static String[] ItemName = { "Ladder",  "" };
+
 }

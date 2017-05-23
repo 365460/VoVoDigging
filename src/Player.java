@@ -14,8 +14,11 @@ public class Player {
     PApplet par;
     PImage img;
 
-    Map map;
     PVector pos;
+
+    Map map;
+    Bag bag;
+
 
     int vx = 4;
     int vy = 4;
@@ -27,6 +30,8 @@ public class Player {
         pos = new PVector( x*Setting.BlockSize, y*Setting.BlockSize);
         this.map = map;
         img = par.loadImage("image/p2.png");
+
+        bag = new Bag(this.par);
     }
 
     public void display(){
@@ -35,12 +40,11 @@ public class Player {
         par.image(img, pos.x, pos.y, blocksize, blocksize );
     }
 
-    public void move(int dir){
+    public boolean move(int dir){
         int gx = (int)pos.x/Setting.BlockSize + 1, gy = (int) pos.y/Setting.BlockSize + 1; // screen
         int mx = gx + map.stx , my = gy+map.sty ; // map
 
         int nx = (int)pos.x, ny = (int)pos.y;
-        if(canMove(dir)==false) return;
         if(dir==1){ // up
             if(gy==Setting.HeightSpaceNum && map.sty>0) map.sty -= 1;
             else if(pos.y-1>0) ny -= Setting.BlockSize;
@@ -59,24 +63,28 @@ public class Player {
         }
         gx = nx/Setting.BlockSize + 1; gy = ny/Setting.BlockSize + 1; // screen
         mx = gx +map.stx; my = gy + map.sty;
-        System.out.println("gx = " + gx + ",, gy = " + gy);
-        System.out.println("mx = " + mx + ",, my = " + my);
-        System.out.println("stx = " +map.stx + ", sty = " + map.sty + "\n");
+//        System.out.println("gx = " + gx + ",, gy = " + gy);
+//        System.out.println("mx = " + mx + ",, my = " + my);
+//        System.out.println("stx = " +map.stx + ", sty = " + map.sty + "\n");
 
         pos.x = nx;
         pos.y = ny;
+        return true;
 
     }
 
-    boolean canMove(int dir){
+    public boolean tryMove(int dir){
         int gx = (int)pos.x/Setting.BlockSize + 1 , gy = (int)pos.y/Setting.BlockSize + 1; // screen
         int mx = gx + map.stx, my = gy+map.sty; // map
         if(dir==1) my -= 1;
         else if(dir==2) mx += 1;
         else if(dir==3) my += 1;
         else if(dir==4) mx -= 1;
+        boolean result = map.canMove(mx, my);
 
-        return map.canMove(mx, my);
+        if(result) move(dir);
+
+        return result;
     }
 
     void digBlock(int dir) {
@@ -88,7 +96,30 @@ public class Player {
         else if(dir==4) mx -= 1;
 
         int result = map.Dig(mx, my);
-        if(result!=0 && dir==3) move(3);
+        if(result!=0 && dir==3) {
+            while ( map.map[my-Setting.HeightSpaceNum][mx].isEmpty()){
+                move(3);
+                gx = (int)pos.x/Setting.BlockSize + 1;
+                gy = (int)pos.y/Setting.BlockSize + 1; // screen
+                mx = gx + map.stx;
+                my = gy + map.sty; // map
+            }
+            pos.y -= Setting.BlockSize;
+        }
+        bag.addMine( result );
+    }
+
+    void putMine(int dir){
+        int gx = (int)pos.x/Setting.BlockSize + 1 , gy = (int)pos.y/Setting.BlockSize + 1; // screen
+        int mx = gx + map.stx, my = gy+map.sty; // map
+        if(dir==1) my -= 1;
+        else if(dir==2) mx += 1;
+        else if(dir==3) my += 1;
+        else if(dir==4) mx -= 1;
+
+        if(bag.getMineNum(bag.activeMine)>0 && map.putMine(mx, my, bag.activeMine)){
+            bag.delMine(bag.activeMine);
+        }
     }
 
     void putItem(){

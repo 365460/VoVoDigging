@@ -60,7 +60,6 @@ public class Map {
 
         int gx = playerx/Setting.BlockSize + 1, gy = playery/Setting.BlockSize + 1;
         int r = 1;
-        System.out.println("gx = " + gx + " gy = " + gy);
         par.background(0);
         // ground
         if(sty<=Setting.HeightSpaceNum){
@@ -85,8 +84,9 @@ public class Map {
 
         int mgy = y -Setting.HeightSpaceNum;
         if(mgy==0){
-            if(map[mgy+1][x].status==BlockStatus.EMPTY) return false;
-            else return true;
+            return true;
+          //  if(map[mgy+1][x].status==BlockStatus.EMPTY) return false;
+            //else return true;
         }
         if(mgy<0) return false;
         if(map[mgy+1][x].status == BlockStatus.EMPTY) return false;
@@ -120,6 +120,18 @@ public class Map {
         }else{
             return false;
         }
+    }
+
+    public boolean putMine(int x,int y,int id){
+        y -= Setting.HeightSpaceNum;
+        if(OverBoard(x,y)) return false;
+
+        System.out.println("put "+x + " " + y + " , id = " + id);
+        if(map[y][x].status==BlockStatus.EMPTY){
+            map[y][x] = BlockFactory.generate(par, id);
+            return true;
+        }
+        else return false;
     }
 }
 

@@ -8,7 +8,7 @@ import processing.core.PImage;
  */
 public class Block {
     int level;
-    BlockStatus status = BlockStatus.NORMAL;
+    public BlockStatus status = BlockStatus.NORMAL;
     PApplet par;
 
     static PImage imgRock;
@@ -20,12 +20,10 @@ public class Block {
     static PImage imgLadder;
 
     public void display(int x,int y,int w,int h){
+
     }
 
     public int dig(){ return 0;}
-
-
-
 
     public boolean CanDig(){
         // TODO: compare with tools
@@ -33,6 +31,10 @@ public class Block {
 
         if(level==100) return false;
         else return true;
+    }
+
+    public boolean isEmpty(){
+        return status==BlockStatus.EMPTY;
     }
 }
 

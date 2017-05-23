@@ -14,6 +14,7 @@ public class Game {
 
     int height, width;
     boolean isShifting;
+    int isBag = 0;
     public Game(PApplet par, int height, int width){
         this.par = par;
         this.height = height;
@@ -28,6 +29,7 @@ public class Game {
             case DIGGING:
                 map.display((int)player.pos.x, (int)player.pos.y);
                 player.display();
+                if(isBag==1) player.bag.display();
                 break;
         }
     }
@@ -36,25 +38,34 @@ public class Game {
 
         switch (gameStatus){
             case DIGGING:
-                if(par.keyCode == par.SHIFT) isShifting = true;
-                int dir = 0;
-                if(par.keyCode==par.UP || par.key=='w') dir = 1;
-                else if(par.keyCode==par.RIGHT || par.key=='d') dir = 2;
-                else if(par.keyCode==par.DOWN || par.key=='s') dir = 3;
-                else if(par.keyCode==par.LEFT || par.key=='a') dir = 4;
-
-                if(par.key=='q') player.putItem();
-
-                else if(par.key == par.CODED){
-                    player.ismoving = true;
-                    player.dir = dir;
-                    player.move(dir);
+                if(isBag==1){
+                    if(par.key == 'b') isBag ^= 1;
+                    player.bag.keyPressed(par.keyCode);
+                    break;
                 }
-                else player.digBlock(dir);
+                else{
+                    int dir = 0;
+                    if(par.keyCode==par.UP         || par.key=='w' || par.key=='W') dir = 1;
+                    else if(par.keyCode==par.RIGHT || par.key=='d' || par.key=='D') dir = 2;
+                    else if(par.keyCode==par.DOWN  || par.key=='s' || par.key=='S') dir = 3;
+                    else if(par.keyCode==par.LEFT  || par.key=='a' || par.key=='A') dir = 4;
 
+                    if(par.key=='q') player.putItem();
+                    else if(par.key=='b') isBag ^= 1;
+                    else if(par.key == par.CODED){
+                        player.ismoving = true;
+                        player.dir = dir;
+                        player.tryMove(dir);
+                    }
+                    else if(dir!=0){
+                        System.out.println("dir = " + dir);
+                        if(par.key>='A' && par.key<='Z') System.out.println("put " + dir);
+                        if(par.key>='A' && par.key<='Z') player.putMine(dir);
+                        else player.digBlock(dir);
+                    }
+                }
                 break;
         }
-
     }
 
     public void keyReleased(){
@@ -70,6 +81,7 @@ public class Game {
 
 enum GameStatus {
     DIGGING,
+    ShOPPING,
     BAGOPEN
 }
 
