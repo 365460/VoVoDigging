@@ -25,8 +25,12 @@ public class BlockSoil extends Block{
     }
 
     public int dig(){
+        int result;
+        if(status==BlockStatus.LADDER) result = 10;
+        else result = Setting.SoilId;
+
         status = BlockStatus.EMPTY;
-        return Setting.SoilId;
+        return result;
     }
 
 }

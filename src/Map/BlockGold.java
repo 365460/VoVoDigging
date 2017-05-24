@@ -26,7 +26,11 @@ public class BlockGold extends Block{
     }
 
     public int dig(){
+        int result;
+        if(status==BlockStatus.LADDER) result = 10;
+        else result = Setting.GoldId;
+
         status = BlockStatus.EMPTY;
-        return Setting.GoldId;
+        return result;
     }
 }

@@ -25,7 +25,11 @@ public class BlockWood extends Block{
     }
 
     public int dig(){
+        int result;
+        if(status==BlockStatus.LADDER) result = 10;
+        else result = Setting.WoodId;
+
         status = BlockStatus.EMPTY;
-        return Setting.WoodId;
+        return result;
     }
 }

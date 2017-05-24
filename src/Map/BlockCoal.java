@@ -25,7 +25,11 @@ public class BlockCoal extends Block{
     }
 
     public int dig(){
+        int result;
+        if(status==BlockStatus.LADDER) result = 10;
+        else result = Setting.CoalId;
+
         status = BlockStatus.EMPTY;
-        return Setting.CoalId;
+        return result;
     }
 }

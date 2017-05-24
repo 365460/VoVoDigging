@@ -106,15 +106,17 @@ public class Map {
         return false;
     }
 
-    public int Dig(int x,int y){// 0 -> fail
+    public int Dig(int x,int y,int tool){// 0 -> fail
          y -= Setting.HeightSpaceNum;
         if(OverBoard(x,y)) return 0;
-        if(map[y][x].status!=BlockStatus.NORMAL) return 0;
+        if(!map[y][x].canDig(tool)) return 0;
+        else return map[y][x].dig();
 
-        return map[y][x].dig();
+//        if(map[y][x].status!=BlockStatus.NORMAL) return 0;
+
     }
 
-    public boolean putItem(int x,int y,int id){
+    public boolean putItem(int x,int y,int id){ // just ladder
         y -= Setting.HeightSpaceNum;
         if(OverBoard(x,y)) return false;
 

@@ -27,7 +27,11 @@ public class BlockDiamond extends Block{
     }
 
     public int dig(){
+        int result;
+        if(status==BlockStatus.LADDER) result = 10;
+        else result = Setting.DiamondId;
+
         status = BlockStatus.EMPTY;
-        return Setting.DiamondId;
+        return result;
     }
 }

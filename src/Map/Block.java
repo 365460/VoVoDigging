@@ -22,16 +22,24 @@ public class Block {
 
     static PImage imgLadder;
 
+    public Block(){
+
+    }
+
+    public Block(PApplet par, int mineid){
+
+    }
+
     public void display(int x,int y,int w,int h){
 
     }
 
     public int dig(){ return 0;}
 
-    public boolean CanDig(){
+    public boolean canDig(int tool){
         // TODO: compare with tools
+        if(tool<level) return false;
         if(status==BlockStatus.EMPTY) return false;
-
         if(level==100) return false;
         else return true;
     }

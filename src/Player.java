@@ -20,11 +20,11 @@ public class Player {
     Map map;
     Bag bag;
 
-
     int vx = 4;
     int vy = 4;
     boolean ismoving;
     int dir;
+    int tool = 100;
 
     public Player(PApplet par, int x, int y, Map map){
         this.par = par;
@@ -96,9 +96,14 @@ public class Player {
         else if(dir==3) my += 1;
         else if(dir==4) mx -= 1;
 
-        int result = map.Dig(mx, my);
+        int result = map.Dig(mx, my, tool);
         if(bag.canAddMine(result)){
-            bag.addMine( result );
+            if(result==10){
+                //TODO: get ladder
+            }
+            else{
+                bag.addMine( result );
+            }
             if(result!=0 && dir==3) {
                 while ( map.map[my-Setting.HeightSpaceNum][mx].isEmpty()){
                     move(3);

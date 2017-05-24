@@ -3,6 +3,7 @@ package Bag; /**
  */
 
 import Setting.*;
+import javafx.scene.control.Tab;
 import processing.core.PApplet;
 import processing.core.PImage;
 
@@ -39,6 +40,7 @@ public class Bag {
     }
 
     public boolean canAddMine(int id){
+        if(id==10) return true;
         return minebag.currentWeight + Setting.MineWeight[id] <= minebag.limitWeight;
     }
 
@@ -56,7 +58,12 @@ public class Bag {
 
     public void display(){
         par.translate(256,141);
-        par.image(bg, 0,0,300+20*2,300+20*2);
+        int totalW = 300+20*2, totalH = 300+20*2;
+        par.image(bg, 0, 0, totalW, totalH);
+        par.fill(255, 0, 0);
+        int tabH = 40, tabW = 170;
+        par.rect(0,-tabH,tabW,tabH);
+        par.rect(tabW,-tabH,tabW,tabH);
         minebag.display();
     }
 

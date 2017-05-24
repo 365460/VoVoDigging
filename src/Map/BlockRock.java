@@ -25,7 +25,11 @@ public class BlockRock extends Block{
     }
 
     public int dig(){
+        int result;
+        if(status==BlockStatus.LADDER) result = 10;
+        else result = Setting.IronId;
+
         status = BlockStatus.EMPTY;
-        return Setting.IronId;
+        return result;
     }
 }
