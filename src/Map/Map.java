@@ -34,19 +34,23 @@ public class Map {
         System.out.println("stx = " + stx + ", sty = " + sty);
 
         // init Block image
-        Block.imgSoil   = par.loadImage("image/soil.jpg");
-        Block.imgWall   = par.loadImage("image/wall.jpg");
-        Block.imgRock   = par.loadImage("image/rock.jpg");
-        Block.imgEmpty  = par.loadImage("image/empty.jpg");
-        Block.imgGold   = par.loadImage("image/gold.png");
-        Block.imgLadder = par.loadImage("image/ladder.png");
-        imgbackground   = par.loadImage("image/background.jpg");
+        Block.imgSoil      = par.loadImage("image/soil.jpg");
+        Block.imgRock      = par.loadImage("image/rock.jpg");
+        Block.imgCoal      = par.loadImage("image/coal.jpg");
+        Block.imgGold      = par.loadImage("image/gold.png");
+        Block.imgWood      = par.loadImage("image/wood.jpg");
+        Block.imgDiamond   = par.loadImage("image/dim.png");
+
+        Block.imgWall      = par.loadImage("image/wall.jpg");
+        Block.imgEmpty     = par.loadImage("image/empty.jpg");
+        Block.imgLadder    = par.loadImage("image/ladder.png");
+        imgbackground      = par.loadImage("image/background.jpg");
 
         for(int i=1; i<=numH-1; i++){
             for(int j=2; j<=numW-1; j++){
                 int id = (int)par.random(0, 6);
-                if(id==1)  map[i][j] = new BlockGold(this.par);
-                else if(id>=2) map[i][j] = new BlockSoil(this.par);
+                if(id==1)  map[i][j] = new BlockCoal(this.par);
+                else if(id>=2) map[i][j] = new BlockDiamond(this.par);
                 else map[i][j] = new BlockRock(this.par);
             }
         }
@@ -89,9 +93,9 @@ public class Map {
             //else return true;
         }
         if(mgy<0) return false;
+        if(map[mgy][x].status==BlockStatus.LADDER) return true;
         if(map[mgy+1][x].status == BlockStatus.EMPTY) return false;
         if(map[mgy][x].status==BlockStatus.NORMAL) return false;
-        if(map[mgy][x].status==BlockStatus.LADDER) return true;
         if(map[mgy][x].status==BlockStatus.EMPTY) return true;
         return true;
     }

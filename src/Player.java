@@ -1,3 +1,4 @@
+import Bag.Bag;
 import Setting.Setting;
 import processing.core.PApplet;
 import processing.core.PImage;
@@ -96,17 +97,23 @@ public class Player {
         else if(dir==4) mx -= 1;
 
         int result = map.Dig(mx, my);
-        if(result!=0 && dir==3) {
-            while ( map.map[my-Setting.HeightSpaceNum][mx].isEmpty()){
-                move(3);
-                gx = (int)pos.x/Setting.BlockSize + 1;
-                gy = (int)pos.y/Setting.BlockSize + 1; // screen
-                mx = gx + map.stx;
-                my = gy + map.sty; // map
+        if(bag.canAddMine(result)){
+            bag.addMine( result );
+            if(result!=0 && dir==3) {
+                while ( map.map[my-Setting.HeightSpaceNum][mx].isEmpty()){
+                    move(3);
+                    gx = (int)pos.x/Setting.BlockSize + 1;
+                    gy = (int)pos.y/Setting.BlockSize + 1; // screen
+                    mx = gx + map.stx;
+                    my = gy + map.sty; // map
+                }
+                pos.y -= Setting.BlockSize;
             }
-            pos.y -= Setting.BlockSize;
         }
-        bag.addMine( result );
+        else{
+            System.out.println("放不進去喔QQ");
+            map.putMine(mx, my, result);
+        }
     }
 
     void putMine(int dir){
@@ -117,8 +124,9 @@ public class Player {
         else if(dir==3) my += 1;
         else if(dir==4) mx -= 1;
 
-        if(bag.getMineNum(bag.activeMine)>0 && map.putMine(mx, my, bag.activeMine)){
-            bag.delMine(bag.activeMine);
+        int id = bag.getMineActiveId();
+        if(bag.getMineNum(id)>0 && map.putMine(mx, my, id)){
+            bag.delMine(id);
         }
     }
 

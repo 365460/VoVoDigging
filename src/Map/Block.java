@@ -11,11 +11,14 @@ public class Block {
     public BlockStatus status = BlockStatus.NORMAL;
     PApplet par;
 
-    static PImage imgRock;
     static PImage imgSoil;
+    static PImage imgRock;
+    static PImage imgCoal;
+    static PImage imgWood;
+    static PImage imgGold;
+    static PImage imgDiamond;
     static PImage imgWall;
     static PImage imgEmpty;
-    static PImage imgGold;
 
     static PImage imgLadder;
 

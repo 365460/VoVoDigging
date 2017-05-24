@@ -14,6 +14,12 @@ public class BlockFactory {
                 return new BlockRock(par);
             case Setting.GoldId:
                 return new BlockGold(par);
+            case Setting.WoodId:
+                return new BlockWood(par);
+            case Setting.CoalId:
+                return new BlockCoal(par);
+            case Setting.DiamondId:
+                return new BlockDiamond(par);
             default:
                 return new BlockWall(par);
         }
