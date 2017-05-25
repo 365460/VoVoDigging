@@ -24,9 +24,12 @@ public class Main extends PApplet {
     public void keyPressed(){
         game.keyPressed();
     }
+
     public void keyReleased(){
         game.keyReleased();
     }
+
+    public void mousePressed(){ game.mousePressed(); }
 
     public static void main(String _args[]) {
         PApplet.main(new String[]{ Main.class.getName()});

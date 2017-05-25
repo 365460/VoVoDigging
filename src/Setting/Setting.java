@@ -55,4 +55,13 @@ public class Setting {
     public static int ItemNum =  4;
     public static String[] ItemName = { "Ladder",  "" };
 
+
+    public static int Nothing   = 0;
+    public static int ToWoodId    = 1;
+    public static int ToCoalId    = 2;
+    public static int ToIronId    = 3;
+    public static int ToGoldId    = 4;
+    public static int ToDiamondId = 5;
+    public static int ToSoilId    = 6;
+    public static int ToLedderId = 7;
 }

@@ -2,6 +2,7 @@ package Map;
 
 import Setting.Setting;
 import processing.core.PApplet;
+import processing.core.PConstants;
 import processing.core.PImage;
 
 import java.awt.*;
@@ -48,10 +49,11 @@ public class Map {
 
         for(int i=1; i<=numH-1; i++){
             for(int j=2; j<=numW-1; j++){
-                int id = (int)par.random(0, 6);
-                if(id==1)  map[i][j] = new BlockCoal(this.par);
-                else if(id>=2) map[i][j] = new BlockDiamond(this.par);
-                else map[i][j] = new BlockRock(this.par);
+                int id = (int)par.random(1, 6);
+                map[i][j] = BlockFactory.generate(par, id);
+//                if(id==1)  map[i][j] = new BlockCoal(this.par);
+//                else if(id>=2) map[i][j] = new BlockDiamond(this.par);
+//                else map[i][j] = new BlockRock(this.par);
             }
         }
 
@@ -64,6 +66,7 @@ public class Map {
 
         int gx = playerx/Setting.BlockSize + 1, gy = playery/Setting.BlockSize + 1;
         int r = 1;
+        par.imageMode(PConstants.CORNER);
         par.background(0);
         // ground
         if(sty<=Setting.HeightSpaceNum){

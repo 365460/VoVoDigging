@@ -1,6 +1,7 @@
 //import com.sun.deploy.net.proxy.pac.PACFunctions;
 import processing.core.PApplet;
 import Map.*;
+import Store.*;
 
 /**
  * Created by Rober on 2017/5/5.
@@ -9,6 +10,7 @@ public class Game {
     PApplet par;
     Map map;
     Player player;
+    Store store;
 
     GameStatus gameStatus = GameStatus.DIGGING;
 
@@ -22,6 +24,8 @@ public class Game {
 
         map = new Map(this.par, 8, 0);
         player = new Player(this.par, 3, 3, map);
+
+        store = new Store(this.par, this.par.height, this.width, player.bag);
     }
 
     public void draw(){
@@ -31,12 +35,18 @@ public class Game {
                 player.display();
                 if(isBag==1) player.bag.display();
                 break;
+            case ShOPPING:
+                store.draw();
         }
     }
 
     public void keyPressed(){
 
         switch (gameStatus){
+            case ShOPPING:
+//                store.keyPressed();
+                if(par.key == 'o') gameStatus = GameStatus.DIGGING;
+                break;
             case DIGGING:
                 if(isBag==1){
                     if(par.key == 'b') isBag ^= 1;
@@ -44,6 +54,11 @@ public class Game {
                     break;
                 }
                 else{
+
+                    if(par.key =='p') {
+                        gameStatus = GameStatus.ShOPPING;
+                       return;
+                    }
                     int dir = 0;
                     if(par.keyCode==par.UP         || par.key=='w' || par.key=='W') dir = 1;
                     else if(par.keyCode==par.RIGHT || par.key=='d' || par.key=='D') dir = 2;
@@ -75,6 +90,14 @@ public class Game {
 
         if(par.key == par.CODED){
             player.ismoving = false;
+        }
+    }
+
+    public void mousePressed(){
+        switch (gameStatus){
+            case ShOPPING:
+                store.mousePressed();
+                break;
         }
     }
 }

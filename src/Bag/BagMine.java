@@ -85,6 +85,7 @@ public class BagMine {
             }
         }
         par.text(currentWeight+"/"+limitWeight, 0, 280, 300, 30);
+        par.translate(-20,-20);
     }
 
     public void keyPressed(int key){

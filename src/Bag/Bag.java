@@ -22,7 +22,6 @@ public class Bag {
         bg = par.loadImage("image/bagBg.png");
     }
 
-
     public int getMineNum(int id){
         return minebag.getNum(id);
     }
@@ -62,9 +61,11 @@ public class Bag {
         par.image(bg, 0, 0, totalW, totalH);
         par.fill(255, 0, 0);
         int tabH = 40, tabW = 170;
-        par.rect(0,-tabH,tabW,tabH);
-        par.rect(tabW,-tabH,tabW,tabH);
+//        par.rect(0,-tabH,tabW,tabH);
+//        par.rect(tabW,-tabH,tabW,tabH);
         minebag.display();
+
+        par.translate(-256, -141);
     }
 
     public void keyPressed(int key){
