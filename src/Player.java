@@ -35,6 +35,14 @@ public class Player {
         bag = new Bag(this.par);
     }
 
+    public void displayMineBag(){
+        bag.displayMine();
+    }
+
+    public void displayToolBag(){
+        bag.displayTool();
+    }
+
     public void display(){
         int blocksize = Setting.BlockSize;
 
@@ -96,15 +104,19 @@ public class Player {
         else if(dir==3) my += 1;
         else if(dir==4) mx -= 1;
 
-        int result = map.Dig(mx, my, tool);
+        int toolid = bag.getToolActiveId();
+        if(bag.getToolUsage(toolid) <=0 ) toolid = 1;
+
+        int result = map.Dig(mx, my, Setting.ItemLevel[toolid]);
         if(bag.canAddMine(result)){
+            bag.delToolUsage( toolid );
             if(result==10){
-                //TODO: get ladder
+                bag.addToolUsage(Setting.ToLadderId, 1);
             }
             else{
                 bag.addMine( result );
             }
-            if(result!=0 && dir==3) {
+            if(result!=0 && dir==3) { // falling
                 while ( map.map[my-Setting.HeightSpaceNum][mx].isEmpty()){
                     move(3);
                     gx = (int)pos.x/Setting.BlockSize + 1;
@@ -135,10 +147,14 @@ public class Player {
         }
     }
 
-    void putItem(){
+    void putItem(){ // just ladder now
         int gx = (int)pos.x/Setting.BlockSize + 1 , gy = (int)pos.y/Setting.BlockSize + 1; // screen
         int mx = gx + map.stx, my = gy+map.sty; // map
-        map.putItem(mx, my, 0);
+
+        if(bag.getToolUsage(Setting.ToLadderId) > 0){
+            if( map.putItem(mx, my, 0) )
+                bag.delToolUsage(Setting.ToLadderId);
+        }
     }
 
 }

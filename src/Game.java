@@ -33,32 +33,48 @@ public class Game {
             case DIGGING:
                 map.display((int)player.pos.x, (int)player.pos.y);
                 player.display();
-                if(isBag==1) player.bag.display();
                 break;
-            case ShOPPING:
+
+            case BAGMINE:
+                map.display((int)player.pos.x, (int)player.pos.y);
+                player.display();
+                player.displayMineBag();
+                break;
+
+            case BAGTOOL:
+                map.display((int)player.pos.x, (int)player.pos.y);
+                player.display();
+                player.displayToolBag();
+                break;
+
+            case SHOPPING:
                 store.draw();
+                break;
         }
     }
 
     public void keyPressed(){
 
         switch (gameStatus){
-            case ShOPPING:
-//                store.keyPressed();
+            case SHOPPING:
                 if(par.key == 'o') gameStatus = GameStatus.DIGGING;
                 break;
-            case DIGGING:
-                if(isBag==1){
-                    if(par.key == 'b') isBag ^= 1;
-                    player.bag.keyPressed(par.keyCode);
-                    break;
-                }
-                else{
 
-                    if(par.key =='p') {
-                        gameStatus = GameStatus.ShOPPING;
-                       return;
-                    }
+            case BAGMINE:
+                if(par.key == 'b') gameStatus = GameStatus.DIGGING;
+                else player.bag.keyPressed(par.keyCode, 0);
+                break;
+
+            case BAGTOOL:
+                if(par.key == 't') gameStatus = GameStatus.DIGGING;
+                else player.bag.keyPressed(par.keyCode, 1);
+                break;
+
+            case DIGGING:
+                if(par.key == 'b')       gameStatus = GameStatus.BAGMINE;
+                else if(par.key == 't' ) gameStatus = GameStatus.BAGTOOL;
+                else if(par.key == 'p')  gameStatus = GameStatus.SHOPPING;
+                else{
                     int dir = 0;
                     if(par.keyCode==par.UP         || par.key=='w' || par.key=='W') dir = 1;
                     else if(par.keyCode==par.RIGHT || par.key=='d' || par.key=='D') dir = 2;
@@ -95,7 +111,7 @@ public class Game {
 
     public void mousePressed(){
         switch (gameStatus){
-            case ShOPPING:
+            case SHOPPING:
                 store.mousePressed();
                 break;
         }
@@ -104,7 +120,8 @@ public class Game {
 
 enum GameStatus {
     DIGGING,
-    ShOPPING,
-    BAGOPEN
+    SHOPPING,
+    BAGMINE,
+    BAGTOOL
 }
 

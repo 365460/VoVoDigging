@@ -10,16 +10,14 @@ import processing.core.PImage;
 public class Bag {
     PApplet par;
     BagMine minebag;
-    PImage bg;
-    int activeItem = 1;
-    int[] item;
+    BagTool toolbag;
 
     public Bag(PApplet par){
         this.par = par;
-        item = new int[Setting.ItemNum + 10];
-        minebag = new BagMine(par);
 
-        bg = par.loadImage("image/bagBg.png");
+        minebag = new BagMine(par);
+        toolbag = new BagTool(par);
+
     }
 
     public int getMineNum(int id){
@@ -43,33 +41,36 @@ public class Bag {
         return minebag.currentWeight + Setting.MineWeight[id] <= minebag.limitWeight;
     }
 
-    public int getItemNum(int id){
-        return item[id];
+    public int getToolActiveId(){
+        return toolbag.getActiveId();
+    }
+
+    public int getToolUsage(int id){
+        return toolbag.getUsage(id);
+    }
+
+    public void addToolUsage(int id,int v){
+        toolbag.addToolUsage(id, v);
+    }
+
+    public void delToolUsage(int id){
+        toolbag.delToolUsage(id);
+    }
+
+    public void displayTool(){
+        toolbag.display();
     }
 
     public void addItem(int id){
-        item[id]++;
+        toolbag.addItem(id);
     }
-
-    public void delItem(int id){
-        item[id]--;
-    }
-
-    public void display(){
-        par.translate(256,141);
-        int totalW = 300+20*2, totalH = 300+20*2;
-        par.image(bg, 0, 0, totalW, totalH);
-        par.fill(255, 0, 0);
-        int tabH = 40, tabW = 170;
-//        par.rect(0,-tabH,tabW,tabH);
-//        par.rect(tabW,-tabH,tabW,tabH);
+    public void displayMine(){
         minebag.display();
-
-        par.translate(-256, -141);
     }
 
-    public void keyPressed(int key){
-        minebag.keyPressed(key);
+    public void keyPressed(int key,int which){
+        if(which==0) minebag.keyPressed(key);
+        else toolbag.keyPressed(key);
     }
 
 }

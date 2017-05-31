@@ -52,16 +52,23 @@ public class Setting {
 
 
     /*              Item            */
-    public static int ItemNum =  4;
-    public static String[] ItemName = { "Ladder",  "" };
+    public static int ItemNum =  5;
+    public static String[] ItemName = {"", "hand", "IronTool", "GoldTool", "DimTool", "Ladder" };
+    public static int[] ItemUsageCount = { 0,   0,         30,         20,       30,       20 };
+    public static int[] ItemLevel =      { 0,   2,          4,          5,        5,  0 };
 
+   final public static int Nothing     = 0;
+   final public static int ToHandId    = 1;
+   final public static int ToIronId    = 2;
+   final public static int ToGoldId    = 3;
+   final public static int ToDiamondId = 4;
+   final public static int ToLadderId  = 5;
 
-    public static int Nothing   = 0;
-    public static int ToWoodId    = 1;
-    public static int ToCoalId    = 2;
-    public static int ToIronId    = 3;
-    public static int ToGoldId    = 4;
-    public static int ToDiamondId = 5;
-    public static int ToSoilId    = 6;
-    public static int ToLedderId = 7;
+            /* item-img */
+        final public static String  ToHandIcon    = "image/handTool.png";
+        final public static String  ToIronIcon    = "image/ironTool.png";
+        final public static String  ToGoldIcon    = "image/goldTool.png";
+        final public static String  ToDiamondIcon = "image/dimTool.png";
+        final public static String  ToLadder      = "image/ladder.png";
+        final public static String[] ToolImage = {"", ToHandIcon, ToIronIcon, ToGoldIcon, ToDiamondIcon, ToLadder};
 }

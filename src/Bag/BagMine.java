@@ -22,6 +22,7 @@ public class BagMine {
         this.par = par;
 
         mine = new int[Setting.MineNum + 10];
+        bg = par.loadImage("image/bagBg.png");
 
         mineIcon = new PImage[ Setting.MineNum+10 ];
         for(int i=1; i<Setting.MineNum; i++){
@@ -52,6 +53,12 @@ public class BagMine {
     }
 
     public void display(){
+        par.translate(256,141);
+        int totalW = 300+20*2, totalH = 300+20*2;
+        par.image(bg, 0, 0, totalW, totalH);
+        par.fill(255, 0, 0);
+
+
         par.translate(20, 20);
         int blockHeight = 140;
         int blockWidth = 100;
@@ -86,6 +93,8 @@ public class BagMine {
         }
         par.text(currentWeight+"/"+limitWeight, 0, 280, 300, 30);
         par.translate(-20,-20);
+
+        par.translate(-256, -141);
     }
 
     public void keyPressed(int key){
