@@ -28,7 +28,7 @@ public class Setting {
     public static int CoalLevel    = 3;
     public static int RockLevel    = 2;
     public static int GoldLevel    = 3;
-    public static int DiamondLevel = 3;
+    public static int DiamondLevel = 5;
     public static int WallLevel    = 100;
 
 

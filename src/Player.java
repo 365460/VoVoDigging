@@ -38,6 +38,14 @@ public class Player {
         bag.addItem(Setting.ToLadderId);
     }
 
+    public int getLight(){
+        return light;
+    }
+
+    public void setLight(int v){
+        light = v;
+    }
+
     public void displayMineBag(){
         bag.displayMine();
     }
@@ -124,23 +132,20 @@ public class Player {
                 }
                 pos.y -= Setting.BlockSize;
             }
-
-            /*  not always can get */
-            if(par.random(0, 1) >= 0.5) return;
-
             if(result==10){
                 bag.addToolUsage(Setting.ToLadderId, 1);
                 throw new Reminder(par, pos, "You got a Ladder");
             }
             else{
+                if(par.random(0, 1)>=0.5) return;
                 bag.addMine( result );
-                throw new Reminder(par, pos, "You got " + Setting.MineName[ result ]);
+                throw new Reminder(par, pos, "You got a " + Setting.MineName[ result ]);
             }
 
         }
         else{
             map.putMine(mx, my, result);
-            throw new Reminder(par, pos, "Bag is Full!");
+            throw new Reminder(par, pos, "Bag is full!");
         }
     }
 

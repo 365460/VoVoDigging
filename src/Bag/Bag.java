@@ -20,6 +20,14 @@ public class Bag {
 
     }
 
+    public void setMineLimit(int v){
+        minebag.setLimitWeight(v);
+    }
+
+    public int getMineLimit(){
+        return minebag.getLimitWeight();
+    }
+
     public int getMineNum(int id){
         return minebag.getNum(id);
     }

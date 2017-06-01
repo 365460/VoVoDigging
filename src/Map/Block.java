@@ -37,10 +37,10 @@ public class Block {
     public int dig(){ return 0;}
 
     public boolean canDig(int tool){
-        // TODO: compare with tools
-        System.out.println(tool + " " + level);
-        if(tool<level) return false;
+        if(status==BlockStatus.LADDER) return true;
         if(status==BlockStatus.EMPTY) return false;
+
+        if(tool<level) return false;
         if(level==100) return false;
         else return true;
     }

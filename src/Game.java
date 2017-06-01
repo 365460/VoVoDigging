@@ -4,6 +4,7 @@ import processing.core.PApplet;
 import Map.*;
 import Store.*;
 
+import java.util.EmptyStackException;
 import java.util.LinkedList;
 import java.util.Queue;
 
@@ -15,6 +16,7 @@ public class Game {
     Map map;
     Player player;
     Store store;
+    Loading loading;
 
     GameStatus gameStatus = GameStatus.LOADING;
 
@@ -35,22 +37,28 @@ public class Game {
         this.par = par;
         this.height = height;
         this.width = width;
+        loading = new Loading(par);
 
         Thread load = new Thread(new Runnable() {
             @Override
             public void run() {
-                loadMessage = "loading map....";
+                loading.setMessage("loading map....");
                 map    = new Map(par, 8, 0);
-                loadP = 30;
+                loading.setProgress(30);
 
-                loadMessage = "loading player....";
+                loading.setMessage("loading player....");
                 player = new Player(par, 3, 3, map);
-                loadP = 60;
+                loading.setProgress(60);
 
-                loadMessage = "loading store....";
+                loading.setMessage("loading store");
                 store  = new Store(par, par.height, width, player.bag);
-                loadP = 100;
+                loading.setProgress(100);
 
+                while(loading.isOk()==false){
+                    try{
+                        Thread.sleep(10);
+                    }catch (Exception e){}
+                }
                 gameStatus = GameStatus.DIGGING;
             }
         });
@@ -84,10 +92,7 @@ public class Game {
     public void draw(){
         switch (gameStatus){
             case LOADING:
-                par.textSize(40);
-                par.background(0);
-                par.text("LOADING.....(" + loadP + " %)", 50, 50);
-                par.text(loadMessage,  50, 100);
+                loading.display();
                 break;
 
             case DIGGING:

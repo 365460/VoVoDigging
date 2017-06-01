@@ -34,6 +34,10 @@ public class BagMine {
         return limitWeight;
     }
 
+    public void setLimitWeight(int v){
+        limitWeight = v;
+    }
+
     public int getNum(int id){
         return mine[id];
     }
