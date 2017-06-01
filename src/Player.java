@@ -8,6 +8,8 @@ import processing.core.PVector;
 import static java.lang.Math.max;
 import static java.lang.Math.min;
 
+import Reminder.*;
+
 /**
  * Created by Rober on 2017/5/5.
  */
@@ -24,7 +26,7 @@ public class Player {
     int vy = 4;
     boolean ismoving;
     int dir;
-    int tool = 100;
+    int light = 4;
 
     public Player(PApplet par, int x, int y, Map map){
         this.par = par;
@@ -33,6 +35,7 @@ public class Player {
         img = par.loadImage("image/p2.png");
 
         bag = new Bag(this.par);
+        bag.addItem(Setting.ToLadderId);
     }
 
     public void displayMineBag(){
@@ -59,11 +62,11 @@ public class Player {
             else if(pos.y-1>0) ny -= Setting.BlockSize;
         }
         else if(dir==2){ // right
-            if(gx==Setting.ScreenWidthNum-1 && map.stx+1+Setting.ScreenWidthNum<=Setting.BlockNumWidth) map.stx += 1;
+            if(gx==Setting.ScreenWidthNum-3 && map.stx+1+Setting.ScreenWidthNum<=Setting.BlockNumWidth) map.stx += 1;
             else if(gx+1<Setting.ScreenWidthNum) nx += Setting.BlockSize;
         }
         else if(dir==3){ // down
-            if(gy==Setting.ScreenHeightNum-1 && map.sty+1+Setting.ScreenHeightNum<=Setting.BlockNumHeight) map.sty += 1;
+            if(gy==Setting.ScreenHeightNum-3 && map.sty+1+Setting.ScreenHeightNum<=Setting.BlockNumHeight) map.sty += 1;
             else if(gy+1<=Setting.ScreenHeightNum) ny += Setting.BlockSize;
         }
         else if(dir==4){ // left
@@ -72,9 +75,6 @@ public class Player {
         }
         gx = nx/Setting.BlockSize + 1; gy = ny/Setting.BlockSize + 1; // screen
         mx = gx +map.stx; my = gy + map.sty;
-//        System.out.println("gx = " + gx + ",, gy = " + gy);
-//        System.out.println("mx = " + mx + ",, my = " + my);
-//        System.out.println("stx = " +map.stx + ", sty = " + map.sty + "\n");
 
         pos.x = nx;
         pos.y = ny;
@@ -96,7 +96,7 @@ public class Player {
         return result;
     }
 
-    void digBlock(int dir) {
+    void digBlock(int dir) throws Reminder{
         int gx = (int)pos.x/Setting.BlockSize + 1 , gy = (int)pos.y/Setting.BlockSize + 1; // screen
         int mx = gx + map.stx, my = gy+map.sty; // map
         if(dir==1) my -= 1;
@@ -108,14 +108,12 @@ public class Player {
         if(bag.getToolUsage(toolid) <=0 ) toolid = 1;
 
         int result = map.Dig(mx, my, Setting.ItemLevel[toolid]);
-        if(bag.canAddMine(result)){
+        if(result == 0){
+            throw new Reminder(par, pos, "your tool can't dig it");
+        }
+        else if(bag.canAddMine(result)){
+
             bag.delToolUsage( toolid );
-            if(result==10){
-                bag.addToolUsage(Setting.ToLadderId, 1);
-            }
-            else{
-                bag.addMine( result );
-            }
             if(result!=0 && dir==3) { // falling
                 while ( map.map[my-Setting.HeightSpaceNum][mx].isEmpty()){
                     move(3);
@@ -126,10 +124,23 @@ public class Player {
                 }
                 pos.y -= Setting.BlockSize;
             }
+
+            /*  not always can get */
+            if(par.random(0, 1) >= 0.5) return;
+
+            if(result==10){
+                bag.addToolUsage(Setting.ToLadderId, 1);
+                throw new Reminder(par, pos, "You got a Ladder");
+            }
+            else{
+                bag.addMine( result );
+                throw new Reminder(par, pos, "You got " + Setting.MineName[ result ]);
+            }
+
         }
         else{
-            System.out.println("放不進去喔QQ");
             map.putMine(mx, my, result);
+            throw new Reminder(par, pos, "Bag is Full!");
         }
     }
 
@@ -147,13 +158,16 @@ public class Player {
         }
     }
 
-    void putItem(){ // just ladder now
+    void putItem() throws Reminder{ // just ladder now
         int gx = (int)pos.x/Setting.BlockSize + 1 , gy = (int)pos.y/Setting.BlockSize + 1; // screen
         int mx = gx + map.stx, my = gy+map.sty; // map
 
         if(bag.getToolUsage(Setting.ToLadderId) > 0){
             if( map.putItem(mx, my, 0) )
                 bag.delToolUsage(Setting.ToLadderId);
+        }
+        else{
+            throw new Reminder(par, pos, "no ladder Q_Q");
         }
     }
 

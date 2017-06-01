@@ -57,13 +57,15 @@ public class Bag {
         toolbag.delToolUsage(id);
     }
 
+    public void addItem(int id){
+        toolbag.addItem(id);
+    }
+
+    /*      display  */
     public void displayTool(){
         toolbag.display();
     }
 
-    public void addItem(int id){
-        toolbag.addItem(id);
-    }
     public void displayMine(){
         minebag.display();
     }

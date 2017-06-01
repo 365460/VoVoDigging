@@ -1,11 +1,15 @@
 package Map;
 
+import Reminder.*;
 import Setting.Setting;
 import processing.core.PApplet;
 import processing.core.PConstants;
 import processing.core.PImage;
 
 import java.awt.*;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.Set;
 
 import static java.lang.Math.max;
@@ -47,25 +51,34 @@ public class Map {
         Block.imgLadder    = par.loadImage("image/ladder.png");
         imgbackground      = par.loadImage("image/background.jpg");
 
-        for(int i=1; i<=numH-1; i++){
-            for(int j=2; j<=numW-1; j++){
-                int id = (int)par.random(1, 6);
-                map[i][j] = BlockFactory.generate(par, id);
-//                if(id==1)  map[i][j] = new BlockCoal(this.par);
-//                else if(id>=2) map[i][j] = new BlockDiamond(this.par);
-//                else map[i][j] = new BlockRock(this.par);
+
+        try{
+            FileReader fr = new FileReader("map.data");
+            BufferedReader br = new BufferedReader(fr);
+            for(int i=1; i<=numH; i++){
+                System.out.println("i = " + i);
+                String tmp = br.readLine();
+                String tmpArray[] = tmp.split("\\s");
+                for(int j=1; j<=numW; j++){
+                    int id = Integer.parseInt(tmpArray[j-1]);
+                    map[i][j] = BlockFactory.generate(par, id);
+                    System.out.print(id + " ");
+                }
+                System.out.println("\n");
             }
+
+            fr.close();
+        }
+        catch(Exception e){
+
         }
 
-        for(int i=1; i<=numH; i++) map[i][1] = new BlockWall(par);
-        for(int i=1; i<=numW; i++) map[numH][i] = new BlockWall(par);
-        for(int i=1; i<=numH; i++) map[i][numW] = new BlockWall(par);
     }
 
-    public void display(int playerx,int playery){
+    public void display(int playerx,int playery,int light){
 
         int gx = playerx/Setting.BlockSize + 1, gy = playery/Setting.BlockSize + 1;
-        int r = 1;
+        int r = light;
         par.imageMode(PConstants.CORNER);
         par.background(0);
         // ground
@@ -112,10 +125,10 @@ public class Map {
     public int Dig(int x,int y,int tool){// 0 -> fail
          y -= Setting.HeightSpaceNum;
         if(OverBoard(x,y)) return 0;
-        if(!map[y][x].canDig(tool)) return 0;
+        if(!map[y][x].canDig(tool)){
+            return 0;
+        }
         else return map[y][x].dig();
-
-//        if(map[y][x].status!=BlockStatus.NORMAL) return 0;
 
     }
 
@@ -135,7 +148,6 @@ public class Map {
         y -= Setting.HeightSpaceNum;
         if(OverBoard(x,y)) return false;
 
-        System.out.println("put "+x + " " + y + " , id = " + id);
         if(map[y][x].status==BlockStatus.EMPTY){
             map[y][x] = BlockFactory.generate(par, id);
             return true;

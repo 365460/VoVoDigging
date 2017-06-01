@@ -5,8 +5,10 @@ package Setting;
  */
 public class Setting {
     /*              map             */
-    public static int BlockNumWidth = 40*5;
-    public static int BlockNumHeight= 41*4;
+    public static int BlockNumWidth = 50; // 200
+    public static int BlockNumHeight= 50+4; // 160
+//    public static int BlockNumWidth = 4000; // 200
+//    public static int BlockNumHeight= 4100; // 160
     public static int BlockSize = 60;
 
     public static int ScreenWidthNum = 14;
@@ -23,7 +25,7 @@ public class Setting {
 
     public static int SoilLevel    = 1;
     public static int WoodLevel    = 1;
-    public static int CoalLevel    = 2;
+    public static int CoalLevel    = 3;
     public static int RockLevel    = 2;
     public static int GoldLevel    = 3;
     public static int DiamondLevel = 3;
@@ -71,4 +73,8 @@ public class Setting {
         final public static String  ToDiamondIcon = "image/dimTool.png";
         final public static String  ToLadder      = "image/ladder.png";
         final public static String[] ToolImage = {"", ToHandIcon, ToIronIcon, ToGoldIcon, ToDiamondIcon, ToLadder};
+
+
+    /*    Reminder  */
+    public static String ReNoLadder = "you have not enough ladder.";
 }

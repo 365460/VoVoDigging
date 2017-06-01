@@ -38,6 +38,7 @@ public class Block {
 
     public boolean canDig(int tool){
         // TODO: compare with tools
+        System.out.println(tool + " " + level);
         if(tool<level) return false;
         if(status==BlockStatus.EMPTY) return false;
         if(level==100) return false;

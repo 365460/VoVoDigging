@@ -7,6 +7,11 @@ import processing.core.PApplet;
  */
 public class BlockFactory {
     public static Block generate(PApplet par,int  id){
+        if(id==0) {
+            Block b = new BlockDiamond(par);
+            b.dig();
+            return b;
+        }
         switch (id){
             case Setting.SoilId:
                 return new BlockSoil(par);

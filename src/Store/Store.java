@@ -135,8 +135,6 @@ public class Store {
         par.text("/ ",745,565);
         par.text(need[3][4],760,565);
 
-
-
         for (Items i:Item_arr) {
             i.display();
         }
