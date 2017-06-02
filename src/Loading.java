@@ -6,20 +6,53 @@ import processing.core.PImage;
  */
 public class Loading {
     PApplet par;
-    PImage img;
+    PImage img1, img2;
+    PImage bg, bG;
     String message;
     int progress = 0;
     boolean ok = false;
 
     public Loading (PApplet par){
         this.par = par;
+        img1 = par.loadImage("image/00.png");
+        img2 = par.loadImage("image/01.png");
+        bg   = par.loadImage("image/load2.png");
+        bG   = par.loadImage("image/loadBg.jpg");
     }
 
     public void display(){
+        par.fill(255);
         par.textSize(40);
         par.background(0);
-        par.text("LOADING.....(" + progress + " %)", 50, 50);
-        par.text(message,  50, 100);
+
+        int x = par.mouseX;
+        int y = par.mouseY;
+        par.image(bG, 0, 0, par.width, par.height);
+        par.image(bg, 187, 128, 500, 200);
+
+        par.textSize(20);
+        par.text("LOADING.....(" + progress + " %)", 569, 432);
+        par.text(message,  574, 461);
+
+        int px, py;
+        px = 158;
+        py = 320+50;
+
+        int now = 600*progress/100 + px - 20;
+        if(par.frameCount%10>=5 ) par.image(img1 ,now, py-50, 50,50 );
+        else par.image(img2,now, py-50,50,50 );
+
+//        par.stroke(255,0,0);
+        par.stroke(0, 12, 255);
+
+        par.strokeWeight(3);
+//        par.fill(255,155,127);
+        par.fill(111, 118, 247);
+
+        par.rect(px, py, 600, 30, 50, 50, 50, 50);
+//        par.fill(255, 0, 0);
+        par.fill(0, 12, 255);
+        par.rect(px+5, py+5, (600-10)*progress/100, 20, 50, 50, 50, 50);
 
         if(progress==100) ok = true;
     }
@@ -33,9 +66,9 @@ public class Loading {
             @Override
             public void run() {
                 try{
-                    while(progress<=v){
+                    while(progress<v){
                         progress += 1;
-                        Thread.sleep(100);
+                        Thread.sleep(20);
                     }
                 }catch (Exception e){
 

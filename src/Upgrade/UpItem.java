@@ -55,8 +55,8 @@ public class UpItem
         parent.noFill();
 
         parent.image(img1, position.x-20, position.y, width , height);
-        parent.image(img0, position.x+130, position.y+50, 250 ,60 );
-        parent.image(img2, position.x+400, position.y, width , height);
+        parent.image(img0, position.x+155, position.y+50, 250 ,60 );
+        parent.image(img2, position.x+410, position.y, width , height);
         parent.rect(position.x +580, position.y +70, 100, 90);
         parent.image(imgupgrade,position.x + 580, position.y + 70, 100, 90);
 
@@ -77,13 +77,7 @@ public class UpItem
         return false;
     }
 
-    public int getGetLevel() {
-        return level;
-    }
 
-    public void setLevel(int level) {
-        this.level = level;
-    }
 
 
 }

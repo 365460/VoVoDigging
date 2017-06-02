@@ -1,5 +1,7 @@
 //import com.sun.deploy.net.proxy.pac.PACFunctions;
 import Reminder.Reminder;
+import Setting.Setting;
+import Upgrade.Upgrade;
 import processing.core.PApplet;
 import Map.*;
 import Store.*;
@@ -16,6 +18,8 @@ public class Game {
     Map map;
     Player player;
     Store store;
+    Upgrade upgrade;
+
     Loading loading;
 
     GameStatus gameStatus = GameStatus.LOADING;
@@ -47,11 +51,15 @@ public class Game {
                 loading.setProgress(30);
 
                 loading.setMessage("loading player....");
-                player = new Player(par, 3, 3, map);
+                player = new Player(par, Setting.HeightSpaceNum-1,Setting.HeightSpaceNum-1, map);
                 loading.setProgress(60);
 
-                loading.setMessage("loading store");
+                loading.setMessage("loading store...");
                 store  = new Store(par, par.height, width, player.bag);
+                loading.setProgress(80);
+
+                loading.setMessage("loading Upgrade...");
+                upgrade = new Upgrade(par, par.height, width, player.bag);
                 loading.setProgress(100);
 
                 while(loading.isOk()==false){
@@ -96,24 +104,28 @@ public class Game {
                 break;
 
             case DIGGING:
-                map.display((int)player.pos.x, (int)player.pos.y, player.light);
+                map.display((int)player.pos.x, (int)player.pos.y, player.getLight());
                 player.display();
                 break;
 
             case BAGMINE:
-                map.display((int)player.pos.x, (int)player.pos.y, player.light);
+                map.display((int)player.pos.x, (int)player.pos.y, player.getLight());
                 player.display();
                 player.displayMineBag();
                 break;
 
             case BAGTOOL:
-                map.display((int)player.pos.x, (int)player.pos.y, player.light);
+                map.display((int)player.pos.x, (int)player.pos.y, player.getLight());
                 player.display();
                 player.displayToolBag();
                 break;
 
             case SHOPPING:
                 store.draw();
+                break;
+
+            case UPGRADE:
+                upgrade.draw();
                 break;
         }
 
@@ -123,6 +135,13 @@ public class Game {
     public void keyPressed(){
         try{
             switch (gameStatus){
+                case LOADING:
+                    break;
+
+                case UPGRADE:
+                    if(par.key == 'o') gameStatus = GameStatus.DIGGING;
+                    break;
+
                 case SHOPPING:
                     if(par.key == 'o') gameStatus = GameStatus.DIGGING;
                     break;
@@ -141,6 +160,7 @@ public class Game {
                     if(par.key == 'b')       gameStatus = GameStatus.BAGMINE;
                     else if(par.key == 't' ) gameStatus = GameStatus.BAGTOOL;
                     else if(par.key == 'p')  gameStatus = GameStatus.SHOPPING;
+                    else if(par.key == 'u')  gameStatus = GameStatus.UPGRADE;
                     else{
                         int dir = 0;
                         if(par.keyCode==par.UP         || par.key=='w' || par.key=='W') dir = 1;
@@ -171,18 +191,21 @@ public class Game {
 
     public void keyReleased(){
 
-        if(par.keyCode == par.SHIFT)
-            isShifting = false;
-
-        if(par.key == par.CODED){
-            player.ismoving = false;
-        }
+//        if(par.keyCode == par.SHIFT)
+//            isShifting = false;
+//
+//        if(par.key == par.CODED){
+//            player.ismoving = false;
+//        }
     }
 
     public void mousePressed(){
         switch (gameStatus){
             case SHOPPING:
                 store.mousePressed();
+                break;
+            case UPGRADE:
+                upgrade.mousePressed();
                 break;
         }
     }
@@ -192,6 +215,7 @@ enum GameStatus {
     LOADING,
     DIGGING,
     SHOPPING,
+    UPGRADE,
     BAGMINE,
     BAGTOOL
 }

@@ -26,24 +26,15 @@ public class Player {
     int vy = 4;
     boolean ismoving;
     int dir;
-    int light = 4;
 
     public Player(PApplet par, int x, int y, Map map){
         this.par = par;
         pos = new PVector( x*Setting.BlockSize, y*Setting.BlockSize);
         this.map = map;
-        img = par.loadImage("image/p2.png");
+        img = par.loadImage("image/p3.png");
 
         bag = new Bag(this.par);
         bag.addItem(Setting.ToLadderId);
-    }
-
-    public int getLight(){
-        return light;
-    }
-
-    public void setLight(int v){
-        light = v;
     }
 
     public void displayMineBag(){
@@ -56,10 +47,12 @@ public class Player {
 
     public void display(){
         int blocksize = Setting.BlockSize;
-
         par.image(img, pos.x, pos.y, blocksize, blocksize );
     }
 
+    public int getLight(){
+        return bag.getLight();
+    }
     public boolean move(int dir){
         int gx = (int)pos.x/Setting.BlockSize + 1, gy = (int) pos.y/Setting.BlockSize + 1; // screen
         int mx = gx + map.stx , my = gy+map.sty ; // map
@@ -84,6 +77,7 @@ public class Player {
         gx = nx/Setting.BlockSize + 1; gy = ny/Setting.BlockSize + 1; // screen
         mx = gx +map.stx; my = gy + map.sty;
 
+        map.extend(mx, my, bag.getLight());
         pos.x = nx;
         pos.y = ny;
         return true;
@@ -117,7 +111,7 @@ public class Player {
 
         int result = map.Dig(mx, my, Setting.ItemLevel[toolid]);
         if(result == 0){
-            throw new Reminder(par, pos, "your tool can't dig it");
+            throw new Reminder(par, pos, "You need update your tools");
         }
         else if(bag.canAddMine(result)){
 

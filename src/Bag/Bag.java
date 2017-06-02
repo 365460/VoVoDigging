@@ -11,13 +11,23 @@ public class Bag {
     PApplet par;
     BagMine minebag;
     BagTool toolbag;
+    int light;
 
     public Bag(PApplet par){
         this.par = par;
+        light = 1;
 
         minebag = new BagMine(par);
         toolbag = new BagTool(par);
 
+    }
+
+    public void setLight(int v){
+        light = v;
+    }
+
+    public int getLight(){
+        return light;
     }
 
     public void setMineLimit(int v){

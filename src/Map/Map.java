@@ -27,12 +27,14 @@ public class Map {
     int blockSize = Setting.BlockSize;
 
     public Block[][] map;
+    boolean shown[][];
     public Map(PApplet par, int stx, int sty){
         this.par = par;
         this.stx = stx;
         this.sty = sty;
 
         map = new Block[numH+10][numW+10];
+        shown = new boolean[numH+10][numW+10];
 
         System.out.println("numW = " + numW + ", numH = " + numH);
         System.out.println("width = " + par.width + ", height = " + par.height);
@@ -49,22 +51,24 @@ public class Map {
         Block.imgWall      = par.loadImage("image/wall.jpg");
         Block.imgEmpty     = par.loadImage("image/empty.jpg");
         Block.imgLadder    = par.loadImage("image/ladder.png");
-        imgbackground      = par.loadImage("image/background.jpg");
+        imgbackground      = par.loadImage("image/background2.jpg");
 
+        for(int i=1; i<=numH; i++){
+            for(int j=1; j<=numW; j++){
+                shown[i][j] = false;
+            }
+        }
 
         try{
             FileReader fr = new FileReader("map.data");
             BufferedReader br = new BufferedReader(fr);
             for(int i=1; i<=numH; i++){
-                System.out.println("i = " + i);
                 String tmp = br.readLine();
                 String tmpArray[] = tmp.split("\\s");
                 for(int j=1; j<=numW; j++){
                     int id = Integer.parseInt(tmpArray[j-1]);
                     map[i][j] = BlockFactory.generate(par, id);
-                    System.out.print(id + " ");
                 }
-                System.out.println("\n");
             }
 
             fr.close();
@@ -75,6 +79,15 @@ public class Map {
 
     }
 
+    public void extend(int x,int y,int r){
+        y -= Setting.HeightSpaceNum;
+        for(int i=-r; i<=r; i++){
+            for(int j=-r; j<=r; j++){
+                if(i+y<=0 || x+j<=0) continue;;
+                shown[i+y][j+x] = true;
+            }
+        }
+    }
     public void display(int playerx,int playery,int light){
 
         int gx = playerx/Setting.BlockSize + 1, gy = playery/Setting.BlockSize + 1;
@@ -83,15 +96,16 @@ public class Map {
         par.background(0);
         // ground
         if(sty<=Setting.HeightSpaceNum){
-            par.image(imgbackground, 0, -(sty)*Setting.BlockSize, Setting.GameWidth, (Setting.HeightSpaceNum)*Setting.BlockSize );
+            par.image(imgbackground, -(stx)*Setting.BlockSize, -(sty)*Setting.BlockSize, Setting.BlockNumWidth*Setting.BlockSize, (Setting.HeightSpaceNum)*Setting.BlockSize );
         }
         for(int i=1; i<=Setting.ScreenHeightNum; i++){
             for(int j=1; j<=Setting.ScreenWidthNum; j++){
 
                 if(sty+i>Setting.HeightSpaceNum) { // bottom
-                    if( ! ((i-r<=gy && gy<=i+r)&&(j-r<=gx && gx<=j+r)) ) continue;
+//                    if( ! ((i-r<=gy && gy<=i+r)&&(j-r<=gx && gx<=j+r)) ) continue;
                     int y =  sty+i-Setting.HeightSpaceNum;
                     int x = j + stx;
+                    if(shown[y][x]==false) continue;
                     map[y][x].display( (j-1)*blockSize, (i-1)*blockSize, blockSize, blockSize);
                 }
             }
