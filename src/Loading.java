@@ -8,6 +8,7 @@ public class Loading {
     PApplet par;
     PImage img1, img2;
     PImage bg, bG;
+    PImage flag[];
     String message;
     int progress = 0;
     boolean ok = false;
@@ -18,6 +19,12 @@ public class Loading {
         img2 = par.loadImage("image/01.png");
         bg   = par.loadImage("image/load2.png");
         bG   = par.loadImage("image/loadBg.jpg");
+
+        flag = new PImage[3];
+        for(int i=1; i<=3; i++){
+            flag[i-1] = par.loadImage("image/flag"+i+".png");
+
+        }
     }
 
     public void display(){
@@ -39,19 +46,24 @@ public class Loading {
         py = 320+50;
 
         int now = 600*progress/100 + px - 20;
-        if(par.frameCount%10>=5 ) par.image(img1 ,now, py-50, 50,50 );
+        if(par.frameCount%6>=3 ) par.image(img1 ,now, py-50, 50,50 );
         else par.image(img2,now, py-50,50,50 );
 
-//        par.stroke(255,0,0);
-        par.stroke(0, 12, 255);
+        int xx = 736, yy = 313;
+        if(par.frameCount%6<=1) par.image(flag[0], xx, yy, 50, 50);
+        else if(par.frameCount%6<=3) par.image(flag[1], xx, yy, 50, 50);
+        else par.image(flag[2], xx, yy, 50, 50);
+
+        par.stroke(255,0,0);
+//        par.stroke(0, 12, 255);
 
         par.strokeWeight(3);
-//        par.fill(255,155,127);
-        par.fill(111, 118, 247);
+        par.fill(255,155,127);
+//        par.fill(111, 118, 247);
 
         par.rect(px, py, 600, 30, 50, 50, 50, 50);
-//        par.fill(255, 0, 0);
-        par.fill(0, 12, 255);
+        par.fill(255, 0, 0);
+//        par.fill(0, 12, 255);
         par.rect(px+5, py+5, (600-10)*progress/100, 20, 50, 50, 50, 50);
 
         if(progress==100) ok = true;

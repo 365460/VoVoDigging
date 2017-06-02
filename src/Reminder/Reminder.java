@@ -12,6 +12,7 @@ public class Reminder extends Exception{
     String why;
     PApplet par;
     PVector pos = null;
+    int delay = 0;
 
     int x, y;
     public Reminder(PApplet par, int x,int y, String s){
@@ -29,6 +30,14 @@ public class Reminder extends Exception{
 
     public String why(){
         return why;
+    }
+
+    public int getDelay(){
+        return delay;
+    }
+
+    public void setDelay(int v){
+        delay = v;
     }
 
     public void display(){

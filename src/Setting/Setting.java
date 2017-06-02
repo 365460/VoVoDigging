@@ -77,4 +77,9 @@ public class Setting {
 
     /*    Reminder  */
     public static String ReNoLadder = "you have not enough ladder.";
+
+
+    /*  animation*/
+    public static int DiggingTime = 700;
+    public static int MovingTime  = 100;
 }

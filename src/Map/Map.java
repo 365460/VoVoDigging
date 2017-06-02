@@ -19,9 +19,9 @@ import static java.lang.Math.max;
  */
 public class Map {
     PApplet par;
-    PImage imgbackground;
+    PImage imgbackground, imgfog;
 
-    public int stx, sty;
+    public float stx, sty;
     public int numW = Setting.BlockNumWidth;
     public int numH = Setting.HeightMapNum;
     int blockSize = Setting.BlockSize;
@@ -51,7 +51,17 @@ public class Map {
         Block.imgWall      = par.loadImage("image/wall.jpg");
         Block.imgEmpty     = par.loadImage("image/empty.jpg");
         Block.imgLadder    = par.loadImage("image/ladder.png");
+
+        Block.imgdig       = new PImage[5];
+        for(int i=0; i<=4; i++)
+            Block.imgdig[i]= par.loadImage("image/dig" + i + ".png");
+
+        Block.imgflag = new PImage[3];
+        for(int i=1; i<=3; i++)
+            Block.imgflag[i-1] = par.loadImage("image/flag"+i+".png");
+
         imgbackground      = par.loadImage("image/background2.jpg");
+        imgfog = par.loadImage("image/fog.jpg");
 
         for(int i=1; i<=numH; i++){
             for(int j=1; j<=numW; j++){
@@ -88,6 +98,7 @@ public class Map {
             }
         }
     }
+
     public void display(int playerx,int playery,int light){
 
         int gx = playerx/Setting.BlockSize + 1, gy = playery/Setting.BlockSize + 1;
@@ -98,15 +109,22 @@ public class Map {
         if(sty<=Setting.HeightSpaceNum){
             par.image(imgbackground, -(stx)*Setting.BlockSize, -(sty)*Setting.BlockSize, Setting.BlockNumWidth*Setting.BlockSize, (Setting.HeightSpaceNum)*Setting.BlockSize );
         }
+
+        float dx = stx - (int)stx ;
+        float dy = sty - (int)sty;
+
+        int styy = dy==0? (int)sty:(int)sty+1;
+        int stxx = dx==0? (int)stx:(int)stx+1;
+
         for(int i=1; i<=Setting.ScreenHeightNum; i++){
             for(int j=1; j<=Setting.ScreenWidthNum; j++){
 
-                if(sty+i>Setting.HeightSpaceNum) { // bottom
+                if(styy+i>Setting.HeightSpaceNum) { // bottom
 //                    if( ! ((i-r<=gy && gy<=i+r)&&(j-r<=gx && gx<=j+r)) ) continue;
-                    int y =  sty+i-Setting.HeightSpaceNum;
-                    int x = j + stx;
-                    if(shown[y][x]==false) continue;
-                    map[y][x].display( (j-1)*blockSize, (i-1)*blockSize, blockSize, blockSize);
+                    int y =  (int)sty+i-Setting.HeightSpaceNum;
+                    int x =  j + (int)stx;
+                    if(shown[y][x]==false) par.image(imgfog, (j-1)*blockSize+dx*blockSize, (i-1)*blockSize+dy*blockSize, blockSize, blockSize);
+                    else map[y][x].display( (j-1)*blockSize+dx*blockSize, (i-1)*blockSize+dy*blockSize, blockSize, blockSize);
                 }
             }
         }
@@ -117,12 +135,10 @@ public class Map {
         if(y<=1 || y>=Setting.BlockNumHeight) return false;
 
         int mgy = y -Setting.HeightSpaceNum;
-        if(mgy==0){
-            return true;
-          //  if(map[mgy+1][x].status==BlockStatus.EMPTY) return false;
-            //else return true;
-        }
-        if(mgy<0) return false;
+        if(mgy==0) return true;
+        if(mgy<0)  return false;
+        if(map[mgy][x].status==BlockStatus.FIN) return true;
+
         if(map[mgy][x].status==BlockStatus.LADDER) return true;
         if(map[mgy+1][x].status == BlockStatus.EMPTY) return false;
         if(map[mgy][x].status==BlockStatus.NORMAL) return false;
@@ -136,9 +152,43 @@ public class Map {
         return false;
     }
 
-    public int Dig(int x,int y,int tool){// 0 -> fail
+    public boolean isEmpty(int x,int y){
+        y -= Setting.HeightSpaceNum;
+        if(OverBoard(x,y)) return true;
+
+        return map[y][x].isEmpty();
+    }
+
+    public boolean isVectory(int x,int y){
+        y -= Setting.HeightSpaceNum;
+        if(OverBoard(x, y)) return false;
+        return map[y][x].status == BlockStatus.FIN;
+    }
+
+    public boolean shouldFailing(int x,int y){
+        y -= Setting.HeightSpaceNum;
+
+        if(OverBoard(x, y)) return false;
+        if(map[y][x].status == BlockStatus.LADDER)
+            return false;
+        if(map[y+1][x].status == BlockStatus.EMPTY)
+            return true;
+
+        return false;
+    }
+
+    public boolean canDig(int x,int y){
+        y -= Setting.HeightSpaceNum;
+        if(OverBoard(x, y) ) return false;
+        else if(map[y][x].isDigging()) return false;
+        else if(map[y][x].isEmpty()) return false;
+        return true;
+    }
+
+    public int dig(int x,int y,int tool){// 0 -> fail
          y -= Setting.HeightSpaceNum;
         if(OverBoard(x,y)) return 0;
+
         if(!map[y][x].canDig(tool)){
             return 0;
         }

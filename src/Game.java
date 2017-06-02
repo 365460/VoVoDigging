@@ -80,6 +80,7 @@ public class Game {
                     if(Qre.size()>0){
                         nowReminder = Qre.poll();
                         try {
+                            Thread.sleep(nowReminder.getDelay());
                             isReminder = true;
                             Thread.sleep(1000);
                             isReminder = false;
@@ -127,6 +128,12 @@ public class Game {
             case UPGRADE:
                 upgrade.draw();
                 break;
+
+            case VICTORY:
+                par.background(0);
+                par.textSize(40);
+                par.text("Victory", 50, 50);
+                break;
         }
 
         if(isReminder) nowReminder.display();
@@ -168,14 +175,15 @@ public class Game {
                         else if(par.keyCode==par.DOWN  || par.key=='s' || par.key=='S') dir = 3;
                         else if(par.keyCode==par.LEFT  || par.key=='a' || par.key=='A') dir = 4;
 
+                        if(player.isIdle()==false) return; // so busy
+
                         if(par.key=='q') player.putItem();
                         else if(par.key == par.CODED){
-                            player.ismoving = true;
                             player.dir = dir;
-                            player.tryMove(dir);
+                            boolean win = player.tryMove(dir);
+                            if(win) gameStatus = GameStatus.VICTORY;
                         }
                         else if(dir!=0){
-                            System.out.println("dir = " + dir);
                             if(par.key>='A' && par.key<='Z') System.out.println("put " + dir);
                             if(par.key>='A' && par.key<='Z') player.putMine(dir);
                             else player.digBlock(dir);
@@ -190,13 +198,6 @@ public class Game {
     }
 
     public void keyReleased(){
-
-//        if(par.keyCode == par.SHIFT)
-//            isShifting = false;
-//
-//        if(par.key == par.CODED){
-//            player.ismoving = false;
-//        }
     }
 
     public void mousePressed(){
@@ -217,6 +218,7 @@ enum GameStatus {
     SHOPPING,
     UPGRADE,
     BAGMINE,
-    BAGTOOL
+    BAGTOOL,
+    VICTORY
 }
 

@@ -12,24 +12,17 @@ public class BlockCoal extends Block{
         level = Setting.CoalLevel;
     }
 
-    public void display(int x,int y,int w,int h){
-        if(status==BlockStatus.NORMAL){
-            par.image(imgCoal, x, y, w, h);
-        }
-        else
-            par.image(imgEmpty, x, y, w, h);
-
-        if(status==BlockStatus.LADDER){
-            par.image(imgLadder, x, y, w, h);
-        }
+    void showNormal(float x,float y,float w,float h){
+        par.image(imgCoal, x, y, w, h);
     }
+
 
     public int dig(){
         int result;
         if(status==BlockStatus.LADDER) result = 10;
         else result = Setting.CoalId;
 
-        status = BlockStatus.EMPTY;
+        gotoDie();
         return result;
     }
 }

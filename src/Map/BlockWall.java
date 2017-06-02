@@ -15,7 +15,12 @@ public class BlockWall extends Block{
         level = Setting.WallLevel;
     }
 
+    void showNormal(float x,float y,float w,float h){
+        par.image(imgWall, x, y, w, h);
+    }
+
     public void display(int x,int y,int w,int h){
+        System.out.println("wall shown");
         if(status==BlockStatus.NORMAL)
             par.image(imgWall, x, y, w, h);
         else

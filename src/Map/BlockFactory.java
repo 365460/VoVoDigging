@@ -12,6 +12,11 @@ public class BlockFactory {
             b.dig();
             return b;
         }
+        else if(id==8){
+            Block b = new BlockDiamond(par);
+            b.status = BlockStatus.FIN;
+            return b;
+        }
         switch (id){
             case Setting.SoilId:
                 return new BlockSoil(par);

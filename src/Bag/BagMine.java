@@ -15,7 +15,7 @@ public class BagMine {
 
     int activeId = 1;
     int[] mine;
-    int limitWeight = 6000;
+    int limitWeight = 60;
     int currentWeight = 0;
 
     public BagMine(PApplet par){
