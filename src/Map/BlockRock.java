@@ -10,6 +10,7 @@ public class BlockRock extends Block{
 
     public BlockRock(PApplet par){
         this.par = par;
+        this.id  = Setting.IronId;
         level = Setting.RockLevel;
     }
 

@@ -10,6 +10,7 @@ public class BlockDiamond extends Block{
 
     public BlockDiamond(PApplet par){
         this.par = par;
+        this.id  = Setting.DiamondId;
         level = Setting.DiamondLevel;
     }
 

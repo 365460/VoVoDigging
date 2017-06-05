@@ -2,9 +2,7 @@ package Map;
 
 import Reminder.*;
 import Setting.Setting;
-import processing.core.PApplet;
-import processing.core.PConstants;
-import processing.core.PImage;
+import processing.core.*;
 
 import java.awt.*;
 import java.io.BufferedReader;
@@ -19,12 +17,12 @@ import static java.lang.Math.max;
  */
 public class Map {
     PApplet par;
-    PImage imgbackground, imgfog;
+    PImage imgbackground, imgfog, imgshop, imgboard, imgboardtop, imgupgrade, imgIn;
 
     public float stx, sty;
     public int numW = Setting.BlockNumWidth;
     public int numH = Setting.HeightMapNum;
-    int blockSize = Setting.BlockSize;
+    int unit = Setting.BlockSize;
 
     public Block[][] map;
     boolean shown[][];
@@ -42,13 +40,14 @@ public class Map {
 
         // init Block image
         Block.imgSoil      = par.loadImage("image/soil.jpg");
-        Block.imgRock      = par.loadImage("image/rock.jpg");
-        Block.imgCoal      = par.loadImage("image/coal.jpg");
-        Block.imgGold      = par.loadImage("image/gold.png");
-        Block.imgWood      = par.loadImage("image/wood.jpg");
+        Block.imgRock      = par.loadImage("image/IronMap.png");
+        Block.imgCoal      = par.loadImage("image/coalMap.png");
+        Block.imgGold      = par.loadImage("image/goldMap.png");
+        Block.imgWood      = par.loadImage("image/woodMap.png");
+//        Block.imgWood      = par.loadImage("image/wood.jpg");
         Block.imgDiamond   = par.loadImage("image/dim.png");
 
-        Block.imgWall      = par.loadImage("image/wall.jpg");
+        Block.imgWall      = par.loadImage("image/wallMap.png");
         Block.imgEmpty     = par.loadImage("image/empty.jpg");
         Block.imgLadder    = par.loadImage("image/ladder.png");
 
@@ -60,8 +59,13 @@ public class Map {
         for(int i=1; i<=3; i++)
             Block.imgflag[i-1] = par.loadImage("image/flag"+i+".png");
 
-        imgbackground      = par.loadImage("image/background2.jpg");
-        imgfog = par.loadImage("image/fog.jpg");
+        imgbackground      = par.loadImage("image/background6.png");
+        imgfog             = par.loadImage("image/fog.jpg");
+        imgshop            = par.loadImage("image/shop.png");
+        imgboard           = par.loadImage("image/board.png");
+        imgboardtop        = par.loadImage("image/boardtop.png");
+        imgupgrade         = par.loadImage("image/upgrade.png");
+        imgIn              = par.loadImage("image/in.png");
 
         for(int i=1; i<=numH; i++){
             for(int j=1; j<=numW; j++){
@@ -99,16 +103,30 @@ public class Map {
         }
     }
 
-    public void display(int playerx,int playery,int light){
+    public boolean atShop(PVector pos){
+        float x = pos.x + stx*unit;
+        if(pos.y + sty*unit!= 180) return false;
+        if(x>=Setting.PosShop && x<Setting.PosShop+unit*Setting.buildWidthNum)
+            return true;
+        else return false;
+    }
 
-        int gx = playerx/Setting.BlockSize + 1, gy = playery/Setting.BlockSize + 1;
-        int r = light;
-        par.imageMode(PConstants.CORNER);
+    public boolean atUpgrade(PVector pos){
+        float x = pos.x + stx*unit;
+        if(pos.y + sty*unit!= 180) return false;
+        if(x>=Setting.PosUpgrade && x<Setting.PosUpgrade+unit*Setting.buildWidthNum)
+            return true;
+        else return false;
+    }
+
+    public void display(int playerx,int playery,int light,PVector pos){
+
+        int gx = playerx/unit + 1, gy = playery/unit + 1;
         par.background(0);
+
+
         // ground
-        if(sty<=Setting.HeightSpaceNum){
-            par.image(imgbackground, -(stx)*Setting.BlockSize, -(sty)*Setting.BlockSize, Setting.BlockNumWidth*Setting.BlockSize, (Setting.HeightSpaceNum)*Setting.BlockSize );
-        }
+
 
         float dx = stx - (int)stx ;
         float dy = sty - (int)sty;
@@ -123,11 +141,67 @@ public class Map {
 //                    if( ! ((i-r<=gy && gy<=i+r)&&(j-r<=gx && gx<=j+r)) ) continue;
                     int y =  (int)sty+i-Setting.HeightSpaceNum;
                     int x =  j + (int)stx;
-                    if(shown[y][x]==false) par.image(imgfog, (j-1)*blockSize+dx*blockSize, (i-1)*blockSize+dy*blockSize, blockSize, blockSize);
-                    else map[y][x].display( (j-1)*blockSize+dx*blockSize, (i-1)*blockSize+dy*blockSize, blockSize, blockSize);
+
+                    /*  easy mode */
+//                    if(shown[y][x]==false) par.image(imgfog, (j-1)*unit+dx*unit, (i-1)*unit+dy*unit, unit, unit);
+//                    else map[y][x].display( (j-1)*unit+dx*unit, (i-1)*unit+dy*unit, unit, unit);
+                    /* difficult mode */
+
+                    map[y][x].display( (j-1)*unit+dx*unit, (i-1)*unit+dy*unit, unit, unit);
                 }
             }
         }
+
+
+        /* difficult mode */
+
+        int r = (4+light )* Setting.BlockNumWidth;
+        PGraphics mask = par.createGraphics(par.width, par.height);
+        mask.beginDraw();
+
+        mask.background(0,0,0);
+        mask.fill(255,255,255);
+        mask.ellipse(pos.x+unit/2, pos.y+unit/2, r, r);
+        mask.endDraw();
+        par.blend(mask, 0, 0, par.width, par.height, 0 ,0, par.width, par.height,  PConstants.DARKEST);
+
+
+        par.imageMode(PConstants.CORNER);
+        if(sty<=Setting.HeightSpaceNum){
+            par.image(imgbackground, -(stx)*unit, -(sty)*unit, Setting.BlockNumWidth*unit, (Setting.HeightSpaceNum)*unit );
+
+
+            for(int i=0; i<Setting.ScreenWidthNum; i++){
+                par.image(imgboard, i*unit, (4-sty)*unit - Setting.BlockNumWidth/2, unit, unit/4);
+                par.image(imgboardtop, i*unit, (4-sty)*unit - Setting.BlockNumWidth/4, unit, unit/4);
+            }
+/**/
+            par.translate( -stx*unit, -sty*unit);
+
+            par.imageMode(par.CORNER);
+            par.image(imgshop, Setting.PosShop, 2*unit+5, unit*Setting.buildWidthNum, unit*Setting.buildWidthNum-15);
+            par.image(imgupgrade, Setting.PosUpgrade, 2*unit+5, unit*Setting.buildWidthNum, unit*Setting.buildWidthNum-15);
+
+            if(atShop(pos)){
+                int h = unit-10;
+                if(par.frameCount%9<=2) h += 10;
+                else if(par.frameCount%9<=5) h += 6;
+                else  h += 0;
+                par.image(imgIn, Setting.PosShop+unit/2, h, unit, unit);
+            }
+            if(atUpgrade(pos)){
+                int h = unit-10;
+                if(par.frameCount%9<=2) h += 10;
+                else if(par.frameCount%9<=5) h += 6;
+                else  h += 0;
+                par.image(imgIn, Setting.PosUpgrade+unit/2, h, unit, unit);
+            }
+
+            par.translate( stx*unit, sty*unit);
+
+            /**/
+        }
+
     }
 
     public boolean canMove(int x,int y){
@@ -189,11 +263,12 @@ public class Map {
          y -= Setting.HeightSpaceNum;
         if(OverBoard(x,y)) return 0;
 
-        if(!map[y][x].canDig(tool)){
-            return 0;
-        }
-        else return map[y][x].dig();
+        if(!map[y][x].canDig(tool)) return 0;
 
+        else{
+            System.out.println("dig " + x + " " + y);
+            return map[y][x].dig();
+        }
     }
 
     public boolean putItem(int x,int y,int id){ // just ladder
@@ -208,15 +283,42 @@ public class Map {
         }
     }
 
+    public void delPutMine(int x, int y, int id,int time){
+        Thread thread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try{
+                    System.out.println("start delay");
+                    Thread.sleep(time + 10);
+                    putMine(x, y, id);
+                    System.out.println("put");
+                }
+                catch(Exception e){
+                }
+            }
+        });
+        thread.start();
+    }
+
     public boolean putMine(int x,int y,int id){
+
         y -= Setting.HeightSpaceNum;
         if(OverBoard(x,y)) return false;
 
+        System.out.println("put "+x+" " + y);
+        System.out.println("ss = " + map[y][x].status);
         if(map[y][x].status==BlockStatus.EMPTY){
             map[y][x] = BlockFactory.generate(par, id);
             return true;
         }
         else return false;
+    }
+
+    public int getBlockId(int x,int y){
+        y -= Setting.HeightSpaceNum;
+        if(OverBoard(x, y)) return 0;
+
+        return map[y][x].getId();
     }
 }
 

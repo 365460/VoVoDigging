@@ -11,6 +11,8 @@ public class BlockSoil extends Block{
 
     public BlockSoil(PApplet par){
         this.par = par;
+        this.id  = Setting.SoilId;
+        this.level = Setting.SoilLevel;
     }
 
     void showNormal(float x,float y,float w,float h){

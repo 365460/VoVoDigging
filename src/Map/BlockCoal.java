@@ -9,6 +9,7 @@ import processing.core.PApplet;
 public class BlockCoal extends Block{
     public BlockCoal(PApplet par){
         this.par = par;
+        this.id  = Setting.CoalId;
         level = Setting.CoalLevel;
     }
 

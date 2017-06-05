@@ -19,6 +19,7 @@ public class Game {
     Player player;
     Store store;
     Upgrade upgrade;
+    Log log;
 
     Loading loading;
 
@@ -38,20 +39,21 @@ public class Game {
     String loadMessage;
 
     public Game(PApplet par, int height, int width){
-        this.par = par;
+        this.par    = par;
         this.height = height;
-        this.width = width;
-        loading = new Loading(par);
+        this.width  = width;
+        loading     = new Loading(par);
 
         Thread load = new Thread(new Runnable() {
             @Override
             public void run() {
                 loading.setMessage("loading map....");
-                map    = new Map(par, 8, 0);
+                log         = new Log(par);
+                map    = new Map(par, 10, 0);
                 loading.setProgress(30);
 
                 loading.setMessage("loading player....");
-                player = new Player(par, Setting.HeightSpaceNum-1,Setting.HeightSpaceNum-1, map);
+                player = new Player(par, 6,Setting.HeightSpaceNum-1, map, log);
                 loading.setProgress(60);
 
                 loading.setMessage("loading store...");
@@ -105,18 +107,18 @@ public class Game {
                 break;
 
             case DIGGING:
-                map.display((int)player.pos.x, (int)player.pos.y, player.getLight());
+                map.display((int)player.pos.x, (int)player.pos.y, player.getLight(), player.pos);
                 player.display();
                 break;
 
             case BAGMINE:
-                map.display((int)player.pos.x, (int)player.pos.y, player.getLight());
+                map.display((int)player.pos.x, (int)player.pos.y, player.getLight(), player.pos);
                 player.display();
                 player.displayMineBag();
                 break;
 
             case BAGTOOL:
-                map.display((int)player.pos.x, (int)player.pos.y, player.getLight());
+                map.display((int)player.pos.x, (int)player.pos.y, player.getLight(), player.pos);
                 player.display();
                 player.displayToolBag();
                 break;
@@ -131,11 +133,12 @@ public class Game {
 
             case VICTORY:
                 par.background(0);
+                par.textAlign(par.LEFT);
                 par.textSize(40);
                 par.text("Victory", 50, 50);
+                log.display();
                 break;
         }
-
         if(isReminder) nowReminder.display();
     }
 
@@ -166,8 +169,8 @@ public class Game {
                 case DIGGING:
                     if(par.key == 'b')       gameStatus = GameStatus.BAGMINE;
                     else if(par.key == 't' ) gameStatus = GameStatus.BAGTOOL;
-                    else if(par.key == 'p')  gameStatus = GameStatus.SHOPPING;
-                    else if(par.key == 'u')  gameStatus = GameStatus.UPGRADE;
+//                    else if(par.key == 'p')  gameStatus = GameStatus.SHOPPING;
+//                    else if(par.key == 'u')  gameStatus = GameStatus.UPGRADE;
                     else{
                         int dir = 0;
                         if(par.keyCode==par.UP         || par.key=='w' || par.key=='W') dir = 1;
@@ -179,9 +182,14 @@ public class Game {
 
                         if(par.key=='q') player.putItem();
                         else if(par.key == par.CODED){
-                            player.dir = dir;
-                            boolean win = player.tryMove(dir);
-                            if(win) gameStatus = GameStatus.VICTORY;
+
+                            if(dir==1 && map.atShop(player.pos)) gameStatus = GameStatus.SHOPPING;
+                            else if(dir==1 && map.atUpgrade(player.pos)) gameStatus = GameStatus.UPGRADE;
+                            else{
+                                player.dir = dir;
+                                boolean win = player.tryMove(dir);
+                                if(win) gameStatus = GameStatus.VICTORY;
+                            }
                         }
                         else if(dir!=0){
                             if(par.key>='A' && par.key<='Z') System.out.println("put " + dir);
@@ -201,13 +209,20 @@ public class Game {
     }
 
     public void mousePressed(){
-        switch (gameStatus){
-            case SHOPPING:
-                store.mousePressed();
-                break;
-            case UPGRADE:
-                upgrade.mousePressed();
-                break;
+        try{
+            switch (gameStatus){
+                case SHOPPING:
+                    store.mousePressed();
+                    break;
+                case UPGRADE:
+                    upgrade.mousePressed();
+                    break;
+            }
+        }
+        catch(Reminder re){
+            if(Qre.size()<2){
+                Qre.offer(re);
+            }
         }
     }
 }

@@ -12,9 +12,14 @@ public class Reminder extends Exception{
     String why;
     PApplet par;
     PVector pos = null;
+    ReminderMode mode = ReminderMode.NORMAL;
     int delay = 0;
 
     int x, y;
+    public Reminder(){
+
+    }
+
     public Reminder(PApplet par, int x,int y, String s){
         why = s;
         this.par = par;
@@ -26,6 +31,12 @@ public class Reminder extends Exception{
         this.par = par;
         this.pos = pos;
         this.why = s;
+    }
+
+    public Reminder(PApplet par, String s){
+        why = s;
+        this.par = par;
+        this.mode = ReminderMode.BROADCAST;
     }
 
     public String why(){
@@ -41,12 +52,26 @@ public class Reminder extends Exception{
     }
 
     public void display(){
-        par.fill(255);
-        par.textSize(20);
-        if(pos!=null){
-            par.text( why, pos.x, pos.y);
+
+        switch (mode){
+            case NORMAL:
+                par.fill(255);
+                par.textSize(20);
+                if(pos!=null){
+                    par.text( why, pos.x, pos.y);
+                }
+                else
+                    par.text( why, x, y);
+                break;
+            case BROADCAST:
+                par.textAlign(par.CENTER);
+                par.fill(255, 0, 0);
+                par.text(why,par.width/2, 50);
+                break;
         }
-        else
-            par.text( why, x, y);
     }
+}
+enum ReminderMode{
+       NORMAL,
+    BROADCAST
 }

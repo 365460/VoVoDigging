@@ -8,7 +8,7 @@ import processing.core.PImage;
  * Created by Rober on 2017/5/5.
  */
 public class Block {
-    int level;
+    int level, id;
     public BlockStatus status = BlockStatus.NORMAL;
     PApplet par;
 
@@ -68,14 +68,23 @@ public class Block {
             par.image(imgdig[digid], x, y, w, h);
     }
 
-    public int dig(){ return 0;}
+    public int dig(){
+        return 0;
+    }
+
+
+    public int getId(){
+        if(status==BlockStatus.LADDER) return 0;
+        return id;
+    }
 
     public boolean canDig(int tool){
-        if(status==BlockStatus.LADDER)return true;
-
-        if(tool<level) return false;
-        if(level==100) return false;
-        else return true;
+        return true;
+//        if(status==BlockStatus.LADDER)return true;
+//
+//        if(tool<level) return false;
+//        if(level==100) return false;
+//        else return true;
     }
 
 

@@ -2,6 +2,7 @@
  * Created by chichen on 2017/5/18.
  */
 package Store;
+import Reminder.Reminder;
 import Store.Items;
 import processing.core.PApplet;
 import processing.core.PImage;
@@ -79,6 +80,7 @@ public class Store {
     public void draw(){
 
         par.image(storebk,0,0,width,height);
+        par.textAlign(par.LEFT, par.DOWN);
 
         par.textSize(30);
         par.translate(0, -20);
@@ -143,9 +145,7 @@ public class Store {
 
     }
     // @Override
-    public void mousePressed() {
-        par.println("mouse pressed");
-        //TODO iterate through
+    public void mousePressed()throws Reminder {
 
         for (int i = 0; i < toolnum; i++) {
             if (Item_arr.get(i).checkMouseClicked()) {
@@ -154,6 +154,9 @@ public class Store {
                         bag.addItem(Setting.ToLadderId);
                         for(int k=0;k<need[0][0];k++)
                             bag.delMine(Setting.WoodId);
+                    }
+                    else{
+                       throw new Reminder(par, "You need more resources QQ");
                     }
                 }
                 else if(i==1) {
@@ -164,6 +167,9 @@ public class Store {
                         for(int k=0;k<need[1][2];k++)
                             bag.delMine(Setting.IronId);
                     }
+                    else{
+                        throw new Reminder(par, "You need more resources QQ");
+                    }
                 }
                 else if(i==2) {
                     if(need[2][0]<=bag.getMineNum(Setting.WoodId)&&need[2][3]<=bag.getMineNum(Setting.GoldId)) {
@@ -172,7 +178,9 @@ public class Store {
                             bag.delMine(Setting.WoodId);
                         for(int k=0;k<need[2][3];k++)
                             bag.delMine(Setting.GoldId);
-
+                    }
+                    else{
+                        throw new Reminder(par, "You need more resources QQ");
                     }
                 }
                 else if(i==3) {
@@ -182,6 +190,9 @@ public class Store {
                             bag.delMine(Setting.WoodId);
                         for(int k=0;k<need[3][4];k++)
                             bag.delMine(Setting.DiamondId);
+                    }
+                    else{
+                        throw new Reminder(par, "You need more resources QQ");
                     }
                 }
                 break;

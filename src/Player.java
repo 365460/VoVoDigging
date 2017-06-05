@@ -21,6 +21,7 @@ public class Player {
 
     Map map;
     Bag bag;
+    Log log;
 
     int vx = 4;
     int vy = 4;
@@ -28,10 +29,12 @@ public class Player {
     boolean isDigging = false;
     int dir;
 
-    public Player(PApplet par, int x, int y, Map map){
+    public Player(PApplet par, int x, int y, Map map, Log log ){
         this.par = par;
-        pos = new PVector( x*Setting.BlockSize, y*Setting.BlockSize);
         this.map = map;
+        this.log = log;
+
+        pos = new PVector( x*Setting.BlockSize, y*Setting.BlockSize);
         img = par.loadImage("image/p3.png");
 
         bag = new Bag(this.par);
@@ -246,38 +249,41 @@ public class Player {
 
         if(map.canDig(mx, my)==false) return;
 
+        if(bag.canAddMine( map.getBlockId(mx, my)) ==false){
+            Reminder re = new Reminder(par, pos, "Bag is full!");
+            throw re;
+        }
+
+        startDiggging();
         int result = map.dig(mx, my, Setting.ItemLevel[toolId]);
         if(result == 0){
             throw new Reminder(par, pos, "You need update your tools");
         }
-        else if(bag.canAddMine(result)){
-
-            startDiggging();
+        else{
             bag.delToolUsage( toolId );
             if(result!=0 && dir==3) { // falling
                 if(my==5) delayToMove(Setting.DiggingTime, 3);
             }
             if(result==10){
+
+    /*player get ladder*/
+                log.AddgetItem( Setting.ToLadderId );
+
                 bag.addToolUsage(Setting.ToLadderId, 1);
                 Reminder re = new Reminder(par, pos, "You got a Ladder");
                 re.setDelay(1000);
                 throw re;
             }
             else{
-                if(par.random(0, 1)>=0.5) return;
+                if(par.random(0, 1)<0) return;
+    /*player get mine*/
+                log.AddgetMine( result );
 
                 bag.addMine( result );
                 Reminder re = new Reminder(par, pos, "You got a " + Setting.MineName[ result ]);
                 re.setDelay(1000);
                 throw re;
             }
-
-        }
-        else{
-            map.putMine(mx, my, result);
-            Reminder re = new Reminder(par, pos, "Bag is full!");
-            re.setDelay(Setting.DiggingTime);
-            throw re;
         }
     }
 

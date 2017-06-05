@@ -1,6 +1,7 @@
 package Upgrade;
 
 import Bag.Bag;
+import Reminder.Reminder;
 import Setting.Setting;
 import processing.core.PApplet;
 import processing.core.PImage;
@@ -25,6 +26,7 @@ public class Upgrade {
     int need[][]= new int[2][5];
     int u1_le=0,u0_le=3;
     int inibagweight=60;
+
     public Upgrade (PApplet par, int height, int width, Bag bag){
         this.par = par;
         this.height = height;
@@ -32,6 +34,7 @@ public class Upgrade {
         this.bag = bag;
         setup();
     }
+
     public void setup(){
         inibagweight=bag.getMineLimit();
         for(int i=0;i<5;i++) {
@@ -68,7 +71,10 @@ public class Upgrade {
         System.out.println(bag.getMineLimit());
         u1_le=(bag.getMineLimit()-inibagweight)/8;
     }
+
     public void draw() {
+        par.textAlign(par.LEFT, par.DOWN);
+
         par.image(upgradebk,0,0,width,height);
         //u0
         par.fill(255,255,255,125);
@@ -107,8 +113,7 @@ public class Upgrade {
         par.text(need[1][u1_le],480,550);
 
     }
-    public void mousePressed() {
-        par.println("mouse pressed");
+    public void mousePressed()throws Reminder {
         //TODO iterate through
 
         for (int i = 0; i < upnum; i++) {
@@ -119,12 +124,14 @@ public class Upgrade {
                             bag.delMine(Setting.CoalId);
                         }
                         u0_le=u0_le+1;
-                        //TODO
-//                         bag.setLightLimit(u0_le);
-                         bag.setLight(u0_le);
+                        bag.setLight(u0_le);
+                    }
+                    else{
+                        Reminder re = new Reminder(par, "You need more resources. QQ");
+                        throw re;
                     }
                 }
-                else if(i==2) {
+                else if(i==1) {
                     if ((need[1][u1_le]-2) <= bag.getMineNum(Setting.GoldId)) {
                         if(need[1][u1_le] <= bag.getMineNum(Setting.DiamondId)) {
                             for (int j = 0; j < (need[1][u1_le] - 2); j++) {
@@ -136,7 +143,10 @@ public class Upgrade {
                             u1_le = u1_le+1;
                             bag.setMineLimit(need[1][u1_le]*4+(need[1][u1_le]-2)*3+20);
                         }
-
+                    }
+                    else{
+                        Reminder re = new Reminder(par, "You need more resources. QQ");
+                        throw re;
                     }
                 }
                 break;

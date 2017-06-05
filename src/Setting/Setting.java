@@ -7,8 +7,6 @@ public class Setting {
     /*              map             */
     public static int BlockNumWidth = 50; // 200
     public static int BlockNumHeight= 50+4; // 160
-//    public static int BlockNumWidth = 4000; // 200
-//    public static int BlockNumHeight= 4100; // 160
     public static int BlockSize = 60;
 
     public static int ScreenWidthNum = 14;
@@ -19,6 +17,10 @@ public class Setting {
     public static int WidthMapNum = BlockNumWidth;
     public static int GameWidth = ScreenWidthNum*BlockSize;
     public static int GameHeight = ScreenHeightNum*BlockSize;
+
+    public static int PosShop = 450+ 300;
+    public static int PosUpgrade = 900 + 300;
+    public static int buildWidthNum = 2;
 
     /*              block            */
     public static int TypeNum = 3;
@@ -52,7 +54,6 @@ public class Setting {
         final public static String DiamonIcon = "image/dim.png";
         final public static String[] MIneImage = {"", SolidIcon, WoodIcon, CoalIcon, IronIcon, GoldIcon, DiamonIcon};
 
-
     /*              Item            */
     public static int ItemNum =  5;
     public static String[] ItemName = {"", "hand", "IronTool", "GoldTool", "DimTool", "Ladder" };
@@ -74,10 +75,8 @@ public class Setting {
         final public static String  ToLadder      = "image/ladder.png";
         final public static String[] ToolImage = {"", ToHandIcon, ToIronIcon, ToGoldIcon, ToDiamondIcon, ToLadder};
 
-
     /*    Reminder  */
     public static String ReNoLadder = "you have not enough ladder.";
-
 
     /*  animation*/
     public static int DiggingTime = 700;

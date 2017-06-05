@@ -9,6 +9,7 @@ import Setting.*;
 public class BlockGold extends Block{
     public BlockGold(PApplet par){
         this.par = par;
+        this.id  = Setting.GoldId;
         level = Setting.GoldLevel;
     }
 

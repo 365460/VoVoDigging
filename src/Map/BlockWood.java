@@ -9,6 +9,7 @@ import processing.core.PApplet;
 public class BlockWood extends Block{
     public BlockWood(PApplet par){
         this.par = par;
+        this.id  = Setting.WoodId;
         level = Setting.WoodLevel;
     }
 
