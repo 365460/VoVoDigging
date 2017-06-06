@@ -53,10 +53,10 @@ public class Reminder extends Exception{
 
     public void display(){
 
+        par.fill(255);
+        par.textSize(20);
         switch (mode){
             case NORMAL:
-                par.fill(255);
-                par.textSize(20);
                 if(pos!=null){
                     par.text( why, pos.x, pos.y);
                 }

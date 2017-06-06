@@ -5,6 +5,10 @@ import processing.core.PApplet;
 import processing.core.PImage;
 import Setting.*;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.Set;
 
 /**
@@ -87,6 +91,7 @@ public class BagTool {
         par.text(count, x+5, y+blocklen+10, blocklen, 30);
 
     }
+
     public void display(){
         par.translate(256,141);
         int totalW = 300+20*2, totalH = 300+20*2;
@@ -116,5 +121,35 @@ public class BagTool {
         if(key==par.LEFT && activeId>=2) activeId -= 1;
 
         System.out.println("tool id = " + activeId);
+    }
+
+    public void save(String pre){
+        try{
+            FileWriter fw = new FileWriter(pre+"/tool.bag");
+            String tmp = "";
+            for(int i=1; i<=Setting.ItemNum; i++){
+                tmp += usageCount[ i ] + " ";
+            }
+            fw.write(tmp);
+            fw.close();
+        }
+        catch(IOException e){
+        }
+    }
+
+    public void read(String pre){
+        try{
+            FileReader f = new FileReader(pre+"tool.bag");
+
+            BufferedReader brMap = new BufferedReader(f);
+
+            String tmpM       = brMap.readLine();
+            String tmpArray[] = tmpM.split("\\s");
+
+            for(int j=1; j<=Setting.ItemNum; j++) {
+                usageCount[j] = Integer.parseInt(tmpArray[j-1]);
+            }
+            f.close();
+        }catch(IOException e){}
     }
 }

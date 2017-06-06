@@ -55,6 +55,7 @@ public class Block {
             case LADDER:
                 par.image(imgEmpty, x, y, w, h);
                 par.image(imgLadder, x, y, w, h);
+//                par.image(imgLadder, x, y, w, h);
                 break;
 
             case FIN:
@@ -62,10 +63,20 @@ public class Block {
                 if(par.frameCount%12<=3) par.image(imgflag[0], x, y, w, h);
                 else if(par.frameCount%12<=7) par.image(imgflag[1], x, y, w, h);
                 else par.image(imgflag[2], x, y, w, h);
+
+//                if(par.frameCount%3==0) par.image(imgflag[0], x, y, w, h);
+//                else if(par.frameCount%3==1) par.image(imgflag[1], x, y, w, h);
+//                else par.image(imgflag[2], x, y, w, h);
                 break;
         }
-        if(isDigging)
-            par.image(imgdig[digid], x, y, w, h);
+        if(isDigging) {
+            if (par.frameCount % 5 ==0) par.image(imgdig[0], x, y, w, h);
+            else if (par.frameCount % 5 ==1) par.image(imgdig[1], x, y, w, h);
+            else if (par.frameCount % 5 ==2) par.image(imgdig[2], x, y, w, h);
+            else if (par.frameCount % 5 ==3)par.image(imgdig[3], x, y, w, h);
+            else par.image(imgdig[4], x, y, w, h);
+//            par.image(imgdig[digid], x, y, w, h);
+        }
     }
 
     public int dig(){
@@ -78,13 +89,17 @@ public class Block {
         return id;
     }
 
+    public BlockStatus getStatus(){
+        return status;
+    }
+
     public boolean canDig(int tool){
-        return true;
-//        if(status==BlockStatus.LADDER)return true;
-//
-//        if(tool<level) return false;
-//        if(level==100) return false;
-//        else return true;
+//        return true;
+        if(status==BlockStatus.LADDER)return true;
+
+        if(tool<level) return false;
+        if(level==100) return false;
+        else return true;
     }
 
 
@@ -98,33 +113,19 @@ public class Block {
 
     void gotoDie(){
 
-        isDigging = true;
         Thread thread = new Thread(new Runnable() {
             @Override
             public void run() {
-                int count = 10;
-                for(int i=0; i<count; i++){
-                    digid = i%5;
-                    try{
-                        Thread.sleep(Setting.DiggingTime/count);
-                    }
-                    catch(Exception e){
-
-                    }
+                isDigging = true;
+                try{
+                    Thread.sleep(Setting.DiggingTime);
                 }
+                catch(Exception e){}
                 isDigging = false;
                 status = BlockStatus.EMPTY;
             }
         });
         thread.start();
-
     }
 }
 
-enum BlockStatus{
-    NORMAL,
-    LADDER,
-    DIGGING,
-    FIN,
-    EMPTY
-}

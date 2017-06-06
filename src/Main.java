@@ -1,6 +1,6 @@
 import Setting.Setting;
 import processing.core.PApplet;
-
+import Game.*;
 /**
  * Created by Rober on 2017/5/5.
  */
@@ -22,6 +22,10 @@ public class Main extends PApplet {
     }
 
     public void keyPressed(){
+        if(keyCode==27){
+            key = 0;
+            game.keyPressed();
+        }
         game.keyPressed();
     }
 

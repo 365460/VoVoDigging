@@ -1,4 +1,6 @@
+package Game;
 import processing.core.PApplet;
+import processing.core.PConstants;
 import processing.core.PImage;
 
 /**
@@ -30,6 +32,7 @@ public class Loading {
     public void display(){
         par.fill(255);
         par.textSize(40);
+        par.textAlign(PConstants.TOP, PConstants.LEFT);
         par.background(0);
 
         int x = par.mouseX;
@@ -90,6 +93,9 @@ public class Loading {
         thread.start();
     }
 
+    public void clean(){
+        progress = 0;
+    }
     public boolean isOk(){
         return ok;
     }

@@ -7,16 +7,6 @@ import processing.core.PApplet;
  */
 public class BlockFactory {
     public static Block generate(PApplet par,int  id){
-        if(id==0) {
-            Block b = new BlockDiamond(par);
-            b.dig();
-            return b;
-        }
-        else if(id==8){
-            Block b = new BlockDiamond(par);
-            b.status = BlockStatus.FIN;
-            return b;
-        }
         switch (id){
             case Setting.SoilId:
                 return new BlockSoil(par);
@@ -33,5 +23,15 @@ public class BlockFactory {
             default:
                 return new BlockWall(par);
         }
+    }
+
+    public static Block generateWithStatus(PApplet par,int id , int v){
+
+        BlockStatus status = BlockStatus.toStatus(v);
+
+        Block block = generate(par,id);
+        block.status = status;
+
+        return block;
     }
 }

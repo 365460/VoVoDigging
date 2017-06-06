@@ -1,8 +1,14 @@
 package Bag;
 
+import Map.BlockFactory;
 import Setting.*;
 import processing.core.PApplet;
 import processing.core.PImage;
+
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
 
 /**
  * Created by Rober on 2017/5/24.
@@ -107,5 +113,35 @@ public class BagMine {
         if(key==par.RIGHT&& activeId<=5) activeId += 1;
         if(key==par.LEFT && activeId>=2) activeId -= 1;
         System.out.println(activeId);
+    }
+
+    public void save(String pre){
+        try{
+            FileWriter fw = new FileWriter(pre+"/mine.bag");
+            String tmp = "";
+            for(int i=1; i<=Setting.MineNum; i++){
+                tmp += mine[ i ] + " ";
+            }
+            fw.write(tmp);
+            fw.close();
+        }
+        catch(IOException e){
+        }
+    }
+
+    public void read(String pre){
+        try{
+            FileReader f = new FileReader(pre+"mine.bag");
+
+            BufferedReader brMap = new BufferedReader(f);
+
+            String tmpM       = brMap.readLine();
+            String tmpArray[] = tmpM.split("\\s");
+
+            for(int j=1; j<=Setting.MineNum; j++) {
+                mine[j] = Integer.parseInt(tmpArray[j-1]);
+            }
+            f.close();
+        }catch(IOException e){}
     }
 }

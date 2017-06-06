@@ -17,7 +17,6 @@ public class BlockCoal extends Block{
         par.image(imgCoal, x, y, w, h);
     }
 
-
     public int dig(){
         int result;
         if(status==BlockStatus.LADDER) result = 10;

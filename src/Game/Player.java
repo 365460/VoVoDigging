@@ -1,3 +1,5 @@
+
+package Game;
 import Bag.Bag;
 import Setting.Setting;
 import processing.core.PApplet;
@@ -9,6 +11,9 @@ import static java.lang.Math.max;
 import static java.lang.Math.min;
 
 import Reminder.*;
+
+import java.io.FileWriter;
+import java.io.IOException;
 
 /**
  * Created by Rober on 2017/5/5.
@@ -71,6 +76,22 @@ public class Player {
 
     public int getLight(){
         return bag.getLight();
+    }
+
+    public float getX(){
+        return pos.x;
+    }
+
+    public float getY(){
+        return pos.y;
+    }
+
+    public void setX(float v){
+        pos.x = v;
+    }
+
+    public void setY(float v){
+        pos.y = v;
     }
 
     public boolean move(int dir){
@@ -314,5 +335,20 @@ public class Player {
         }
     }
 
+    void save(String pre){
+        bag.save(pre);
+        try{
+            FileWriter fw = new FileWriter(pre+"/player.player");
+            String tmp = "";
+            fw.write(tmp);
+            fw.close();
+        }
+        catch(IOException e){
+        }
+    }
+
+    void read(String pre){
+        bag.read(pre);
+    }
 }
 

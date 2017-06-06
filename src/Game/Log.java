@@ -1,3 +1,4 @@
+package Game;
 /**
  * Created by Rober on 2017/6/4.
  */

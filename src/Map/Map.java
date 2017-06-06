@@ -1,12 +1,15 @@
 package Map;
 
+import Game.Player;
 import Reminder.*;
 import Setting.Setting;
+import com.sun.javafx.iio.ios.IosDescriptor;
 import processing.core.*;
 
 import java.awt.*;
 import java.io.BufferedReader;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Set;
 
@@ -74,23 +77,21 @@ public class Map {
         }
 
         try{
-            FileReader fr = new FileReader("map.data");
-            BufferedReader br = new BufferedReader(fr);
+            FileReader f = new FileReader("map.data");
+
+            BufferedReader brMap = new BufferedReader(f);
+
             for(int i=1; i<=numH; i++){
-                String tmp = br.readLine();
-                String tmpArray[] = tmp.split("\\s");
+                String tmpM       = brMap.readLine();
+                String tmpArray[] = tmpM.split("\\s");
+
                 for(int j=1; j<=numW; j++){
                     int id = Integer.parseInt(tmpArray[j-1]);
-                    map[i][j] = BlockFactory.generate(par, id);
+                    map[i][j] = BlockFactory.generate(par,id);
                 }
             }
-
-            fr.close();
-        }
-        catch(Exception e){
-
-        }
-
+            f.close();
+        }catch(IOException e){}
     }
 
     public void extend(int x,int y,int r){
@@ -124,10 +125,6 @@ public class Map {
         int gx = playerx/unit + 1, gy = playery/unit + 1;
         par.background(0);
 
-
-        // ground
-
-
         float dx = stx - (int)stx ;
         float dy = sty - (int)sty;
 
@@ -143,11 +140,11 @@ public class Map {
                     int x =  j + (int)stx;
 
                     /*  easy mode */
-//                    if(shown[y][x]==false) par.image(imgfog, (j-1)*unit+dx*unit, (i-1)*unit+dy*unit, unit, unit);
-//                    else map[y][x].display( (j-1)*unit+dx*unit, (i-1)*unit+dy*unit, unit, unit);
-                    /* difficult mode */
+                    if(shown[y][x]==false) par.image(imgfog, (j-1)*unit+dx*unit, (i-1)*unit+dy*unit, unit, unit);
+                    else map[y][x].display( (j-1)*unit+dx*unit, (i-1)*unit+dy*unit, unit, unit);
 
-                    map[y][x].display( (j-1)*unit+dx*unit, (i-1)*unit+dy*unit, unit, unit);
+                    /* difficult mode */
+//                    map[y][x].display( (j-1)*unit+dx*unit, (i-1)*unit+dy*unit, unit, unit);
                 }
             }
         }
@@ -155,17 +152,18 @@ public class Map {
 
         /* difficult mode */
 
-        int r = (4+light )* Setting.BlockNumWidth;
-        PGraphics mask = par.createGraphics(par.width, par.height);
-        mask.beginDraw();
+//        int r = (4+light )* Setting.BlockNumWidth;
+//        PGraphics mask = par.createGraphics(par.width, par.height);
+//        mask.beginDraw();
+//
+//        mask.background(0,0,0);
+//        mask.fill(255,255,255);
+//        mask.ellipse(pos.x+unit/2, pos.y+unit/2, r, r);
+//        mask.endDraw();
+//        par.blend(mask, 0, 0, par.width, par.height, 0 ,0, par.width, par.height,  PConstants.DARKEST);
 
-        mask.background(0,0,0);
-        mask.fill(255,255,255);
-        mask.ellipse(pos.x+unit/2, pos.y+unit/2, r, r);
-        mask.endDraw();
-        par.blend(mask, 0, 0, par.width, par.height, 0 ,0, par.width, par.height,  PConstants.DARKEST);
 
-
+        // ground
         par.imageMode(PConstants.CORNER);
         if(sty<=Setting.HeightSpaceNum){
             par.image(imgbackground, -(stx)*unit, -(sty)*unit, Setting.BlockNumWidth*unit, (Setting.HeightSpaceNum)*unit );
@@ -199,7 +197,7 @@ public class Map {
 
             par.translate( stx*unit, sty*unit);
 
-            /**/
+/**/
         }
 
     }
@@ -266,7 +264,6 @@ public class Map {
         if(!map[y][x].canDig(tool)) return 0;
 
         else{
-            System.out.println("dig " + x + " " + y);
             return map[y][x].dig();
         }
     }
@@ -288,10 +285,8 @@ public class Map {
             @Override
             public void run() {
                 try{
-                    System.out.println("start delay");
                     Thread.sleep(time + 10);
                     putMine(x, y, id);
-                    System.out.println("put");
                 }
                 catch(Exception e){
                 }
@@ -305,8 +300,6 @@ public class Map {
         y -= Setting.HeightSpaceNum;
         if(OverBoard(x,y)) return false;
 
-        System.out.println("put "+x+" " + y);
-        System.out.println("ss = " + map[y][x].status);
         if(map[y][x].status==BlockStatus.EMPTY){
             map[y][x] = BlockFactory.generate(par, id);
             return true;
@@ -319,6 +312,104 @@ public class Map {
         if(OverBoard(x, y)) return 0;
 
         return map[y][x].getId();
+    }
+
+    public void read(String pre, Player player){
+        try{
+            FileReader fmap = new FileReader(pre+"/map.map");
+            FileReader fstauts = new FileReader(pre+"/status.map");
+            FileReader fshown = new FileReader(pre+"/shown.map");
+
+            BufferedReader brMap = new BufferedReader(fmap);
+            BufferedReader brSta = new BufferedReader(fstauts);
+            BufferedReader brShown = new BufferedReader(fshown);
+
+            for(int i=1; i<=numH; i++){
+                String tmpM       = brMap.readLine();
+                String tmpArray[] = tmpM.split("\\s");
+
+                String tmpS    = brSta.readLine();
+                String tmpAs[] = tmpS.split("\\s");
+
+                String tmpShown    = brShown.readLine();
+                String tmpAshown[] = tmpShown.split("\\s");
+                for(int j=1; j<=numW; j++){
+                    int id = Integer.parseInt(tmpArray[j-1]);
+                    int st = Integer.parseInt(tmpAs[j-1]);
+                    map[i][j] = BlockFactory.generateWithStatus(par, id, st);
+                    shown[i][j] = Boolean.parseBoolean(tmpAshown[j-1]);
+                }
+            }
+
+            /* read stx sty*/
+            String tmp = brMap.readLine();
+            String tmpArray[] = tmp.split("\\s");
+            stx = Float.parseFloat(tmpArray[0]);
+            sty = Float.parseFloat(tmpArray[1]);
+
+            /* read player x, y*/
+            tmp = brMap.readLine();
+            tmpArray = tmp.split("\\s");
+            player.setX( Float.parseFloat(tmpArray[0]) );
+            player.setY( Float.parseFloat(tmpArray[1]) );
+
+            fmap.close();
+            brShown.close();
+            fstauts.close();
+        }
+        catch(Exception e){
+            System.out.println(e);
+        }
+    }
+
+    public void save(String pre, Player player){
+        try{
+        /*map*/
+            FileWriter fw = new FileWriter(pre+"/map.map");
+            String tmp;
+            for(int i=1; i<=numH; i++){
+                tmp = "";
+                for(int j=1; j<=numW; j++){
+                    tmp += map[i][j].getId() + " ";
+                }
+                tmp += "\n";
+                fw.write(tmp);
+            }
+
+            tmp = stx + " " + sty +  "\n";
+            fw.write(tmp);
+
+            tmp = player.getX() + " " + player.getY() + "\n";
+            fw.write(tmp);
+            fw.close();
+
+        /* status */
+            fw = new FileWriter(pre + "/status.map");
+            for(int i=1; i<=numH; i++){
+                tmp = "";
+                for(int j=1; j<=numW; j++){
+                    tmp += map[i][j].getStatus().getValue() + " ";
+                }
+                tmp += "\n";
+                fw.write(tmp);
+            }
+            fw.close();
+
+        /* shown */
+            fw = new FileWriter(pre + "/shown.map");
+            for(int i=1; i<=numH; i++){
+                tmp = "";
+                for(int j=1; j<=numW; j++){
+                    tmp += shown[i][j] + " ";
+                }
+                tmp += "\n";
+                fw.write(tmp);
+            }
+            fw.close();
+        }
+        catch(IOException e){
+            System.out.println(e);
+        }
     }
 }
 

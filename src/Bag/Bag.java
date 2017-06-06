@@ -93,4 +93,15 @@ public class Bag {
         else toolbag.keyPressed(key);
     }
 
+
+    public void save(String pre){
+        minebag.save(pre);
+        toolbag.save(pre);
+    }
+
+    public void read(String pre){
+        minebag.read(pre);
+        toolbag.read(pre);
+    }
+
 }

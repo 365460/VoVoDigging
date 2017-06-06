@@ -33,17 +33,17 @@ public class Setting {
     public static int DiamondLevel = 5;
     public static int WallLevel    = 100;
 
-
     /*              Mine            */
-    public static int MineNum = 6+1;
-    public static String[] MineName = {"", "Soil", "Wood", "Coal", "Iron", "Gold", "DO"};
-    public static int[] MineWeight =  { 0,      1,      1,      2,       2,    3,     4};
+    public static int MineNum = 7;
+    public static String[] MineName = {"", "Soil", "Wood", "Coal", "Iron", "Gold", "DO", "Wall"};
+    public static int[] MineWeight =  { 0,      1,      1,      2,       2,    3,     4,   1000};
     final public static int SoilId    = 1;
     final public static int WoodId    = 2;
     final public static int CoalId    = 3;
     final public static int IronId    = 4;
     final public static int GoldId    = 5;
     final public static int DiamondId = 6;
+    final public static int WallId    = 7;
 
                 /* Mine-img */
         final public static String SolidIcon  = "image/soilIcon.png";
