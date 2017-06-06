@@ -29,4 +29,12 @@ public class BlockWall extends Block{
 //            par.image(imgLadder, x, y, w, h);
 //        }
 //    }
+    public int dig(){
+        int result;
+        if(status==BlockStatus.LADDER) result = 10;
+        else result = 0;
+
+        gotoDie();
+        return result;
+    }
 }

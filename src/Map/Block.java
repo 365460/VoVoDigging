@@ -55,7 +55,6 @@ public class Block {
             case LADDER:
                 par.image(imgEmpty, x, y, w, h);
                 par.image(imgLadder, x, y, w, h);
-//                par.image(imgLadder, x, y, w, h);
                 break;
 
             case FIN:
@@ -63,10 +62,6 @@ public class Block {
                 if(par.frameCount%12<=3) par.image(imgflag[0], x, y, w, h);
                 else if(par.frameCount%12<=7) par.image(imgflag[1], x, y, w, h);
                 else par.image(imgflag[2], x, y, w, h);
-
-//                if(par.frameCount%3==0) par.image(imgflag[0], x, y, w, h);
-//                else if(par.frameCount%3==1) par.image(imgflag[1], x, y, w, h);
-//                else par.image(imgflag[2], x, y, w, h);
                 break;
         }
         if(isDigging) {
