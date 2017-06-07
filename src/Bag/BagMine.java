@@ -138,8 +138,11 @@ public class BagMine {
             String tmpM       = brMap.readLine();
             String tmpArray[] = tmpM.split("\\s");
 
+
+            currentWeight = 0;
             for(int j=1; j<=Setting.MineNum; j++) {
                 mine[j] = Integer.parseInt(tmpArray[j-1]);
+                currentWeight +=  mine[j]*Setting.MineWeight[j];
             }
             f.close();
         }catch(IOException e){}
