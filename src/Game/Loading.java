@@ -83,7 +83,7 @@ public class Loading {
                 try{
                     while(progress<v){
                         progress += 1;
-                        Thread.sleep(20);
+                        Thread.sleep(200);
                     }
                 }catch (Exception e){
 

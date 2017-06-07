@@ -50,12 +50,18 @@ public class Menu {
         switch (status){
             case Normal:
 
+                par.fill(108, 114, 124,110);
+                par.noStroke();
+                par.rectMode(PConstants.CORNER);
+                par.rect(170, base-150,490,500);
                 par.stroke(255);
+
                 par.fill(255);
                 par.textSize(50);
                 par.textAlign(PConstants.CENTER, PConstants.BOTTOM);
 
                 par.text("VoVoDigging", par.width/2, base-60);
+                par.text("VoVoDigging", par.width/2+4, base-60);
 //                par.line(par.width/2-tlen, base, par.width/2+tlen/2, base);
 
                 for(int i=0; i<3; i++){
