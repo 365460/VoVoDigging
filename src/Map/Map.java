@@ -29,6 +29,7 @@ public class Map {
 
     public Block[][] map;
     boolean shown[][];
+
     public Map(PApplet par, int stx, int sty){
         this.par = par;
         this.stx = stx;

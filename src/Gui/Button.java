@@ -14,9 +14,11 @@ public class Button {
 
     PVector pos;
     int width, height;
-    String cont;
+    String cont, hoveText;
     boolean hoving;
     public int dx = 0, dir = 1;
+
+    boolean QQ = false;
 
     public Button(){
 
@@ -28,6 +30,7 @@ public class Button {
         this.width  = w;
         this.height = h;
         this.cont   = s;
+        this.hoveText = s;
     }
 
     public void display(){
@@ -41,7 +44,7 @@ public class Button {
 
         if(isHover()){
             par.fill(255,0,0);
-            par.text(cont, pos.x+width/2 + dx, pos.y+height/2+8);
+            par.text(hoveText, pos.x+width/2 + dx, pos.y+height/2+8);
             if(abs(dx)>=20){
                 dir = dir==1? -1:1;
             }
@@ -93,5 +96,9 @@ public class Button {
         if( pos.x>x || x>pos.x+width) return false;
         if( pos.y>y || y>pos.y+height) return false;
         return true;
+    }
+
+    public void setHoverText(String s){
+        hoveText = s;
     }
 }

@@ -50,7 +50,6 @@ public class Game {
     boolean isShifting;
     int isBag = 0;
 
-
     int loadP = 0;
     String loadMessage;
 
@@ -60,13 +59,7 @@ public class Game {
         this.width  = width;
         this.menu   = new Menu(par, this);
 
-        Thread thread = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                loading = new Loading(par);
-            }
-        });
-        thread.start();
+        this.loading = new Loading(par);
 
         Qre = new LinkedList<>();
         thCheck_Reminder = new Thread(new Runnable() {
@@ -235,7 +228,6 @@ public class Game {
     }
 
     public void keyPressed(){
-        System.out.println("keycode = " + par.keyCode);
         try{
             switch (gameStatus){
                 case SETTING:
@@ -339,11 +331,6 @@ public class Game {
 
     public void saveGame(int id){
         gameStatus = GameStatus.DIGGING;
-        try{
-            Thread.sleep(500);
-        }catch(Exception e){
-
-        }
 
         map.save("keep/K" + id , player);
         System.out.println("map save OK");

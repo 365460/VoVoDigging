@@ -70,7 +70,7 @@ public class SettingTab {
                 else if(btn[1].isHover()){
                     game.goToMenu();
                 }
-                else{
+                else if(btn[2].isHover()){
                     par.exit();
                 }
                 break;

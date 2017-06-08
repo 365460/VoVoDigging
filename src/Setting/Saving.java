@@ -55,14 +55,13 @@ public class Saving {
             }
         }catch(IOException e){}
 
-
-
         int stx = par.width/2 - width/2, sty = par.height/2 - height/2;
         int btnH = 40, gapH = 25;
         for(int i=0; i<3; i++){
             btn[i] = new Button(par, new PVector(stx+30,sty+i*btnH+gapH*(i+1)+10), 120, btnH, cont[i]);
         }
     }
+
     public void display(){
         for(int i=0; i<3; i++){
             btn[i].setFont(10);
