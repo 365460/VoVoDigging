@@ -1,5 +1,7 @@
 package Setting;
 
+import processing.core.PApplet;
+
 /**
  * Created by Rober on 2017/5/5.
  */
@@ -10,16 +12,20 @@ public class Setting {
     public static int BlockSize = 60;
 
     public static int ScreenWidthNum = 14;
+//    public static int ScreenWidthNum = 7;
     public static int ScreenHeightNum = 10;
 
     public static int HeightSpaceNum = 4;
-    public static int HeightMapNum = BlockNumHeight - HeightSpaceNum;
-    public static int WidthMapNum = BlockNumWidth;
-    public static int GameWidth = ScreenWidthNum*BlockSize;
-    public static int GameHeight = ScreenHeightNum*BlockSize;
+    public static int HeightMapNum   = BlockNumHeight - HeightSpaceNum;
+    public static int WidthMapNum    = BlockNumWidth;
+    public static int GameWidth      = ScreenWidthNum*BlockSize;
+    public static int GameHeight     = ScreenHeightNum*BlockSize;
+    public static int MapWidth       = BlockNumWidth*BlockSize;
+    public static int MapHeight      = BlockNumHeight*BlockSize;
 
-    public static int PosShop = 450+ 300;
-    public static int PosUpgrade = 900 + 300;
+    public static int PosShop = 150;
+    public static int PosUpgrade = 450;
+    public static int PosGate = 650;
     public static int buildWidthNum = 2;
 
     /*              block            */
@@ -80,5 +86,12 @@ public class Setting {
 
     /*  animation*/
     public static int DiggingTime = 700;
-    public static int MovingTime  = 100;
+    public static float MovingTime  = 0.2f;
+    public static float MoveV = 20;
+
+    public static int getMoveV(PApplet par) {
+        return 30;
+    }
+
+
 }

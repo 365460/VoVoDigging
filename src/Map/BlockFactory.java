@@ -7,6 +7,11 @@ import processing.core.PApplet;
  */
 public class BlockFactory {
     public static Block generate(PApplet par,int  id){
+        if(id==0) {
+            Block b = new BlockSoil(par);
+            b.status = BlockStatus.EMPTY;
+            return b;
+        }
         switch (id){
             case Setting.SoilId:
                 return new BlockSoil(par);
@@ -32,6 +37,14 @@ public class BlockFactory {
         Block block = generate(par,id);
         block.status = status;
 
+        return block;
+    }
+
+    public static Block generateWithStatus(PApplet par,int id){
+        BlockStatus status = BlockStatus.toStatus(id/10);
+        Block block = generate(par,id%10);
+        block.status = status;
+        if(status==BlockStatus.GATE) par.println("GEt gate");
         return block;
     }
 }

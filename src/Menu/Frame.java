@@ -39,6 +39,7 @@ public class Frame {
             par.rect(x ,y, imglen, imglen);
 
             par.textAlign(PConstants.CENTER);
+            par.fill(255);
             par.text("+", x+imglen/2,y+imglen/2);
         }
 

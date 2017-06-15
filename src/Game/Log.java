@@ -50,14 +50,24 @@ public class Log {
 
     public void display(){
 
-        int stx = 100, sty = 100;
+        int stx = 280, sty = 200;
         par.translate(stx, sty);
         par.textAlign(PConstants.CENTER);
 
         int imglen = 50;
+        par.fill(255,255,255,125);
 
+        par.stroke(40, 72, 91);
+        par.rect(0,0,280,350);
+
+        par.textSize(30);
+        par.fill(40, 72, 91);
+        par.text("Get",130,25);
+        par.text("Put",200,25);
         for(int i=1; i<Setting.MineNum; i++){
-            par.image(img[i], 0, (i-1)*imglen, imglen, imglen);
+            par.image(img[i], 20, (i-1)*imglen+30, imglen, imglen);
+            par.text(getMine[i-1],130 ,(i-1)*imglen+65);
+            par.text(putItem[i-1],200,(i-1)*imglen+65);
         }
 
         par.translate(-stx, -sty);

@@ -53,7 +53,7 @@ public class Reminder extends Exception{
 
     public void display(){
 
-        par.fill(255);
+        par.fill(255,0,0);
         par.textSize(20);
         switch (mode){
             case NORMAL:
@@ -66,6 +66,7 @@ public class Reminder extends Exception{
             case BROADCAST:
                 par.textAlign(par.CENTER);
                 par.fill(255, 0, 0);
+                par.textSize(30);
                 par.text(why,par.width/2, 50);
                 break;
         }

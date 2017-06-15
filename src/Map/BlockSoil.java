@@ -16,6 +16,7 @@ public class BlockSoil extends Block{
     }
 
     void showNormal(float x,float y,float w,float h){
+//        par.fill(242,138,19);
         par.image(imgSoil, x, y, w, h);
     }
 

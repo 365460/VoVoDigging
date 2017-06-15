@@ -15,6 +15,7 @@ public class BlockDiamond extends Block{
     }
 
     void showNormal(float x,float y,float w,float h){
+//        par.fill(204,20,106);
         par.image(imgSoil, x, y, w, h);
         par.image(imgDiamond, x, y, w, h);
     }

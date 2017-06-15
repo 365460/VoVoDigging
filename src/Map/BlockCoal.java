@@ -14,6 +14,7 @@ public class BlockCoal extends Block{
     }
 
     void showNormal(float x,float y,float w,float h){
+//        par.fill(38,35,37);
         par.image(imgCoal, x, y, w, h);
     }
 

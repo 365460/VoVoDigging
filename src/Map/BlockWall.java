@@ -15,6 +15,7 @@ public class BlockWall extends Block{
     }
 
     void showNormal(float x,float y,float w,float h){
+//        par.fill(86,24,71);
         par.image(imgWall, x, y, w, h);
     }
 

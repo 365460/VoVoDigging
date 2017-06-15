@@ -21,7 +21,7 @@ public class BagMine {
 
     int activeId = 1;
     int[] mine;
-    int limitWeight = 60;
+    int limitWeight = 600;
     int currentWeight = 0;
 
     public BagMine(PApplet par){
@@ -33,6 +33,11 @@ public class BagMine {
         mineIcon = new PImage[ Setting.MineNum+10 ];
         for(int i=1; i<Setting.MineNum; i++){
             mineIcon[i] = par.loadImage(Setting.MIneImage[i]);
+        }
+
+
+        for(int i=1; i<Setting.MineNum; i++){
+            mine[i] = 50;
         }
     }
 
@@ -56,6 +61,15 @@ public class BagMine {
     public void delMine(int id){
         currentWeight -= Setting.MineWeight[id];
         mine[id]--;
+    }
+
+    public void takeMine(int []require){
+        for(int i = 0; i < 6; i++)
+            mine[i] -= require[i];
+    }
+
+    public int[] getMine(){
+        return mine;
     }
 
     public int getActiveId(){

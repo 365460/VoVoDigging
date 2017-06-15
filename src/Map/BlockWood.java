@@ -14,6 +14,7 @@ public class BlockWood extends Block{
     }
 
     void showNormal(float x,float y,float w,float h){
+//        par.fill(94,66,31);
         par.image(imgWood, x, y, w, h);
     }
 

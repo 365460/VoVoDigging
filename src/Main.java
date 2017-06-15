@@ -1,4 +1,5 @@
 import Setting.Setting;
+import de.looksgood.ani.Ani;
 import processing.core.PApplet;
 import Game.*;
 /**
@@ -15,10 +16,12 @@ public class Main extends PApplet {
 
     public void setup(){
         game = new Game(this, height, width);
+        Ani.init(this);
     }
 
     public void draw(){
         game.draw();
+//        println(frameRate);
     }
 
     public void keyPressed(){

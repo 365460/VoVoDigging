@@ -2,11 +2,15 @@
 package Game;
 import Bag.Bag;
 import Setting.Setting;
+import de.looksgood.ani.Ani;
 import processing.core.PApplet;
 import processing.core.PImage;
 import Map.*;
 import processing.core.PVector;
 
+import static Setting.Setting.BlockNumHeight;
+import static Setting.Setting.BlockSize;
+import static java.lang.Math.abs;
 import static java.lang.Math.max;
 import static java.lang.Math.min;
 
@@ -14,6 +18,7 @@ import Reminder.*;
 
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.Set;
 
 /**
  * Created by Rober on 2017/5/5.
@@ -21,8 +26,9 @@ import java.io.IOException;
 public class Player {
     PApplet par;
     PImage img;
+    PImage[][] imgWalkd;
 
-    PVector pos;
+    PVector pos, posf, moment;
 
     Map map;
     Bag bag;
@@ -32,18 +38,32 @@ public class Player {
     int vy = 4;
     boolean isMoving  = false;
     boolean isDigging = false;
-    int dir;
+    int imgId = 0;
+    int dir = 3;
+
+    int order = -1; // 1->x, 2->y; // for update()
+
+    Ani moveTox, moveToy;
 
     public Player(PApplet par, int x, int y, Map map, Log log ){
         this.par = par;
         this.map = map;
         this.log = log;
 
-        pos = new PVector( x*Setting.BlockSize, y*Setting.BlockSize);
+        pos    = new PVector( x* BlockSize, y* BlockSize);
+        posf   = new PVector( x*BlockSize, y*BlockSize);
+        moment = new PVector(0, 0);
         img = par.loadImage("image/p3.png");
+        imgWalkd = new PImage[5][6];
+        for(int i=1; i<=4; i++)
+            for(int j=0; j<6; j++){
+                imgWalkd[i][j] = par.loadImage("Image/"+i+j+".png");
+                par.println("Image/"+i+j+".png");
+            }
 
         bag = new Bag(this.par);
         bag.addItem(Setting.ToLadderId);
+
 
         Thread thread = new Thread(new Runnable() {
             @Override
@@ -58,9 +78,19 @@ public class Player {
                 }
             }
         });
-        thread.start();
+//        thread.start();
     }
 
+    public void setMap(Map map){
+       this.map = map;
+    }
+
+    public void setPos(int x,int y){
+        pos.x = x;
+        pos.y = y;
+        posf.x = x;
+        posf.y = y;
+    }
     public void displayMineBag(){
         bag.displayMine();
     }
@@ -69,9 +99,19 @@ public class Player {
         bag.displayTool();
     }
 
-    public void display(){
-        int blocksize = Setting.BlockSize;
-        par.image(img, pos.x, pos.y, blocksize, blocksize );
+    public void display(PVector camera){
+
+        update();
+        if(isIdle()) falling();
+
+        par.translate(-camera.x, -camera.y);
+        if(isMoving){
+            par.image(imgWalkd[dir][imgId], pos.x, pos.y, BlockSize, BlockSize);
+            imgId = (imgId+1)%imgWalkd.length;
+        }
+        else par.image(imgWalkd[dir][2], pos.x, pos.y, BlockSize, BlockSize );
+
+        par.translate(camera.x, camera.y);
     }
 
     public int getLight(){
@@ -96,60 +136,62 @@ public class Player {
 
     public boolean move(int dir){
         if(isIdle()==false) return false;
-        int gx = (int)pos.x/Setting.BlockSize + 1, gy = (int) pos.y/Setting.BlockSize + 1; // screen
-        float mx = gx + map.stx , my = gy+map.sty ; // map
 
-        int nx = (int)pos.x, ny = (int)pos.y;
-        float nsty = map.sty, nstx = map.stx;
+        this.dir = dir;
+
+        float nx = posf.x, ny = posf.y;
+        float nsty = map.cameraf.y, nstx = map.cameraf.x;
         if(dir==1){ // up
-            if(gy==Setting.HeightSpaceNum && map.sty>0) nsty -= 1;
-            else if(pos.y-1>0) ny -= Setting.BlockSize;
+            if(ny<=nsty+BlockSize*4 && nsty>0) nsty -= BlockSize;
+            if(ny>0) ny -= BlockSize;
         }
         else if(dir==2){ // right
-            if(gx==Setting.ScreenWidthNum-3 && map.stx+1+Setting.ScreenWidthNum<=Setting.BlockNumWidth) nstx += 1;
-            else if(gx+1<Setting.ScreenWidthNum) nx += Setting.BlockSize;
+
+            if(nx+2*BlockSize<map.width) nx += BlockSize;
+
+            while(nstx+Setting.GameWidth <= nx+BlockSize){
+                nstx += BlockSize;
+            }
         }
         else if(dir==3){ // down
-            if(gy==Setting.ScreenHeightNum-3 && map.sty+1+Setting.ScreenHeightNum<=Setting.BlockNumHeight) nsty += 1;
-            else if(gy+1<=Setting.ScreenHeightNum) ny += Setting.BlockSize;
+            if(ny+2*BlockSize<map.height) ny += BlockSize;
+
+            while(nsty+Setting.GameHeight <= ny+BlockSize){
+                nsty += BlockSize;
+            }
         }
         else if(dir==4){ // left
-            if(gx==2 && map.stx>0) nstx -= 1;
-            else if(gx>=1) nx -= Setting.BlockSize;
+            if(nstx>0 && nx<=nstx+BlockSize*2) nstx -= BlockSize;
+            if(nx-BlockSize>=0) nx -= BlockSize;
         }
 
-        map.stx = nstx;
-        map.sty = nsty;
-        pos.x = nx;
-        pos.y = ny;
-        extend();
+        this.dir = dir;
+        posf.x = nx;
+        posf.y = ny;
 
-//        if(nstx != map.stx || nsty != map.sty)
-//            startMoveWin(nstx, nsty);
-//        else
-//            startMoving(nx, ny);
+        moment.x = posf.x - pos.x;
+        moment.y = posf.y - pos.y;
+
+        extend();
+        map.moveCamera(nstx, nsty);
         return true;
 
     }
 
     void extend(){
-        int gx = (int)pos.x/Setting.BlockSize + 1;
-        int gy = (int)pos.y/Setting.BlockSize + 1; // screen
-        int mx = gx +(int)map.stx;
-        int my = gy +(int)map.sty;
-        map.extend((int)mx, (int)my, bag.getLight());
-
+        int gx = (int)posf.x/ BlockSize + 1;
+        int gy = (int)posf.y/ BlockSize + 1; // screen
+        map.extend(gx, gy, bag.getLight());
     }
 
     public boolean tryMove(int dir)throws Reminder{
-        int gx = (int)pos.x/Setting.BlockSize + 1 , gy = (int)pos.y/Setting.BlockSize + 1; // screen
-        int mx = gx + (int)map.stx, my = gy+ (int)map.sty; // map
+        int gx = (int)posf.x/ BlockSize + 1 , gy = (int)posf.y/ BlockSize + 1; // screen
+        int mx = gx, my = gy; // map
         if(dir==1) my -= 1;
         else if(dir==2) mx += 1;
         else if(dir==3) my += 1;
         else if(dir==4) mx -= 1;
         boolean result = map.canMove(mx, my);
-
         if(result) move(dir);
 
         if(map.isVectory(mx, my)) return true;
@@ -157,12 +199,10 @@ public class Player {
     }
 
     void falling(){
-        int gx = (int)pos.x/Setting.BlockSize + 1, gy = (int)pos.y/Setting.BlockSize + 1;
-        int mx = gx + (int)map.stx, my = gy+ (int)map.sty;
+        int gx = (int)posf.x/ BlockSize + 1, gy = (int)posf.y/ BlockSize + 1;
+        int mx = gx, my = gy;
 
-        int mgy = my - Setting.HeightSpaceNum;
-
-        while(map.shouldFailing(mx, my)){
+        while(map.shouldFalling(mx, my)){
             move(3);
             my += 1;
         }
@@ -185,7 +225,9 @@ public class Player {
     }
 
     boolean isIdle(){
-        if(isDigging || isMoving) return false;
+        if(isDigging) return false;
+
+        if(abs(moment.x)>60 || abs(moment.y)>60) return false;
         return true;
     }
 
@@ -205,61 +247,52 @@ public class Player {
         thread.start();
     }
 
-    void startMoveWin(float nx,float ny){
-        if(isIdle()==false) return;
-        Thread thread = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                try{
-                    isMoving = true;
-                    int f = 10;
-                    float dx = (nx-map.stx)/f;
-                    float dy = (ny-map.sty)/f;
-                    for(int i=0; i<f; i++){
-                        map.stx += dx;
-                        map.sty += dy;
-                        Thread.sleep(Setting.MovingTime/f);
-                    }
-//                    map.stx = nx;
-//                    map.sty = ny;
-                    isMoving = false;
-                    extend();
-                } catch(Exception e){}
-            }
-        });
-        thread.start();
-    }
+    void update(){
+//        par.println(moment);
+//        par.println(pos);
+        if(order == -1){
+            if(moment.x !=0 ) order = 1;
+            else if(moment.y !=0 ) order = 2;
+        }
+        if(order==-1){
+            isMoving = false;
+            return;
+        }
 
-    void startMoving(int nx,int ny){
-        if(isIdle()==false) return;
-        Thread thread = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                try{
-                    isMoving = true;
-                    int f = 10;
-                    float dx = (nx-pos.x)/f;
-                    float dy = (ny-pos.y)/f;
-                    for(int i=0; i<f-1; i++){
-                        pos.x += dx;
-                        pos.y += dy;
-                        System.out.println(pos.x + ", " + pos.y);
-                        Thread.sleep(Setting.MovingTime/f);
-                    }
-                    pos.x = nx;
-                    pos.y = ny;
-                    Thread.sleep(Setting.MovingTime/f);
-                    isMoving = false;
-                    extend();
-                } catch(Exception e){}
+        isMoving = true;
+
+        float v = Setting.getMoveV(par);
+
+        if(order==1){
+            if(moment.x <0){
+                moment.x += v;
+                pos.x -= v;
             }
-        });
-        thread.start();
+            else{
+                moment.x -= v;
+                pos.x += v;
+            }
+            if(moment.x == 0) order = -1;
+        }
+        else if(order==2){
+            if(moment.y <0){
+                moment.y += v;
+                pos.y -= v;
+            }
+            else{
+                moment.y -= v;
+                pos.y += v;
+            }
+            if(moment.y == 0) order = -1;
+        }
+
     }
 
     void digBlock(int dir) throws Reminder{
-        int gx = (int)pos.x/Setting.BlockSize + 1 , gy = (int)pos.y/Setting.BlockSize + 1; // screen
-        int mx = gx + (int)map.stx, my = gy+ (int)map.sty; // map
+        if(isMoving) return;
+
+        int gx = (int)posf.x/ BlockSize + 1 , gy = (int)posf.y/ BlockSize + 1; // screen
+        int mx = gx , my = gy; // map
         if(dir==1) my -= 1;
         else if(dir==2) mx += 1;
         else if(dir==3) my += 1;
@@ -276,6 +309,7 @@ public class Player {
         }
 
         startDiggging();
+        this.dir = dir;
         int result = map.dig(mx, my, Setting.ItemLevel[toolId]);
         if(result == 0){
             throw new Reminder(par, pos, "You need update your tools");
@@ -291,7 +325,7 @@ public class Player {
                 log.AddgetItem( Setting.ToLadderId );
 
                 bag.addToolUsage(Setting.ToLadderId, 1);
-                Reminder re = new Reminder(par, pos, "You got a Ladder");
+                Reminder re = new Reminder(par, pos, "You got Ladder");
                 re.setDelay(1000);
                 throw re;
             }
@@ -301,7 +335,7 @@ public class Player {
                 log.AddgetMine( result );
 
                 bag.addMine( result );
-                Reminder re = new Reminder(par, pos, "You got a " + Setting.MineName[ result ]);
+                Reminder re = new Reminder(par, pos, "You got " + Setting.MineName[ result ]);
                 re.setDelay(1000);
                 throw re;
             }
@@ -309,8 +343,8 @@ public class Player {
     }
 
     void putMine(int dir){
-        int gx = (int)pos.x/Setting.BlockSize + 1 , gy = (int)pos.y/Setting.BlockSize + 1; // screen
-        int mx = gx + (int)map.stx, my = gy+ (int)map.sty; // map
+        int gx = (int)posf.x/ BlockSize + 1 , gy = (int)posf.y/ BlockSize + 1; // screen
+        int mx = gx , my = gy ; // map
         if(dir==1) my -= 1;
         else if(dir==2) mx += 1;
         else if(dir==3) my += 1;
@@ -319,19 +353,20 @@ public class Player {
         int id = bag.getMineActiveId();
         if(bag.getMineNum(id)>0 && map.putMine(mx, my, id)){
             bag.delMine(id);
+            log.AddputMine(id);
         }
     }
 
     void putItem() throws Reminder{ // just ladder now
-        int gx = (int)pos.x/Setting.BlockSize + 1 , gy = (int)pos.y/Setting.BlockSize + 1; // screen
-        int mx = gx + (int)map.stx, my = gy+ (int)map.sty; // map
+        int gx = (int)posf.x/ BlockSize + 1 , gy = (int)posf.y/ BlockSize + 1; // screen
+        int mx = gx  , my = gy; // map
 
         if(bag.getToolUsage(Setting.ToLadderId) > 0){
             if( map.putItem(mx, my, 0) )
                 bag.delToolUsage(Setting.ToLadderId);
         }
         else{
-            throw new Reminder(par, pos, "no ladder Q_Q");
+            throw new Reminder(par, posf, "no ladder Q_Q");
         }
     }
 

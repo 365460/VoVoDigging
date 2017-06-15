@@ -49,6 +49,7 @@ public class Loader {
                 title[i] = br.readLine();
                 if(exist.equals("1"))
                     data[i] = true;
+                else title[i] = "No Data";
             }
         }
         catch(IOException e){

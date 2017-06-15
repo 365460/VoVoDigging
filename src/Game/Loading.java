@@ -9,16 +9,20 @@ import processing.core.PImage;
 public class Loading {
     PApplet par;
     PImage img1, img2;
+    PImage img[];
     PImage bg, bG;
     PImage flag[];
     String message;
     int progress = 0;
+    int imgid = 0;
     boolean ok = false;
 
     public Loading (PApplet par){
         this.par = par;
-        img1 = par.loadImage("image/00.png");
-        img2 = par.loadImage("image/01.png");
+
+        img = new PImage[3];
+        for(int i=0; i<3; i++)
+            img[i] = par.loadImage("image/2" + i +".png");
         bg   = par.loadImage("image/load2.png");
         bG   = par.loadImage("image/loadBg.jpg");
 
@@ -49,8 +53,9 @@ public class Loading {
         py = 320+50;
 
         int now = 600*progress/100 + px - 20;
-        if(par.frameCount%6>=3 ) par.image(img1 ,now, py-50, 50,50 );
-        else par.image(img2,now, py-50,50,50 );
+        if(par.frameCount%6>=4 ) par.image(img[0] ,now, py-50, 50,50 );
+        else if(par.frameCount%6>=2) par.image(img[1],now, py-50,50,50 );
+        else par.image(img[2], now, py-50, 50, 50);
 
         int xx = 736, yy = 313;
         if(par.frameCount%6<=1) par.image(flag[0], xx, yy, 50, 50);
@@ -83,7 +88,7 @@ public class Loading {
                 try{
                     while(progress<v){
                         progress += 1;
-                        Thread.sleep(200);
+                        Thread.sleep(20);
                     }
                 }catch (Exception e){
 

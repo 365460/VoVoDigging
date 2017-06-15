@@ -14,6 +14,7 @@ public class BlockGold extends Block{
     }
 
     void showNormal(float x,float y,float w,float h){
+//        par.fill(255,255,0);
         par.image(imgGold, x, y, w, h);
     }
 

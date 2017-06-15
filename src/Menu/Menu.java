@@ -42,7 +42,7 @@ public class Menu {
         this.game = game;
         load = new Loader(par, game, this);
         tlen =  par.textWidth("VoVoDigging");
-        bg  = par.loadImage("image/menuBg.jpg");
+        bg   = par.loadImage("image/menuBg.jpg");
 
         btn = new Button[3];
         for(int i=0; i<3; i++){

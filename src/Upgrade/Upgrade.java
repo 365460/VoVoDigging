@@ -58,7 +58,7 @@ public class Upgrade {
         u0.imgitem[6]=par.loadImage("res/up.png");
         upItem_arr.add(u0);
         ///TODO LIGHT
-        //u0_le=bag.getLightLimit();
+        u0_le=bag.getLight();
 
         UpItem u1=new UpItem (par,100,400,150,150);
         for(int i=0;i<imgnum;i++)
@@ -91,9 +91,11 @@ public class Upgrade {
         par.fill(0);
         par.textSize(30);
         par.image(imgmine[1],260,180,60,60);
-        par.text(bag.getMineNum(Setting.CoalId),345,230);
-        par.text("/ ",365,230);
-        par.text(need[0][u0_le-3],395,230);
+        String s = bag.getMineNum(Setting.CoalId) + " / " + need[0][u0_le-3];
+        par.text( s, 345, 230);
+//        par.text(bag.getMineNum(Setting.CoalId),345,230);
+//        par.text("/ ",380,230);
+//        par.text(need[0][u0_le-3],400,230);
 
 
         //u1
@@ -101,16 +103,15 @@ public class Upgrade {
         par.fill(0);
         par.textSize(27);
         par.image(imgmine[3],215,510,50,50);
-        par.text(bag.getMineNum(Setting.GoldId),275,550);
-        par.text("/ ",305,550);
-        par.text((need[1][u1_le]-2),330,550);
+        s = bag.getMineNum(Setting.GoldId) + " / " + (need[0][u1_le]-2);
+        par.text( s, 275, 550);
 
         par.fill(0);
         par.textSize(28);
         par.image(imgmine[4],365,515,50,50);
-        par.text(bag.getMineNum(Setting.DiamondId),425,550);
-        par.text("/ ",455,550);
-        par.text(need[1][u1_le],480,550);
+        s = bag.getMineNum(Setting.DiamondId) + " / " + (need[0][u1_le]);
+        par.text( s, 425, 550);
+
 
     }
     public void mousePressed()throws Reminder {

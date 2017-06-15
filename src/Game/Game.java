@@ -8,6 +8,7 @@ import Setting.*;
 import Map.*;
 import Store.*;
 import Menu.*;
+import Battle.*;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -21,14 +22,18 @@ import java.util.LinkedList;
 import java.util.Queue;
 import java.util.concurrent.SynchronousQueue;
 
+import static Setting.Setting.BlockSize;
+
 /**
  * Created by Rober on 2017/5/5.
  */
 public class Game {
     PApplet par;
 
-    Map map;
+    MapDigging map;
+    MapGround mapground;
     Player player;
+    Battle battle;
 
     Store store;
     Upgrade upgrade;
@@ -39,7 +44,11 @@ public class Game {
     Loading loading;
     SettingTab settingtab;
 
+    Victory victory;
+    Lose lose;
+
     GameStatus gameStatus = GameStatus.MENU;
+    GameStatus preStatus = GameStatus.MENU;
 
     Queue<Reminder> Qre;
     Reminder nowReminder;
@@ -49,6 +58,9 @@ public class Game {
     int height, width;
     boolean isShifting;
     int isBag = 0;
+    int hp  = 100;
+    int Time = 5*60;
+    int now = Time;
 
     int loadP = 0;
     String loadMessage;
@@ -85,11 +97,32 @@ public class Game {
             }
         });
         thCheck_Reminder.start();
+
+        Thread timer = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                while(true){
+                    now --;
+                    if(now==0){
+                        goToBattle();
+                    }
+                    try{
+                        Thread.sleep(1000);
+                    }catch(Exception e){
+
+                    }
+                }
+            }
+        });
+        timer.start();
+    }
+    public void resetTimer(){
+        now = Time;
     }
 
     public void initNewGame(){ // call by menu
 
-        gameStatus = GameStatus.LOADING;
+        setStatus( GameStatus.LOADING );
 
         loading.clean();
         Game game = this; // for build settingTab
@@ -98,7 +131,8 @@ public class Game {
             public void run() {
                 loading.setMessage("loading map....");
                 log    = new Log(par);
-                map    = new Map(par, 10, 0);
+                map    = new MapDigging(par, 0, 0);
+                mapground = new MapGround(par, 0, 0);
                 loading.setProgress(20);
 
                 loading.setMessage("loading setting....");
@@ -107,14 +141,20 @@ public class Game {
 
                 loading.setMessage("loading player....");
                 player = new Player(par, 6,Setting.HeightSpaceNum-1, map, log);
-                loading.setProgress(60);
+                loading.setProgress(40);
 
                 loading.setMessage("loading store...");
                 store  = new Store(par, par.height, width, player.bag);
-                loading.setProgress(80);
+                loading.setProgress(50);
 
                 loading.setMessage("loading Upgrade...");
                 upgrade = new Upgrade(par, par.height, width, player.bag);
+                loading.setProgress(60);
+
+                loading.setMessage("loading Battle...");
+                battle = new Battle(par, player.bag.getBagMine());
+                victory=new  Victory( game,  par,par.width,par.height);
+                lose =new Lose( game,  par,par.width,par.height);
                 loading.setProgress(100);
 
                 while(loading.isOk()==false){
@@ -122,25 +162,27 @@ public class Game {
                         Thread.sleep(10);
                     }catch (Exception e){}
                 }
-                gameStatus = GameStatus.DIGGING;
+                resetTimer();
+                goToGround(false);
             }
         });
         load.start();
-
     }
 
     public void initOldGame(String pre){ // call by menu
 
-        gameStatus = GameStatus.LOADING;
+        setStatus(GameStatus.LOADING);
 
         loading.clean();
         Game game = this;
         Thread load = new Thread(new Runnable() {
             @Override
             public void run() {
+
                 loading.setMessage("loading map....");
                 log    = new Log(par);
-                map    = new Map(par, 10, 0);
+                map    = new MapDigging(par, 0, 0);
+                mapground = new MapGround(par, 0, 0);
                 loading.setProgress(20);
 
                 loading.setMessage("loading setting....");
@@ -149,15 +191,21 @@ public class Game {
 
                 loading.setMessage("loading player....");
                 player = new Player(par, 6,Setting.HeightSpaceNum-1, map, log);
-                loading.setProgress(50);
+                loading.setProgress(40);
 
                 loading.setMessage("loading store...");
                 store  = new Store(par, par.height, width, player.bag);
-                loading.setProgress(80);
+                loading.setProgress(50);
 
                 loading.setMessage("loading Upgrade...");
                 upgrade = new Upgrade(par, par.height, width, player.bag);
-                loading.setProgress(90);
+                loading.setProgress(60);
+
+                loading.setMessage("loading Battle...");
+                battle = new Battle(par, player.bag.getBagMine());
+                victory=new  Victory( game,  par,par.width,par.height);
+                lose =new Lose( game,  par,par.width,par.height);
+                loading.setProgress(100);
 
                 loading.setMessage("reading from recorder...");
                 map.read(pre, player);
@@ -169,10 +217,18 @@ public class Game {
                         Thread.sleep(10);
                     }catch (Exception e){}
                 }
-                gameStatus = GameStatus.DIGGING;
+                resetTimer();
+                goToGround(false);
             }
         });
         load.start();
+    }
+
+    public void drawTime(){
+        par.textSize(30);
+        par.fill(255,0,0);
+        par.text("Time:"+now, 550, 30);
+        par.text("hp:"+hp, 50, 30);
     }
 
     public void draw(){
@@ -182,8 +238,10 @@ public class Game {
                 break;
 
             case SETTING:
-                map.display((int)player.pos.x, (int)player.pos.y, player.getLight(), player.pos);
-                player.display();
+                if(preStatus==GameStatus.DIGGING)
+                    map.displayQ(player.pos);
+                else mapground.display(player.pos);
+                player.display(map.camera);
                 settingtab.display();
                 break;
 
@@ -191,21 +249,35 @@ public class Game {
                 loading.display();
                 break;
 
+            case GROUND:
+                mapground.display(player.pos);
+//                map.display((int)player.pos.x, (int)player.pos.y, player.getLight(), player.pos);
+                player.display(map.camera);
+                drawTime();
+                break;
             case DIGGING:
-                map.display((int)player.pos.x, (int)player.pos.y, player.getLight(), player.pos);
-                player.display();
+                map.displayQ(player.pos);
+//                map.display((int)player.pos.x, (int)player.pos.y, player.getLight(), player.pos);
+                player.display(map.camera);
+                drawTime();
                 break;
 
             case BAGMINE:
-                map.display((int)player.pos.x, (int)player.pos.y, player.getLight(), player.pos);
-                player.display();
+                if(preStatus==GameStatus.DIGGING)
+                    map.displayQ(player.pos);
+                else mapground.display(player.pos);
+                player.display(map.camera);
                 player.displayMineBag();
+                drawTime();
                 break;
 
             case BAGTOOL:
-                map.display((int)player.pos.x, (int)player.pos.y, player.getLight(), player.pos);
-                player.display();
+                if(preStatus==GameStatus.DIGGING)
+                    map.displayQ(player.pos);
+                else mapground.display(player.pos);
+                player.display(map.camera);
                 player.displayToolBag();
+                drawTime();
                 break;
 
             case SHOPPING:
@@ -216,20 +288,43 @@ public class Game {
                 upgrade.draw();
                 break;
 
-            case VICTORY:
-                par.background(0);
-                par.textAlign(par.LEFT);
-                par.textSize(40);
-                par.text("Victory", 50, 50);
-                log.display();
+            case BATTLE:
+                int result = battle.display();
+                if(result==1){
+                    if(battle.battleResult()<0){
+                        hp += battle.battleResult();
+                    }
+                    if(hp<=0) setStatus(GameStatus.LOSE);
+                    else setStatus(preStatus);
+                }
                 break;
+
+            case VICTORY:
+                map.display((int)player.pos.x, (int)player.pos.y, player.getLight(), player.pos);
+                victory.draw((int)player.pos.x, (int)player.pos.y);
+                break;
+
+            case LOSE:
+                lose.draw();
         }
-        if(isReminder) nowReminder.display();
+
+        if(isReminder){
+            par.translate(-map.camera.x,-map.camera.y);
+            nowReminder.display();
+            par.translate(map.camera.x,map.camera.y);
+        }
+
     }
 
     public void keyPressed(){
+        if(par.keyCode==par.SHIFT) return;
         try{
             switch (gameStatus){
+                case BATTLE:
+                    if(par.key == 27)
+                        gameStatus = GameStatus.DIGGING;
+                    break;
+
                 case SETTING:
                     int key = par.keyCode;
                     par.keyCode = 0;
@@ -240,31 +335,62 @@ public class Game {
                     break;
 
                 case UPGRADE:
-                    if(par.key == 'o') gameStatus = GameStatus.DIGGING;
+                    if(par.key == 'o') goToGround(false);
                     break;
 
                 case SHOPPING:
-                    if(par.key == 'o') gameStatus = GameStatus.DIGGING;
+                    if(par.key == 'o') goToGround(false);
                     break;
 
                 case BAGMINE:
-                    if(par.key == 'b') gameStatus = GameStatus.DIGGING;
+                    if(par.key == 'b') setStatus( preStatus );
                     else player.bag.keyPressed(par.keyCode, 0);
                     break;
 
                 case BAGTOOL:
-                    if(par.key == 't') gameStatus = GameStatus.DIGGING;
+                    if(par.key == 't') setStatus( preStatus );
                     else player.bag.keyPressed(par.keyCode, 1);
                     break;
 
-                case DIGGING:
-                    if(par.key == 'b')       gameStatus = GameStatus.BAGMINE;
-                    else if(par.key == 't' ) gameStatus = GameStatus.BAGTOOL;
+                case GROUND:
+                    if(par.key == 'b')       setStatus( GameStatus.BAGMINE );
+                    else if(par.key == 'g')  goToBattle();
+                    else if(par.key == 't' ) setStatus( GameStatus.BAGTOOL );
                     else if(par.keyCode == 27) {
                         par.keyCode = 0;
                         settingtab.open();
-                        gameStatus = GameStatus.SETTING;
+                        setStatus( GameStatus.SETTING );
                     }
+                    else{
+                        int dir = 0;
+                        if(par.keyCode==par.UP         || par.key=='w' || par.key=='W') dir = 1;
+                        else if(par.keyCode==par.RIGHT || par.key=='d' || par.key=='D') dir = 2;
+                        else if(par.keyCode==par.DOWN  || par.key=='s' || par.key=='S') dir = 3;
+                        else if(par.keyCode==par.LEFT  || par.key=='a' || par.key=='A') dir = 4;
+
+                        if(player.isIdle()==false) return; // so busy
+
+                        else if(par.key == par.CODED){
+
+                            if(dir==1 && mapground.atShop(player.pos))         setStatus( GameStatus.SHOPPING );
+                            else if(dir==1 && mapground.atUpgrade(player.pos)) setStatus( GameStatus.UPGRADE );
+                            else if(dir==1 && mapground.atGate(player.pos)) goToDigging();
+                            else{
+                                player.dir = dir;
+                                boolean win = player.tryMove(dir);
+                                if(win){
+                                    gameStatus = GameStatus.VICTORY;
+                                    saveGame(1);
+                                }
+                            }
+                        }
+                    }
+                    break;
+
+                case DIGGING:
+                    if(par.key == 'b')       setStatus(GameStatus.BAGMINE);
+                    else if(par.key == 'g')  setStatus( GameStatus.BATTLE );
+                    else if(par.key == 't' ) setStatus( GameStatus.BAGTOOL );
                     else{
                         int dir = 0;
                         if(par.keyCode==par.UP         || par.key=='w' || par.key=='W') dir = 1;
@@ -276,14 +402,12 @@ public class Game {
 
                         if(par.key=='q') player.putItem();
                         else if(par.key == par.CODED){
-
-                            if(dir==1 && map.atShop(player.pos)) gameStatus = GameStatus.SHOPPING;
-                            else if(dir==1 && map.atUpgrade(player.pos)) gameStatus = GameStatus.UPGRADE;
+                            if(dir==1 && player.pos.x==BlockSize && player.pos.y==BlockSize) goToGround(true);
                             else{
                                 player.dir = dir;
                                 boolean win = player.tryMove(dir);
                                 if(win){
-                                    gameStatus = GameStatus.VICTORY;
+                                    setStatus(GameStatus.VICTORY);
                                     saveGame(1);
                                 }
                             }
@@ -320,6 +444,10 @@ public class Game {
                 case UPGRADE:
                     upgrade.mousePressed();
                     break;
+
+                case BATTLE:
+                    battle.checkMouseClicked();
+                    break;
             }
         }
         catch(Reminder re){
@@ -330,7 +458,6 @@ public class Game {
     }
 
     public void saveGame(int id){
-        gameStatus = GameStatus.DIGGING;
 
         map.save("keep/K" + id , player);
         System.out.println("map save OK");
@@ -370,13 +497,34 @@ public class Game {
         Qre.offer(new Reminder(par, "Save successfully"));
     }
 
+    public void goToGround(boolean fromMap){
+        player.setMap( mapground );
+        player.dir = 3;
+        if(fromMap) player.setPos(BlockSize*11, BlockSize*3);
+//        else player.setPos(BlockSize*6, BlockSize*3);
+        setStatus(GameStatus.GROUND);
+    }
+
     public void goToDigging(){
-        gameStatus = GameStatus.DIGGING;
+        player.setMap( map );
+        player.setPos(BlockSize, BlockSize);
+        player.extend();
+        setStatus(GameStatus.DIGGING);
     }
 
     public void goToMenu(){
         menu.toNormal();
-        gameStatus = GameStatus.MENU;
+        setStatus( GameStatus.MENU);
+    }
+
+    public void setStatus(GameStatus status){
+        preStatus = gameStatus;
+        gameStatus = status;
+    }
+
+    public void goToBattle(){
+        battle.reset();
+        setStatus(GameStatus.BATTLE );
     }
 }
 
@@ -385,6 +533,7 @@ enum GameStatus {
     SETTING,
 
     LOADING,
+    GROUND,
     DIGGING,
 
     SHOPPING,
@@ -393,6 +542,8 @@ enum GameStatus {
     BAGMINE,
     BAGTOOL,
 
-    VICTORY
+    VICTORY,
+    LOSE,
+    BATTLE;
 }
 

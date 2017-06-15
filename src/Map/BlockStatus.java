@@ -8,7 +8,8 @@ public enum BlockStatus{
         LADDER(2),
         DIGGING(3),
         FIN(4),
-        EMPTY(5);
+        EMPTY(5),
+        GATE(6);
 
         private final int value;
 
@@ -30,6 +31,8 @@ public enum BlockStatus{
                     return FIN;
                 case 5:
                     return EMPTY;
+                case 6:
+                    return GATE;
                 default:
                     return EMPTY;
             }

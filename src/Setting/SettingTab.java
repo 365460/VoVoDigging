@@ -23,7 +23,6 @@ public class SettingTab {
 
     Saving save;
 
-
     public SettingTab(PApplet par, Game game){
         this.par  = par;
         this.game = game;
@@ -98,7 +97,7 @@ public class SettingTab {
                         Thread.sleep(100);
                     }
                     Thread.sleep(200);
-                    game.goToDigging();
+                    game.goToGround(false);
                 } catch (Exception e){}
             }
         });

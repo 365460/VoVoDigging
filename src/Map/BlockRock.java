@@ -15,6 +15,7 @@ public class BlockRock extends Block{
     }
 
     void showNormal(float x,float y,float w,float h){
+//        par.fill(137,229,208);
         par.image(imgRock, x, y, w, h);
     }
 

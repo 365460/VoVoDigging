@@ -15,11 +15,15 @@ public class Bag {
 
     public Bag(PApplet par){
         this.par = par;
-        light = 1;
+        light = 3;
 
         minebag = new BagMine(par);
         toolbag = new BagTool(par);
 
+    }
+
+    public BagMine getBagMine(){
+        return minebag;
     }
 
     public void setLight(int v){
