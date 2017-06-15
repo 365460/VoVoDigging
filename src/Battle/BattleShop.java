@@ -29,12 +29,15 @@ public class BattleShop {
     private MessageBox checkBox;
     private Shelf targetShelf;
 
+
     private void generateList(int n){
         int []req = new int[6];
         for (int i = 0; i < n; i++) {
             int luckyNum = (int)(Math.random()*11);
-            int defNum = (int)(Math.random()*30);
-            for(int j = 0; j < 6; j++) req[j] = (int)(Math.random()*3);
+            int defNum = (int)(Math.random()*20);
+            for(int j = 0; j < 6; j++) {
+                req[j] = (int)(Math.random()*2 + (luckyNum+defNum)/(j+10));
+            }
             DefensiveItem tmp = new DefensiveItem(parent, luckyNum, defNum, i, req, BattleSetting.itemName[i]);
             defItemList.add(tmp);
         }
@@ -105,7 +108,7 @@ public class BattleShop {
                     parent.rect(gridX, gridY, gridW, gridH);
                     parent.image(DefensiveItem.mine[r*2 + c], gridX + x_interval, gridY + y_interval, gridW - x_interval*2, gridH - y_interval*2);
                     parent.fill(0, 0, 0);
-                    parent.text(bag.getNum(r*2+c), gridX, gridY + gridH - 2);
+                    parent.text(bag.getNum(r*2+c+1), gridX, gridY + gridH - 2);
                 }
             }
     }

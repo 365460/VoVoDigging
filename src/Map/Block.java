@@ -110,12 +110,12 @@ public class Block {
     }
 
     public boolean canDig(int tool){
-        return true;
-//        if(status==BlockStatus.LADDER)return true;
-//
-//        if(tool<level) return false;
-//        if(level==100) return false;
-//        else return true;
+//        return true;
+        if(status==BlockStatus.LADDER)return true;
+
+        if(tool<level) return false;
+        if(level==100) return false;
+        else return true;
     }
 
     public boolean isEmpty(){

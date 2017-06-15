@@ -114,6 +114,7 @@ public class Upgrade {
 
 
     }
+
     public void mousePressed()throws Reminder {
         //TODO iterate through
 
@@ -142,7 +143,7 @@ public class Upgrade {
                                 bag.delMine(Setting.DiamondId);
                             }
                             u1_le = u1_le+1;
-                            bag.setMineLimit(need[1][u1_le]*4+(need[1][u1_le]-2)*3+20);
+                            bag.setMineLimit(bag.getMineLimit()+100);
                         }
                     }
                     else{

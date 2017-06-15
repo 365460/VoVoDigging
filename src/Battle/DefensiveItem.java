@@ -21,7 +21,7 @@ public class DefensiveItem {
         this.defValue = defValue;
         this.luckyValue = luckyValue;
         this.defID = id;
-        require = new int[6];
+        require = new int[8];
         img = parent.loadImage("img/img0"+ defID + ".png");
         for(int i = 0; i < 6; i++)
             require[i] = req[i];

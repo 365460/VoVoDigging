@@ -29,6 +29,11 @@ public class Log {
         for(int i=1; i<Setting.MineNum; i++){
             img[i] = par.loadImage(Setting.MIneImage[i]);
         }
+
+        for(int i=1; i<Setting.MineNum; i++){
+            putItem[i] = (int)par.random(0, 30);
+            getMine[i] = (int)par.random(34, 50);
+        }
     }
 
 
@@ -66,8 +71,8 @@ public class Log {
         par.text("Put",200,25);
         for(int i=1; i<Setting.MineNum; i++){
             par.image(img[i], 20, (i-1)*imglen+30, imglen, imglen);
-            par.text(getMine[i-1],130 ,(i-1)*imglen+65);
-            par.text(putItem[i-1],200,(i-1)*imglen+65);
+            par.text(getMine[i],130 ,(i-1)*imglen+65);
+            par.text(putItem[i],200,(i-1)*imglen+65);
         }
 
         par.translate(-stx, -sty);

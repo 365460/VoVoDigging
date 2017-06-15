@@ -68,7 +68,7 @@ public class Shelf {
     public boolean isValidBuy(int[] bagmine) {
            int []check = item.getRequire();
            for (int i = 0; i < 6; i++) {
-               if (check[i] > bagmine[i]) return false;
+               if (check[i] > bagmine[i+1]) return false;
            }
            return true;
     }

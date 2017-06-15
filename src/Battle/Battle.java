@@ -75,6 +75,16 @@ public class Battle {
        public int battleResult() {
               return fight.fightResult();
        }
+    public void checkKeyPressed() {
+        if(state == BattleState.SHOP) {
+            if (parent.key == 'g') {
+                System.out.println("key PREEEE");
+                state = BattleState.FIGHT;
+                fight.reset();
+            }
+        }
+    }
+
 
 }
 

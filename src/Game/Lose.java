@@ -28,6 +28,7 @@ public class Lose {
 
     }
 
+
     public void draw(){
 
         par.imageMode(PConstants.CORNER);
@@ -37,12 +38,11 @@ public class Lose {
         par.textAlign(par.CENTER);
         par.fill(255, 0, 0);
         par.textSize(100);
-        par.text("Lose", par.width / 2, 100);
+        par.text("Defeat", par.width / 2, 100);
         par.textSize(50);
         par.text("Die", par.width / 2, 160);
 
         log.display();
     }
-
 }
 

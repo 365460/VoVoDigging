@@ -10,5 +10,6 @@
     <orderEntry type="library" name="core" level="project" />
     <orderEntry type="library" name="Ani" level="project" />
     <orderEntry type="library" name="GifAnimation" level="project" />
+    <orderEntry type="library" name="jsminim" level="project" />
   </component>
 </module>

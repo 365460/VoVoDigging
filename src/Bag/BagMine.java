@@ -36,8 +36,10 @@ public class BagMine {
         }
 
 
+
         for(int i=1; i<Setting.MineNum; i++){
-            mine[i] = 50;
+            for(int j=0; j<40; j++)
+                addMine(i);
         }
     }
 
@@ -65,7 +67,7 @@ public class BagMine {
 
     public void takeMine(int []require){
         for(int i = 0; i < 6; i++)
-            mine[i] -= require[i];
+            mine[i+1] -= require[i];
     }
 
     public int[] getMine(){

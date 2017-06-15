@@ -41,7 +41,7 @@ public class MessageBox {
             parent.text(title, pos.x + width/2, pos.y + height/5 - y_interval);
             //show message
             parent.textSize(height*1/5 - y_interval);
-            parent.text(message, pos.x + width/2, pos.y + height*3/5 - y_interval);
+            parent.text(message, pos.x + width/2, pos.y + height*3/5 - y_interval*3);
             // show button
             yesButton.display();
             noButton.display();
