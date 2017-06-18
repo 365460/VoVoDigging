@@ -34,9 +34,8 @@ public class Map {
         cameraMovement.y = y - camera.y;
     }
 
-    public void update(){
+    public void update(){ // called by draw
         float v = Setting.getMoveV(par);
-        par.println(camera+ " " + cameraf);
 
         boolean check = (cameraMovement.x!=0) || (cameraMovement.y !=0);
         if(cameraMovement.x < 0){
@@ -57,6 +56,7 @@ public class Map {
             camera.y += v;
         }
     }
+
     public void extend(int gx,int gy,int r){
 
     }

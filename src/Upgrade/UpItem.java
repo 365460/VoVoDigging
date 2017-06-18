@@ -77,7 +77,9 @@ public class UpItem
         return false;
     }
 
-
-
+public void setLevel(int level)
+{
+    this.level=level;
+}
 
 }

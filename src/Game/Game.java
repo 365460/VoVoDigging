@@ -28,6 +28,7 @@ import static Setting.Setting.BlockSize;
  * Created by Rober on 2017/5/5.
  */
 public class Game {
+    /*   music   */
     Minim minim ;
     AudioPlayer s0,s1,s2,s3,s4,s5;
     ArrayList<AudioPlayer> s= new ArrayList<>();
@@ -62,16 +63,12 @@ public class Game {
     Thread thCheck_Reminder;
 
     int height, width;
-    boolean isShifting;
-    int isBag = 0;
     int hp  = 100;
     int Time = 5*100;
     int now = -1;
 
-    int loadP = 0;
-    String loadMessage;
-
     public Game(PApplet par, int height, int width){
+        /* load music */
         minim = new Minim(par);
         s5 = minim. loadFile ("music/defeat.wav");
         s4 = minim. loadFile ("music/bag.wav");
@@ -117,12 +114,12 @@ public class Game {
         });
         thCheck_Reminder.start();
 
+        /* battle timer*/
         Thread timer = new Thread(new Runnable() {
             @Override
             public void run() {
                 while(true){
                     now --;
-                    par.println("now = "+now);
                     if(now==0){
                         goToBattle();
                     }
@@ -136,6 +133,7 @@ public class Game {
         });
         timer.start();
     }
+
     public void resetTimer(){
         now = Time;
     }
@@ -302,17 +300,16 @@ public class Game {
                     s.get(i).pause();
                 }
                 mapground.display(player.pos);
-//                map.display((int)player.pos.x, (int)player.pos.y, player.getLight(), player.pos);
                 player.display(map.camera);
                 drawTime();
                 break;
+
             case DIGGING:
                 for(int i=0;i< snum;i++)
                 {
                     s.get(i).pause();
                 }
                 map.displayQ(player.pos);
-//                map.display((int)player.pos.x, (int)player.pos.y, player.getLight(), player.pos);
                 player.display(map.camera);
                 drawTime();
                 break;
@@ -456,8 +453,6 @@ public class Game {
             switch (gameStatus){
                 case BATTLE:
                     battle.checkKeyPressed();
-                    if(par.key == 27)
-                        gameStatus = GameStatus.DIGGING;
                     break;
 
                 case SETTING:
@@ -547,7 +542,7 @@ public class Game {
                             }
                         }
                         else if(dir!=0){
-                            if(par.key>='A' && par.key<='Z') System.out.println("put " + dir);
+                            //if(par.key>='A' && par.key<='Z') System.out.println("put " + dir);
                             if(par.key>='A' && par.key<='Z') player.putMine(dir);
                             else player.digBlock(dir);
                         }

@@ -37,10 +37,10 @@ public class BagMine {
 
 
 
-        for(int i=1; i<Setting.MineNum; i++){
-            for(int j=0; j<40; j++)
-                addMine(i);
-        }
+//        for(int i=1; i<Setting.MineNum; i++){
+//            for(int j=0; j<40; j++)
+//                addMine(i);
+//        }
     }
 
     public int getLimitWeight(){

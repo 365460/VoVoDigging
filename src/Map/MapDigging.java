@@ -50,11 +50,9 @@ public class MapDigging extends Map {
         // init Block image
         Block.imgSoil      = par.loadImage("image/soilMap.png");
         Block.imgRock      = par.loadImage("image/IronMap.png");
-//        Block.imgRock      = par.loadImage("image/rock.png");
         Block.imgCoal      = par.loadImage("image/coalMap.png");
         Block.imgGold      = par.loadImage("image/goldMap.png");
         Block.imgWood      = par.loadImage("image/woodMap.png");
-//        Block.imgWood      = par.loadImage("image/wood.jpg");
         Block.imgDiamond   = par.loadImage("image/dim.png");
         Block.imgGate      = new PImage[3];
         Block.imgGate[0]   = par.loadImage("image/g1.png");
@@ -100,7 +98,6 @@ public class MapDigging extends Map {
     }
 
     public void extend(int x,int y,int r){
-//        y -= Setting.HeightSpaceNum;
         r -= 2;
         for(int i=-r; i<=r; i++){
             for(int j=-r; j<=r; j++){
@@ -108,28 +105,6 @@ public class MapDigging extends Map {
                 shown[i+y][j+x] = true;
             }
         }
-    }
-
-    public void drawTotal(){
-        par.translate(-camera.x, -camera.y);
-        int HS = Setting.HeightSpaceNum*Setting.BlockSize;
-        int len = Setting.BlockSize;
-        int base = HS-Setting.BlockSize;
-
-        for(int i=1; i<=50; i++) {
-            for (int j = 1; j <= 50; j++) {
-                int x = (j - 1) * Setting.BlockSize;
-                int y = (i - 1) * Setting.BlockSize + HS;
-                if (shown[i][j]) map[i][j].display(x, y, len, len);
-
-                if (shown[i][j] == false) {
-                    par.image(imgfog, x, y, len, len);
-                } else {
-                    map[i][j].display(x, y, len, len);
-                }
-            }
-        }
-        par.translate(camera.x, camera.y);
     }
 
     public void displayQ(PVector pos){
@@ -167,7 +142,6 @@ public class MapDigging extends Map {
         par.translate(camera.x, camera.y);
 
     }
-
 
     public void display(int playerx,int playery,int light,PVector pos){
 
@@ -285,7 +259,6 @@ public class MapDigging extends Map {
 
     public boolean shouldFalling(int x,int y){
 
-        par.println("falling "+x+ " " +y);
         if(OverBoard(x, y)) return false;
         if(map[y][x].status == BlockStatus.LADDER)
             return false;

@@ -127,6 +127,7 @@ public class Upgrade {
                         }
                         u0_le=u0_le+1;
                         bag.setLight(u0_le);
+                        upItem_arr.get(i).setLevel(u0_le);
                     }
                     else{
                         Reminder re = new Reminder(par, "You need more resources. QQ");
@@ -144,6 +145,8 @@ public class Upgrade {
                             }
                             u1_le = u1_le+1;
                             bag.setMineLimit(bag.getMineLimit()+100);
+                            upItem_arr.get(i).setLevel(u1_le);
+
                         }
                     }
                     else{
