@@ -300,7 +300,7 @@ public class Game {
                     s.get(i).pause();
                 }
                 mapground.display(player.pos);
-                player.display(map.camera);
+                player.display(mapground.camera);
                 drawTime();
                 break;
 
@@ -630,13 +630,17 @@ public class Game {
         player.setMap( mapground );
         player.dir = 3;
         if(fromMap) player.setPos(BlockSize*11, BlockSize*3);
-//        else player.setPos(BlockSize*6, BlockSize*3);
+        player.setPos(BlockSize*6, BlockSize*3);
         setStatus(GameStatus.GROUND);
     }
 
     public void goToDigging(){
         player.setMap( map );
         player.setPos(BlockSize, BlockSize);
+        map.camera.x = 0;
+        map.camera.y = 0;
+        map.cameraf.x = 0;
+        map.cameraf.y = 0;
         player.extend();
         setStatus(GameStatus.DIGGING);
     }

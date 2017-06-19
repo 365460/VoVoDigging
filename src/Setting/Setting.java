@@ -90,7 +90,7 @@ public class Setting {
     public static float MoveV = 20;
 
     public static int getMoveV(PApplet par) {
-        return 30;
+        return (int)MoveV;
     }
 
 

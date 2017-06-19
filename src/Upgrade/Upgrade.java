@@ -40,15 +40,25 @@ public class Upgrade {
         for(int i=0;i<5;i++) {
             need[1][i] = 8 + 8* i;
             need[0][i] = (4 + i) * (4 + i);
+
         }
 
-
+        for(int i=0;i<5;i++)
+        {
+            System.out.print(need[0][i]+ "  ");
+        }
+        System.out.println();
+        for(int i=0;i<5;i++)
+        {
+            System.out.print(need[1][i]+ "  ");
+        }
+        System.out.println();
         upgradebk=par.loadImage("res/upgradebk.png");
         for(int i=0;i<minenum;i++)
         {
             imgmine[i]=par.loadImage("res/"+i+".png");
         }
-
+        //light
         UpItem u0=new UpItem (par,100,70,150,150);
         for(int i=0;i<imgnum;i++)
         {
@@ -57,9 +67,9 @@ public class Upgrade {
         u0.imgitem[5]=par.loadImage("res/ch.png");
         u0.imgitem[6]=par.loadImage("res/up.png");
         upItem_arr.add(u0);
-        ///TODO LIGHT
         u0_le=bag.getLight();
-
+        System.out.println( u0_le);
+        //bag
         UpItem u1=new UpItem (par,100,400,150,150);
         for(int i=0;i<imgnum;i++)
         {
@@ -69,7 +79,8 @@ public class Upgrade {
         u1.imgitem[6]=par.loadImage("res/up.png");
         upItem_arr.add(u1);
         System.out.println(bag.getMineLimit());
-        u1_le=(bag.getMineLimit()-inibagweight)/8;
+        u1_le=0;
+        System.out.println(u1_le);
     }
 
     public void draw() {
@@ -99,17 +110,16 @@ public class Upgrade {
 
 
         //u1
-
         par.fill(0);
         par.textSize(27);
         par.image(imgmine[3],215,510,50,50);
-        s = bag.getMineNum(Setting.GoldId) + " / " + (need[0][u1_le]-2);
+        s = bag.getMineNum(Setting.GoldId) + " / " + (need[1][u1_le]-2);
         par.text( s, 275, 550);
 
         par.fill(0);
         par.textSize(28);
         par.image(imgmine[4],365,515,50,50);
-        s = bag.getMineNum(Setting.DiamondId) + " / " + (need[0][u1_le]);
+        s = bag.getMineNum(Setting.DiamondId) + " / " + (need[1][u1_le]);
         par.text( s, 425, 550);
 
 
@@ -120,21 +130,21 @@ public class Upgrade {
 
         for (int i = 0; i < upnum; i++) {
             if (upItem_arr.get(i).checkMouseClicked()) {
-                if(i==0) {
+                if(i==0) {//light
                     if ( need[0][u0_le-3]<= bag.getMineNum(Setting.CoalId)) {
                         for (int j = 0; j< need[0][u0_le-3]; j++) {
                             bag.delMine(Setting.CoalId);
                         }
                         u0_le=u0_le+1;
                         bag.setLight(u0_le);
-                        upItem_arr.get(i).setLevel(u0_le);
+                        upItem_arr.get(i).setLevel(u0_le-3);
                     }
                     else{
                         Reminder re = new Reminder(par, "You need more resources. QQ");
                         throw re;
                     }
                 }
-                else if(i==1) {
+                else if(i==1) {//bag
                     if ((need[1][u1_le]-2) <= bag.getMineNum(Setting.GoldId)) {
                         if(need[1][u1_le] <= bag.getMineNum(Setting.DiamondId)) {
                             for (int j = 0; j < (need[1][u1_le] - 2); j++) {

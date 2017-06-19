@@ -2,25 +2,20 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="e3f6bab5-ada1-4dbc-961b-c635cde621c9" name="Default" comment="kkkkk">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/img/img01.png" afterPath="$PROJECT_DIR$/img/img01.png" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/img/img03.png" afterPath="$PROJECT_DIR$/img/img03.png" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/img/img05.png" afterPath="$PROJECT_DIR$/img/img05.png" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/img/img06.png" afterPath="$PROJECT_DIR$/img/img06.png" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/img/img08.png" afterPath="$PROJECT_DIR$/img/img08.png" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/keep/K1/img.png" afterPath="$PROJECT_DIR$/keep/K1/img.png" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gitignore" afterPath="$PROJECT_DIR$/.gitignore" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/VovoDigging.iml" afterPath="$PROJECT_DIR$/VovoDigging.iml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/VovoDigging/Game/Game.class" afterPath="$PROJECT_DIR$/out/production/VovoDigging/Game/Game.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/VovoDigging/Game/GameStatus.class" afterPath="$PROJECT_DIR$/out/production/VovoDigging/Game/GameStatus.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/VovoDigging/Map/MapGround.class" afterPath="$PROJECT_DIR$/out/production/VovoDigging/Map/MapGround.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/keep/K1/map.map" afterPath="$PROJECT_DIR$/keep/K1/map.map" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/keep/K1/mine.bag" afterPath="$PROJECT_DIR$/keep/K1/mine.bag" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/keep/K1/shown.map" afterPath="$PROJECT_DIR$/keep/K1/shown.map" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/keep/K1/status.map" afterPath="$PROJECT_DIR$/keep/K1/status.map" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/keep/K1/tool.bag" afterPath="$PROJECT_DIR$/keep/K1/tool.bag" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/keep/keep" afterPath="$PROJECT_DIR$/keep/keep" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Bag/BagMine.java" afterPath="$PROJECT_DIR$/src/Bag/BagMine.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/map.data" afterPath="$PROJECT_DIR$/map.data" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Game/Game.java" afterPath="$PROJECT_DIR$/src/Game/Game.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Map/Map.java" afterPath="$PROJECT_DIR$/src/Map/Map.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Map/MapDigging.java" afterPath="$PROJECT_DIR$/src/Map/MapDigging.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Upgrade/UpItem.java" afterPath="$PROJECT_DIR$/src/Upgrade/UpItem.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Setting/Setting.java" afterPath="$PROJECT_DIR$/src/Setting/Setting.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Upgrade/Upgrade.java" afterPath="$PROJECT_DIR$/src/Upgrade/Upgrade.java" />
     </list>
     <ignored path="VovoDigging.iws" />
@@ -42,126 +37,113 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="Game.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="Game.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/Game/Game.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-58">
-              <caret line="135" column="0" selection-start-line="135" selection-start-column="0" selection-end-line="135" selection-end-column="0" />
+            <state relative-caret-position="157">
+              <caret line="302" column="39" selection-start-line="302" selection-start-column="39" selection-end-line="302" selection-end-column="39" />
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="method#Game#0;class#Game#0" expanded="false" />
                 <element signature="method#initNewGame#0;class#Game#0" expanded="false" />
                 <element signature="method#initOldGame#0;class#Game#0" expanded="false" />
                 <element signature="method#drawTime#0;class#Game#0" expanded="false" />
-                <element signature="method#draw#0;class#Game#0" expanded="false" />
                 <element signature="method#keyPressed#0;class#Game#0" expanded="false" />
                 <element signature="method#mousePressed#0;class#Game#0" expanded="false" />
                 <element signature="method#saveGame#0;class#Game#0" expanded="false" />
-                <element signature="method#goToGround#0;class#Game#0" expanded="false" />
-                <element signature="method#goToDigging#0;class#Game#0" expanded="false" />
                 <element signature="method#goToMenu#0;class#Game#0" expanded="false" />
                 <element signature="method#setStatus#0;class#Game#0" expanded="false" />
-                <element signature="method#goToBattle#0;class#Game#0" expanded="false" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Loading.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/Game/Loading.java">
+      <file leaf-file-name="Victory.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/Game/Victory.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1216">
-              <caret line="66" column="0" selection-start-line="66" selection-start-column="0" selection-end-line="66" selection-end-column="0" />
-              <folding>
-                <element signature="imports" expanded="false" />
-                <element signature="e#2175#2176#0" expanded="false" />
-                <element signature="e#2202#2203#0" expanded="false" />
-                <element signature="e#2647#2648#0" expanded="false" />
-                <element signature="e#2675#2676#0" expanded="false" />
-                <element signature="e#2702#2703#0" expanded="false" />
-                <element signature="e#2727#2728#0" expanded="false" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name=".gitignore" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/.gitignore">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1007">
-              <caret line="53" column="0" selection-start-line="53" selection-start-column="0" selection-end-line="53" selection-end-column="0" />
+            <state relative-caret-position="247">
+              <caret line="23" column="26" selection-start-line="23" selection-start-column="26" selection-end-line="23" selection-end-column="26" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Bag.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/Bag/Bag.java">
+      <file leaf-file-name="Player.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/Game/Player.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="114">
-              <caret line="9" column="13" selection-start-line="9" selection-start-column="13" selection-end-line="9" selection-end-column="13" />
+            <state relative-caret-position="1463">
+              <caret line="344" column="25" selection-start-line="344" selection-start-column="25" selection-end-line="344" selection-end-column="25" />
               <folding>
-                <element signature="imports" expanded="false" />
-                <element signature="e#449#450#0" expanded="false" />
-                <element signature="e#479#480#0" expanded="false" />
-                <element signature="e#513#514#0" expanded="false" />
-                <element signature="e#538#539#0" expanded="false" />
-                <element signature="e#566#567#0" expanded="false" />
-                <element signature="e#594#595#0" expanded="false" />
-                <element signature="e#632#633#0" expanded="false" />
-                <element signature="e#673#674#0" expanded="false" />
-                <element signature="e#705#706#0" expanded="false" />
-                <element signature="e#752#753#0" expanded="false" />
-                <element signature="e#788#789#0" expanded="false" />
-                <element signature="e#829#830#0" expanded="false" />
-                <element signature="e#863#864#0" expanded="false" />
-                <element signature="e#898#899#0" expanded="false" />
-                <element signature="e#932#933#0" expanded="false" />
-                <element signature="e#967#968#0" expanded="false" />
-                <element signature="e#1002#1003#0" expanded="false" />
-                <element signature="e#1046#1047#0" expanded="false" />
-                <element signature="e#1245#1246#0" expanded="false" />
-                <element signature="e#1289#1290#0" expanded="false" />
-                <element signature="e#1327#1328#0" expanded="false" />
-                <element signature="e#1370#1371#0" expanded="false" />
-                <element signature="e#1415#1416#0" expanded="false" />
-                <element signature="e#1458#1459#0" expanded="false" />
-                <element signature="e#1497#1498#0" expanded="false" />
-                <element signature="e#1537#1538#0" expanded="false" />
-                <element signature="e#1571#1572#0" expanded="false" />
-                <element signature="e#1606#1607#0" expanded="false" />
-                <element signature="e#1662#1663#0" expanded="false" />
-                <element signature="e#1695#1696#0" expanded="false" />
-                <element signature="e#1727#1728#0" expanded="false" />
-                <element signature="e#1760#1761#0" expanded="false" />
+                <element signature="method#move#0;class#Player#0" expanded="false" />
+                <element signature="method#extend#0;class#Player#0" expanded="false" />
+                <element signature="method#delayToMove#0;class#Player#0" expanded="false" />
+                <element signature="method#isIdle#0;class#Player#0" expanded="false" />
+                <element signature="method#startDiggging#0;class#Player#0" expanded="false" />
+                <element signature="method#update#0;class#Player#0" expanded="false" />
+                <element signature="method#digBlock#0;class#Player#0" expanded="false" />
+                <element signature="method#putMine#0;class#Player#0" expanded="false" />
+                <element signature="method#save#0;class#Player#0" expanded="false" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="BagMine.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/Bag/BagMine.java">
+      <file leaf-file-name="MapGround.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/Map/MapGround.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1254">
-              <caret line="151" column="57" selection-start-line="151" selection-start-column="57" selection-end-line="151" selection-end-column="57" />
+            <state relative-caret-position="-57">
+              <caret line="57" column="0" selection-start-line="57" selection-start-column="0" selection-end-line="57" selection-end-column="0" />
               <folding>
-                <element signature="imports" expanded="false" />
-                <element signature="e#943#944#0" expanded="false" />
-                <element signature="e#977#978#0" expanded="false" />
-                <element signature="e#1017#1018#0" expanded="false" />
-                <element signature="e#1048#1049#0" expanded="false" />
-                <element signature="e#1080#1081#0" expanded="false" />
-                <element signature="e#1111#1112#0" expanded="false" />
-                <element signature="method#addMine#0;class#BagMine#0" expanded="false" />
-                <element signature="method#delMine#0;class#BagMine#0" expanded="false" />
-                <element signature="e#1478#1479#0" expanded="false" />
-                <element signature="e#1505#1506#0" expanded="false" />
-                <element signature="e#1536#1537#0" expanded="false" />
-                <element signature="e#1567#1568#0" expanded="false" />
-                <element signature="method#display#0;class#BagMine#0" expanded="false" />
-                <element signature="method#keyPressed#0;class#BagMine#0" expanded="false" />
-                <element signature="method#save#0;class#BagMine#0" expanded="false" />
+                <element signature="imports" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="MapDigging.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/Map/MapDigging.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="304">
+              <caret line="98" column="0" selection-start-line="98" selection-start-column="0" selection-end-line="98" selection-end-column="0" />
+              <folding>
+                <element signature="method#MapDigging#0;class#MapDigging#0" expanded="false" />
+                <element signature="method#extend#0;class#MapDigging#0" expanded="false" />
+                <element signature="method#displayQ#0;class#MapDigging#0" expanded="false" />
+                <element signature="method#display#0;class#MapDigging#0" expanded="false" />
+                <element signature="method#canMove#0;class#MapDigging#0" expanded="false" />
+                <element signature="method#OverBoard#0;class#MapDigging#0" expanded="false" />
+                <element signature="method#isEmpty#0;class#MapDigging#0" expanded="false" />
+                <element signature="method#isVectory#0;class#MapDigging#0" expanded="false" />
+                <element signature="method#shouldFalling#0;class#MapDigging#0" expanded="false" />
+                <element signature="method#canDig#0;class#MapDigging#0" expanded="false" />
+                <element signature="method#dig#0;class#MapDigging#0" expanded="false" />
+                <element signature="method#putItem#0;class#MapDigging#0" expanded="false" />
+                <element signature="method#delPutMine#0;class#MapDigging#0" expanded="false" />
+                <element signature="method#putMine#0;class#MapDigging#0" expanded="false" />
+                <element signature="method#getBlockId#0;class#MapDigging#0" expanded="false" />
+                <element signature="method#read#0;class#MapDigging#0" expanded="false" />
+                <element signature="method#save#0;class#MapDigging#0" expanded="false" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="BlockCoal.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/Map/BlockCoal.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="133">
+              <caret line="8" column="13" selection-start-line="8" selection-start-column="13" selection-end-line="8" selection-end-column="13" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Reminder.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/Reminder/Reminder.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-380">
+              <caret line="10" column="13" selection-start-line="10" selection-start-column="13" selection-end-line="10" selection-end-column="13" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -169,13 +151,32 @@
       <file leaf-file-name="Upgrade.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/Upgrade/Upgrade.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1235">
-              <caret line="147" column="57" selection-start-line="147" selection-start-column="57" selection-end-line="147" selection-end-column="57" />
+            <state relative-caret-position="532">
+              <caret line="171" column="0" selection-start-line="171" selection-start-column="0" selection-end-line="171" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Setting.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/Setting/Setting.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="393">
+              <caret line="92" column="19" selection-start-line="92" selection-start-column="19" selection-end-line="92" selection-end-column="19" />
               <folding>
-                <element signature="imports" expanded="false" />
-                <element signature="method#setup#0;class#Upgrade#0" expanded="false" />
-                <element signature="method#draw#0;class#Upgrade#0" expanded="false" />
+                <element signature="e#3915#3916#0" expanded="true" />
+                <element signature="e#3948#3949#0" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Upgrade.java" pinned="false" current-in-tab="false">
+        <entry file="file://$USER_HOME$/Downloads/Upgrade.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="209">
+              <caret line="157" column="48" selection-start-line="157" selection-start-column="48" selection-end-line="157" selection-end-column="48" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -200,7 +201,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/src/Player.java" />
         <option value="$PROJECT_DIR$/src/Menu.java" />
         <option value="$PROJECT_DIR$/src/Menu/Button.java" />
         <option value="$PROJECT_DIR$/src/Menu/Load.java" />
@@ -219,14 +219,12 @@
         <option value="$PROJECT_DIR$/src/Map/BlockWood.java" />
         <option value="$PROJECT_DIR$/src/Main.java" />
         <option value="$PROJECT_DIR$/src/Map/BlockGate.java" />
-        <option value="$PROJECT_DIR$/src/Setting/Setting.java" />
         <option value="$PROJECT_DIR$/src/Map/BlockStatus.java" />
         <option value="$PROJECT_DIR$/src/Map/BlockFactory.java" />
         <option value="$PROJECT_DIR$/keep/keep" />
         <option value="$PROJECT_DIR$/src/Menu/Frame.java" />
         <option value="$PROJECT_DIR$/src/Menu/Loader.java" />
         <option value="$PROJECT_DIR$/src/Setting/SettingTab.java" />
-        <option value="$PROJECT_DIR$/src/Map/MapGround.java" />
         <option value="$PROJECT_DIR$/src/Game/Timer.java" />
         <option value="$PROJECT_DIR$/src/Game/BattleFight.java" />
         <option value="$PROJECT_DIR$/src/Game/Player.java" />
@@ -241,24 +239,27 @@
         <option value="$PROJECT_DIR$/src/Battle/BattleShop.java" />
         <option value="$PROJECT_DIR$/src/Game/Lose.java" />
         <option value="$PROJECT_DIR$/src/Game/Victory.java" />
-        <option value="$PROJECT_DIR$/map.data" />
         <option value="$PROJECT_DIR$/src/Map/Block.java" />
         <option value="$PROJECT_DIR$/src/Game/Log.java" />
         <option value="$PROJECT_DIR$/src/Upgrade/UpItem.java" />
-        <option value="$PROJECT_DIR$/src/Upgrade/Upgrade.java" />
         <option value="$PROJECT_DIR$/src/Bag/BagMine.java" />
         <option value="$PROJECT_DIR$/.gitignore" />
         <option value="$PROJECT_DIR$/src/Map/Map.java" />
         <option value="$PROJECT_DIR$/src/Map/MapDigging.java" />
+        <option value="$PROJECT_DIR$/map.data" />
         <option value="$PROJECT_DIR$/src/Game/Game.java" />
+        <option value="$PROJECT_DIR$/src/Map/MapGround.java" />
+        <option value="$USER_HOME$/Downloads/Upgrade.java" />
+        <option value="$PROJECT_DIR$/src/Upgrade/Upgrade.java" />
+        <option value="$PROJECT_DIR$/src/Setting/Setting.java" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="1358" />
+    <option name="x" value="67" />
     <option name="y" value="-8" />
-    <option name="width" value="1936" />
-    <option name="height" value="1056" />
+    <option name="width" value="1307" />
+    <option name="height" value="784" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="false">
     <OptionsSetting value="true" id="Add" />
@@ -285,8 +286,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
-      <pane id="Scratches" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -319,9 +318,47 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="VovoDigging" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="VovoDigging" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Upgrade" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="VovoDigging" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="VovoDigging" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Setting" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
         </subPane>
       </pane>
       <pane id="PackagesPane" />
+      <pane id="Scope" />
+      <pane id="Scratches" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -620,8 +657,8 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="1358" y="-8" width="1936" height="1056" extended-state="6" />
-    <editor active="false" />
+    <frame x="67" y="-8" width="1307" height="784" extended-state="6" />
+    <editor active="true" />
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
@@ -630,12 +667,12 @@
       <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.42750373" sideWeight="0.51688695" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.33756614" sideWeight="0.48311308" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.15304606" sideWeight="0.48311308" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.1609375" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.23934934" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -708,20 +745,6 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/Map/BlockRock.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="342">
-          <caret line="19" column="5" selection-start-line="19" selection-start-column="5" selection-end-line="19" selection-end-column="5" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Map/BlockWall.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="342">
-          <caret line="19" column="5" selection-start-line="19" selection-start-column="5" selection-end-line="19" selection-end-column="5" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/Map/BlockSoil.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="342">
@@ -738,13 +761,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$USER_HOME$/Downloads/Game (1).java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="285">
-          <caret line="34" column="0" selection-start-line="34" selection-start-column="0" selection-end-line="34" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$USER_HOME$/Downloads/Game (1).java" />
     <entry file="file://$PROJECT_DIR$/src/Map/BlockGold.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="399">
@@ -812,28 +829,11 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Setting/SettingTab.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="612">
-          <caret line="114" column="11" selection-start-line="114" selection-start-column="11" selection-end-line="114" selection-end-column="11" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Map/MapGround.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="309">
-          <caret line="76" column="31" selection-start-line="76" selection-start-column="31" selection-end-line="76" selection-end-column="31" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/Game/Timer.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="152">
           <caret line="8" column="0" selection-start-line="8" selection-start-column="0" selection-end-line="8" selection-end-column="0" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -855,19 +855,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Game/Player.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="247">
-          <caret line="354" column="12" selection-start-line="354" selection-start-column="12" selection-end-line="354" selection-end-column="12" />
-          <folding>
-            <element signature="method#delayToMove#0;class#Player#0" expanded="false" />
-            <element signature="method#isIdle#0;class#Player#0" expanded="false" />
-            <element signature="method#startDiggging#0;class#Player#0" expanded="false" />
-            <element signature="method#save#0;class#Player#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/Battle/Timer.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-309">
@@ -879,14 +866,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="278">
           <caret line="28" column="39" selection-start-line="28" selection-start-column="39" selection-end-line="28" selection-end-column="39" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Reminder/Reminder.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-753">
-          <caret line="10" column="13" selection-start-line="10" selection-start-column="13" selection-end-line="10" selection-end-column="13" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -924,18 +903,13 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Setting/Setting.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-551">
-          <caret line="7" column="13" selection-start-line="7" selection-start-column="13" selection-end-line="7" selection-end-column="13" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/Battle/BattleShop.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-210">
           <caret line="111" column="16" selection-start-line="111" selection-start-column="16" selection-end-line="111" selection-end-column="16" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -968,30 +942,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$USER_HOME$/Downloads/Game (2).java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="151">
-          <caret line="65" column="0" selection-start-line="65" selection-start-column="0" selection-end-line="65" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Game/Victory.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-307">
-          <caret line="11" column="13" selection-start-line="11" selection-start-column="13" selection-end-line="11" selection-end-column="13" />
-          <folding>
-            <element signature="imports" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/map.data">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="76">
-          <caret line="4" column="46" selection-start-line="4" selection-start-column="46" selection-end-line="4" selection-end-column="46" />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$USER_HOME$/Downloads/Game (2).java" />
     <entry file="file://$PROJECT_DIR$/src/Map/Block.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1406">
@@ -1019,57 +970,11 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Upgrade/Upgrade.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1235">
-          <caret line="147" column="57" selection-start-line="147" selection-start-column="57" selection-end-line="147" selection-end-column="57" />
-          <folding>
-            <element signature="imports" expanded="false" />
-            <element signature="method#setup#0;class#Upgrade#0" expanded="false" />
-            <element signature="method#draw#0;class#Upgrade#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/Bag/Bag.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="114">
           <caret line="9" column="13" selection-start-line="9" selection-start-column="13" selection-end-line="9" selection-end-column="13" />
-          <folding>
-            <element signature="imports" expanded="false" />
-            <element signature="e#449#450#0" expanded="false" />
-            <element signature="e#479#480#0" expanded="false" />
-            <element signature="e#513#514#0" expanded="false" />
-            <element signature="e#538#539#0" expanded="false" />
-            <element signature="e#566#567#0" expanded="false" />
-            <element signature="e#594#595#0" expanded="false" />
-            <element signature="e#632#633#0" expanded="false" />
-            <element signature="e#673#674#0" expanded="false" />
-            <element signature="e#705#706#0" expanded="false" />
-            <element signature="e#752#753#0" expanded="false" />
-            <element signature="e#788#789#0" expanded="false" />
-            <element signature="e#829#830#0" expanded="false" />
-            <element signature="e#863#864#0" expanded="false" />
-            <element signature="e#898#899#0" expanded="false" />
-            <element signature="e#932#933#0" expanded="false" />
-            <element signature="e#967#968#0" expanded="false" />
-            <element signature="e#1002#1003#0" expanded="false" />
-            <element signature="e#1046#1047#0" expanded="false" />
-            <element signature="e#1245#1246#0" expanded="false" />
-            <element signature="e#1289#1290#0" expanded="false" />
-            <element signature="e#1327#1328#0" expanded="false" />
-            <element signature="e#1370#1371#0" expanded="false" />
-            <element signature="e#1415#1416#0" expanded="false" />
-            <element signature="e#1458#1459#0" expanded="false" />
-            <element signature="e#1497#1498#0" expanded="false" />
-            <element signature="e#1537#1538#0" expanded="false" />
-            <element signature="e#1571#1572#0" expanded="false" />
-            <element signature="e#1606#1607#0" expanded="false" />
-            <element signature="e#1662#1663#0" expanded="false" />
-            <element signature="e#1695#1696#0" expanded="false" />
-            <element signature="e#1727#1728#0" expanded="false" />
-            <element signature="e#1760#1761#0" expanded="false" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -1078,19 +983,8 @@
         <state relative-caret-position="1254">
           <caret line="151" column="57" selection-start-line="151" selection-start-column="57" selection-end-line="151" selection-end-column="57" />
           <folding>
-            <element signature="imports" expanded="false" />
-            <element signature="e#943#944#0" expanded="false" />
-            <element signature="e#977#978#0" expanded="false" />
-            <element signature="e#1017#1018#0" expanded="false" />
-            <element signature="e#1048#1049#0" expanded="false" />
-            <element signature="e#1080#1081#0" expanded="false" />
-            <element signature="e#1111#1112#0" expanded="false" />
             <element signature="method#addMine#0;class#BagMine#0" expanded="false" />
             <element signature="method#delMine#0;class#BagMine#0" expanded="false" />
-            <element signature="e#1478#1479#0" expanded="false" />
-            <element signature="e#1505#1506#0" expanded="false" />
-            <element signature="e#1536#1537#0" expanded="false" />
-            <element signature="e#1567#1568#0" expanded="false" />
             <element signature="method#display#0;class#BagMine#0" expanded="false" />
             <element signature="method#keyPressed#0;class#BagMine#0" expanded="false" />
             <element signature="method#save#0;class#BagMine#0" expanded="false" />
@@ -1110,15 +1004,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1216">
           <caret line="66" column="0" selection-start-line="66" selection-start-column="0" selection-end-line="66" selection-end-column="0" />
-          <folding>
-            <element signature="imports" expanded="false" />
-            <element signature="e#2175#2176#0" expanded="false" />
-            <element signature="e#2202#2203#0" expanded="false" />
-            <element signature="e#2647#2648#0" expanded="false" />
-            <element signature="e#2675#2676#0" expanded="false" />
-            <element signature="e#2702#2703#0" expanded="false" />
-            <element signature="e#2727#2728#0" expanded="false" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -1142,6 +1028,77 @@
             <element signature="method#moveCamera#0;class#Map#0" expanded="false" />
             <element signature="method#update#0;class#Map#0" expanded="false" />
             <element signature="method#extend#0;class#Map#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Setting/SettingTab.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="133">
+          <caret line="11" column="13" selection-start-line="11" selection-start-column="13" selection-end-line="11" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/map.data">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="95">
+          <caret line="5" column="11" selection-start-line="5" selection-start-column="11" selection-end-line="5" selection-end-column="11" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Game/Victory.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="247">
+          <caret line="23" column="26" selection-start-line="23" selection-start-column="26" selection-end-line="23" selection-end-column="26" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Game/Player.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1463">
+          <caret line="344" column="25" selection-start-line="344" selection-start-column="25" selection-end-line="344" selection-end-column="25" />
+          <folding>
+            <element signature="method#move#0;class#Player#0" expanded="false" />
+            <element signature="method#extend#0;class#Player#0" expanded="false" />
+            <element signature="method#delayToMove#0;class#Player#0" expanded="false" />
+            <element signature="method#isIdle#0;class#Player#0" expanded="false" />
+            <element signature="method#startDiggging#0;class#Player#0" expanded="false" />
+            <element signature="method#update#0;class#Player#0" expanded="false" />
+            <element signature="method#digBlock#0;class#Player#0" expanded="false" />
+            <element signature="method#putMine#0;class#Player#0" expanded="false" />
+            <element signature="method#save#0;class#Player#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Game/Game.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="157">
+          <caret line="302" column="39" selection-start-line="302" selection-start-column="39" selection-end-line="302" selection-end-column="39" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="method#Game#0;class#Game#0" expanded="false" />
+            <element signature="method#initNewGame#0;class#Game#0" expanded="false" />
+            <element signature="method#initOldGame#0;class#Game#0" expanded="false" />
+            <element signature="method#drawTime#0;class#Game#0" expanded="false" />
+            <element signature="method#keyPressed#0;class#Game#0" expanded="false" />
+            <element signature="method#mousePressed#0;class#Game#0" expanded="false" />
+            <element signature="method#saveGame#0;class#Game#0" expanded="false" />
+            <element signature="method#goToMenu#0;class#Game#0" expanded="false" />
+            <element signature="method#setStatus#0;class#Game#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Map/MapGround.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-57">
+          <caret line="57" column="0" selection-start-line="57" selection-start-column="0" selection-end-line="57" selection-end-column="0" />
+          <folding>
+            <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -1172,25 +1129,45 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Game/Game.java">
+    <entry file="file://$PROJECT_DIR$/src/Map/BlockCoal.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-58">
-          <caret line="135" column="0" selection-start-line="135" selection-start-column="0" selection-end-line="135" selection-end-column="0" />
+        <state relative-caret-position="133">
+          <caret line="8" column="13" selection-start-line="8" selection-start-column="13" selection-end-line="8" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Reminder/Reminder.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-380">
+          <caret line="10" column="13" selection-start-line="10" selection-start-column="13" selection-end-line="10" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/Downloads/Upgrade.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="209">
+          <caret line="157" column="48" selection-start-line="157" selection-start-column="48" selection-end-line="157" selection-end-column="48" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Upgrade/Upgrade.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="532">
+          <caret line="171" column="0" selection-start-line="171" selection-start-column="0" selection-end-line="171" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Setting/Setting.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="393">
+          <caret line="92" column="19" selection-start-line="92" selection-start-column="19" selection-end-line="92" selection-end-column="19" />
           <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="method#Game#0;class#Game#0" expanded="false" />
-            <element signature="method#initNewGame#0;class#Game#0" expanded="false" />
-            <element signature="method#initOldGame#0;class#Game#0" expanded="false" />
-            <element signature="method#drawTime#0;class#Game#0" expanded="false" />
-            <element signature="method#draw#0;class#Game#0" expanded="false" />
-            <element signature="method#keyPressed#0;class#Game#0" expanded="false" />
-            <element signature="method#mousePressed#0;class#Game#0" expanded="false" />
-            <element signature="method#saveGame#0;class#Game#0" expanded="false" />
-            <element signature="method#goToGround#0;class#Game#0" expanded="false" />
-            <element signature="method#goToDigging#0;class#Game#0" expanded="false" />
-            <element signature="method#goToMenu#0;class#Game#0" expanded="false" />
-            <element signature="method#setStatus#0;class#Game#0" expanded="false" />
-            <element signature="method#goToBattle#0;class#Game#0" expanded="false" />
+            <element signature="e#3915#3916#0" expanded="true" />
+            <element signature="e#3948#3949#0" expanded="true" />
           </folding>
         </state>
       </provider>
